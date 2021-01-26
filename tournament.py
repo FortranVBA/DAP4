@@ -87,6 +87,7 @@ class MainViewer:
             print("Main menu")
             print("Command list :")
             print("new to create a new tournament")
+            print("print to generate reports")
             print("exit to quit application")
         elif self.current_view == "new":
             print(" ")
@@ -94,6 +95,15 @@ class MainViewer:
             if not self.current_error == "":
                 print(self.display_error(self.current_error))
             print("You are creating a new tournament")
+            print("Command list :")
+            print("back to go back to main menu")
+            print("exit to quit application")
+        elif self.current_view == "print":
+            print(" ")
+            print(" ")
+            if not self.current_error == "":
+                print(self.display_error(self.current_error))
+            print("What report do you want ?")
             print("Command list :")
             print("back to go back to main menu")
             print("exit to quit application")
@@ -128,9 +138,13 @@ class Application:
         """(Put description here)."""
         if command == "exit":
             return True
+
         elif self.viewer.current_view == "main":
             if command == "new":
                 self.viewer.current_view = "new"
+                self.viewer.current_error = ""
+            if command == "print":
+                self.viewer.current_view = "print"
                 self.viewer.current_error = ""
             else:
                 self.viewer.current_error = "command unknown"
@@ -141,6 +155,14 @@ class Application:
                 self.viewer.current_error = ""
             else:
                 self.viewer.current_error = "command unknown"
+
+        elif self.viewer.current_view == "print":
+            if command == "back":
+                self.viewer.current_view = "main"
+                self.viewer.current_error = ""
+            else:
+                self.viewer.current_error = "command unknown"
+
         else:
             self.viewer.current_error = "command unknown"
 
