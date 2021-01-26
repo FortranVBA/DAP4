@@ -62,7 +62,7 @@ class MainController:
 
     def __init__(self):
         """Init MainController class."""
-        self.viewer = MainViewer()
+        pass
 
     def run(self):
         """(Put description here)."""
@@ -74,4 +74,74 @@ class MainViewer:
 
     def __init__(self):
         """Init MainViewer class."""
-        pass
+        self.current_view = "main"
+        self.current_error = ""
+
+    def display(self):
+        """(Put description here)."""
+        if self.current_view == "main":
+            print(" ")
+            print(" ")
+            if not self.current_error == "":
+                print(self.display_error(self.current_error))
+            print("Main menu")
+            print("Command list :")
+            print("new to create a new tournament")
+            print("exit to quit application")
+        elif self.current_view == "new":
+            print(" ")
+            print(" ")
+            if not self.current_error == "":
+                print(self.display_error(self.current_error))
+            print("You are creating a new tournament")
+            print("Command list :")
+            print("back to go back to main menu")
+            print("exit to quit application")
+
+    def display_error(self, error):
+        """(Put description here)."""
+        if error == "command unknown":
+            return "Warning : this command is not valid"
+        else:
+            return "Warning : unknown error occured"
+
+
+class Application:
+    """Project application class."""
+
+    def __init__(self):
+        """Init Application class."""
+        self.player_list = []
+        self.tournament_list = []
+        self.viewer = MainViewer()
+        self.exit = False
+
+    def run(self):
+        """Run  Application class."""
+        while not self.exit:
+            self.viewer.display()
+            self.exit = self.get_command(input("Enter your command: "))
+
+        return
+
+    def get_command(self, command):
+        """(Put description here)."""
+        if command == "exit":
+            return True
+        elif self.viewer.current_view == "main":
+            if command == "new":
+                self.viewer.current_view = "new"
+                self.viewer.current_error = ""
+            else:
+                self.viewer.current_error = "command unknown"
+
+        elif self.viewer.current_view == "new":
+            if command == "back":
+                self.viewer.current_view = "main"
+                self.viewer.current_error = ""
+            else:
+                self.viewer.current_error = "command unknown"
+        else:
+            self.viewer.current_error = "command unknown"
+
+        return False
