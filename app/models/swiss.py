@@ -16,34 +16,34 @@ class SwissSystem:
         sorted_dict = dict(sorted(players_rank.items(), key=lambda item: item[1]))
         sorted_players_keys = list(sorted_dict.keys())
 
-        if previous_matchs == []:
+        if not previous_matchs:
             # Implémenter : Si nombre impair, enlever le dernier joueur
-            middle = int(len(sorted_players_keys) / 2)
-            opponents_1 = sorted_players_keys[:middle]
-            opponents_2 = sorted_players_keys[middle:]
+            middle = len(sorted_players_keys) // 2
+            players = sorted_players_keys[middle:]
+            opponents = sorted_players_keys[:middle]
 
-            for oppenent_1, oppenent_2 in zip(opponents_1, opponents_2):
-                matchs_keys.append([oppenent_1, oppenent_2])
+            for player, opponent in zip(players, opponents):
+                matchs_keys.append([player, opponent])
 
-        else:
-            while not sorted_players_keys == []:
-                next_player = sorted_players_keys[0]
-                if len(sorted_players_keys) == 1:
-                    matchs_keys.append([next_player])
-                    sorted_players_keys.remove(next_player)
+            return matchs_keys
 
-                else:
-                    next_opponent_int = 1
-                    next_opponent = sorted_players_keys[next_opponent_int]
-                    while [next_player, next_opponent] in previous_matchs or [
-                        next_opponent,
-                        next_player,
-                    ] in previous_matchs:
-                        next_opponent_int += 1
-                        next_opponent = sorted_players_keys[next_opponent_int]
+        while sorted_players_keys:
+            player = sorted_players_keys.pop(0)
+            if not sorted_players_keys:
+                matchs_keys.append((player,))
 
-                    matchs_keys.append([next_player, next_opponent])
-                    sorted_players_keys.remove(next_player)
-                    sorted_players_keys.remove(next_opponent)
+            else:
+                opponent_index = 0
+                opponent = sorted_players_keys[opponent_index]
+                while (player, opponent) in previous_matchs or (
+                    opponent,
+                    player,
+                ) in previous_matchs:
+                    opponent_index += 1
+                    opponent = sorted_players_keys[opponent_index]
+
+                matchs_keys.append((player, opponent))
+                sorted_players_keys.remove(player)
+                sorted_players_keys.remove(opponent)
 
         return matchs_keys
