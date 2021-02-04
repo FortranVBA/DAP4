@@ -80,7 +80,9 @@ class Application:
                 self.viewer.selected_turn,
                 self.player_list,
             )
-            return EditTurnController.get_command(self.viewer)
+            return EditTurnController.get_command(
+                self.tournament_list[self.viewer.selected_tournament], self.viewer
+            )
 
         return False
 

@@ -9,6 +9,6 @@ class Match:
         self.opponents = opponents
         self.result = []
 
-    def update_result(self):
+    def update_result(self, score_p1, score_p2):
         """(Put description here)."""
-        pass
+        self.result = [score_p1, score_p2]

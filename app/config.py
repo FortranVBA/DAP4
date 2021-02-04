@@ -13,6 +13,7 @@ class CommandField:
     exit_c = "ex"
     generate_players_c = "gp"
     main_c = "m"
+    match_result_c = "mr"
     new_c = "n"
     print_c = "p"
     tournaments_c = "t"
