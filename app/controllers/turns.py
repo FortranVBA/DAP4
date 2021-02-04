@@ -24,7 +24,11 @@ class TurnsController:
 
         number = 1
         for turn in tournament.turns:
-            if command == str(number) + CommandField.edit_c:
+            if command == str(number) + CommandField.edit_turn_c:
+                viewer.current_view = CommandField.edit_turn_c
+                viewer.current_error = ""
+                viewer.selected_turn = number - 1
+
                 command_unknown = False
 
             number += 1

@@ -1,12 +1,14 @@
 """Project OC DAP 4 file with tournament related class."""
 
 from app.controllers.edit_tournament import EditTournamentController
+from app.controllers.edit_turn import EditTurnController
 from app.controllers.mainmenu import MainMenuController
 from app.controllers.print import PrintMenuController
 from app.controllers.tournaments import TournamentMenuController
 from app.controllers.turns import TurnsController
 
 from app.views.edit_tournament import EditTournamentViewer
+from app.views.edit_turn import EditTurnViewer
 from app.views.errors import Errors
 from app.views.mainmenu import MainMenuViewer
 from app.views.print import PrintMenuViewer
@@ -53,7 +55,7 @@ class Application:
             PrintMenuViewer.display()
             return PrintMenuController.get_command(self.viewer)
 
-        elif self.viewer.current_view == CommandField.edit_c:
+        elif self.viewer.current_view == CommandField.edit_tournament_c:
             Errors.display(self.viewer.current_error)
             EditTournamentViewer.display(
                 self.tournament_list[self.viewer.selected_tournament], self.player_list
@@ -62,7 +64,7 @@ class Application:
                 self.tournament_list, self.player_list, self.viewer
             )
 
-        elif self.viewer.current_view == CommandField.edit_turns:
+        elif self.viewer.current_view == CommandField.turns_c:
             Errors.display(self.viewer.current_error)
             TurnsViewer.display(self.tournament_list[self.viewer.selected_tournament])
             return TurnsController.get_command(
@@ -70,6 +72,15 @@ class Application:
                 self.player_list,
                 self.viewer,
             )
+
+        elif self.viewer.current_view == CommandField.edit_turn_c:
+            Errors.display(self.viewer.current_error)
+            EditTurnViewer.display(
+                self.tournament_list[self.viewer.selected_tournament],
+                self.viewer.selected_turn,
+                self.player_list,
+            )
+            return EditTurnController.get_command(self.viewer)
 
         return False
 

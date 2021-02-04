@@ -16,9 +16,8 @@ class SwissSystem:
         sorted_dict = dict(sorted(players_rank.items(), key=lambda item: item[1]))
         sorted_players_keys = list(sorted_dict.keys())
 
-        print(sorted_players_keys)
-
         if previous_matchs == []:
+            # Implémenter : Si nombre impair, enlever le dernier joueur
             middle = int(len(sorted_players_keys) / 2)
             opponents_1 = sorted_players_keys[:middle]
             opponents_2 = sorted_players_keys[middle:]

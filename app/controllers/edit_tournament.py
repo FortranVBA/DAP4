@@ -103,13 +103,18 @@ class EditTournamentController:
                 player_index_new
             )
 
-        elif command == CommandField.edit_turns:
-            viewer.current_view = CommandField.edit_turns
+        elif command == CommandField.turns_c:
+            viewer.current_view = CommandField.turns_c
             viewer.current_error = ""
-        elif command == CommandField.create_next_turn:
+        elif command == CommandField.create_next_turn_c:
             name_new = input("Enter turn name : ")
             tournament_list[viewer.selected_tournament].get_next_turn(
                 name_new, player_list
+            )
+            viewer.current_view = CommandField.edit_turn_c
+            viewer.current_error = ""
+            viewer.selected_turn = (
+                len(tournament_list[viewer.selected_tournament].turns) - 1
             )
 
         else:

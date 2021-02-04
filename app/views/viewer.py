@@ -11,3 +11,4 @@ class Viewer:
         self.current_view = CommandField.main_c
         self.current_error = ""
         self.selected_tournament = ""
+        self.selected_turn = 0

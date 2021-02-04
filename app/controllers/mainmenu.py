@@ -24,7 +24,7 @@ class MainMenuController:
             tournament_list[name_new] = Tournament(name_new)
 
             viewer.selected_tournament = name_new
-            viewer.current_view = CommandField.edit_c
+            viewer.current_view = CommandField.edit_tournament_c
             viewer.current_error = ""
         elif command == CommandField.tournaments_c:
             viewer.current_view = CommandField.tournaments_c

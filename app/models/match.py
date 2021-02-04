@@ -6,7 +6,7 @@ class Match:
 
     def __init__(self, opponents):
         """Init Match class."""
-        self.opponents = []
+        self.opponents = opponents
         self.result = []
 
     def update_result(self):

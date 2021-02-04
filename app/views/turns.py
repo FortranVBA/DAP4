@@ -21,7 +21,7 @@ class TurnsViewer:
         print("Command list :")
         number = 1
         for turn in tournament.turns:
-            print(f" - {number}{CommandField.edit_c} to edit {turn.name}")
+            print(f" - {number}{CommandField.edit_turn_c} to edit {turn.name}")
             number += 1
         print(" - " + CommandField.back_c + " to go back to main menu")
         print(" - " + CommandField.exit_c + " to quit application")

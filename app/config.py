@@ -6,9 +6,10 @@ class CommandField:
 
     add_player_c = "ap"
     back_c = "b"
-    create_next_turn = "cnt"
-    edit_c = "ed"
-    edit_turns = "edt"
+    create_next_turn_c = "cnt"
+    edit_tournament_c = "eto"
+    edit_turn_c = "etu"
+    turns_c = "etus"
     exit_c = "ex"
     generate_players_c = "gp"
     main_c = "m"
