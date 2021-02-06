@@ -16,4 +16,16 @@ class CommandField:
     match_result_c = "mr"
     new_c = "n"
     print_c = "p"
+    unknown_c = "uk"
     tournaments_c = "t"
+
+
+class ViewName:
+    """Object with field string names matchings."""
+
+    view_main = "v_main"
+    view_tournaments = "v_tournaments"
+    view_print = "v_print"
+    view_edit_tournament = "v_edit_tour"
+    view_turns = "v_turns"
+    view_edit_turn = "v_edit_turn"
