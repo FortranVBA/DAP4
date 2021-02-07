@@ -26,7 +26,7 @@ class MainMenuController:
         self.arguments_needed[
             CommandField.tournaments_c
         ] = self.return_arguments_tournaments_menu
-        self.arguments_needed[CommandField.print_c] = self.return_no_argument
+        self.arguments_needed[CommandField.print_c] = self.return_arguments_print_menu
         self.arguments_needed[CommandField.unknown_c] = self.return_no_argument
 
         self.viewer = MainMenuViewer()
@@ -90,7 +90,7 @@ class MainMenuController:
         """(Put description here)."""
         current_view = arguments[0].current_view
 
-        current_view = CommandField.tournaments_c
+        current_view = ViewName.view_tournaments
 
         arguments[0].current_view = current_view
 
@@ -108,7 +108,7 @@ class MainMenuController:
         """(Put description here)."""
         current_view = arguments[0].current_view
 
-        current_view = CommandField.print_c
+        current_view = ViewName.view_print
 
         arguments[0].current_view = current_view
 

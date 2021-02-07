@@ -25,6 +25,7 @@ class Controller:
         self.commands_controllers[
             ViewName.view_edit_tournament
         ] = EditTournamentController()
+        self.commands_controllers[ViewName.view_print] = PrintMenuController()
 
         self.current_error = ""
         self.selected_turn = 0

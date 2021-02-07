@@ -119,6 +119,8 @@ class EditTournamentController:
         arguments[0] = player_list
         arguments[1] = tournament_list
 
+        self.viewer.warning = ""
+
         return False
 
     def return_arguments_generate_player(self):
@@ -183,6 +185,8 @@ class EditTournamentController:
 
         arguments[0] = player_list
         arguments[1] = tournament_list
+
+        self.viewer.warning = ""
 
         return False
 
