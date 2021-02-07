@@ -78,15 +78,23 @@ class EditTournamentController:
         """(Put description here)."""
         arguments = []
         arguments.append("controller")
+        arguments.append("tournaments_controller")
+        arguments.append("tournament_list")
+
         return arguments
 
     def goto_tournaments_menu(self, arguments):
         """(Put description here)."""
         current_view = arguments[0].current_view
+        tournaments_controller = arguments[1]
+        tournament_list = arguments[2]
 
         current_view = ViewName.view_tournaments
+        tournaments_controller.set_tournament_names(tournament_list)
 
         arguments[0].current_view = current_view
+        arguments[1] = tournaments_controller
+        arguments[2] = tournament_list
 
         self.viewer.warning = ""
 

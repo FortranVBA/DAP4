@@ -7,7 +7,6 @@ from app.controllers.print import PrintMenuController
 from app.controllers.tournaments import TournamentMenuController
 from app.controllers.turns import TurnsController
 
-from app.config import CommandField
 from app.config import ViewName
 
 import os
@@ -26,6 +25,9 @@ class Controller:
             ViewName.view_edit_tournament
         ] = EditTournamentController()
         self.commands_controllers[ViewName.view_print] = PrintMenuController()
+        self.commands_controllers[
+            ViewName.view_tournaments
+        ] = TournamentMenuController()
 
         self.current_error = ""
         self.selected_turn = 0

@@ -21,6 +21,9 @@ class Application:
         self.get_argument_functions[
             "edit_tournament_controller"
         ] = self.get_edit_tournament_controller
+        self.get_argument_functions[
+            "tournaments_controller"
+        ] = self.get_tournaments_controller
 
     def run(self):
         """Run  Application class."""
@@ -60,6 +63,10 @@ class Application:
     def get_edit_tournament_controller(self):
         """(Put description here)."""
         return self.controller.commands_controllers[ViewName.view_edit_tournament]
+
+    def get_tournaments_controller(self):
+        """(Put description here)."""
+        return self.controller.commands_controllers[ViewName.view_tournaments]
 
 
 " sty -> coloration de la console"
