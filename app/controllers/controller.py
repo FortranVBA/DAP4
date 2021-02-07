@@ -7,13 +7,6 @@ from app.controllers.print import PrintMenuController
 from app.controllers.tournaments import TournamentMenuController
 from app.controllers.turns import TurnsController
 
-from app.views.edit_tournament import EditTournamentViewer
-from app.views.edit_turn import EditTurnViewer
-
-from app.views.print import PrintMenuViewer
-from app.views.tournaments import TournamentMenuViewer
-from app.views.turns import TurnsViewer
-
 from app.config import CommandField
 from app.config import ViewName
 
@@ -25,13 +18,15 @@ class Controller:
 
     def __init__(self, player_list, tournament_list):
         """Init Application class."""
-        self.current_view = CommandField.main_c
+        self.current_view = ViewName.view_main
         self.commands_controllers = {}
 
         self.commands_controllers[ViewName.view_main] = MainMenuController()
+        self.commands_controllers[
+            ViewName.view_edit_tournament
+        ] = EditTournamentController()
 
         self.current_error = ""
-        self.selected_tournament = ""
         self.selected_turn = 0
 
     def display(self):
@@ -42,50 +37,12 @@ class Controller:
         """(Put description here)."""
         os.system("cls")
 
-    def get_command(self):
+    def get_arguments(self, command):
         """(Put description here)."""
-        self.commands_controllers[self.current_view].get_command()
+        return self.commands_controllers[self.current_view].get_arguments(command)
 
-        if self.viewer.current_view == CommandField.main_c:
-            return MainMenuController.get_command(self.tournament_list, self.viewer)
-
-        elif self.viewer.current_view == CommandField.tournaments_c:
-            Errors.display(self.viewer.current_error)
-            TournamentMenuViewer.display(self.tournament_list)
-            return TournamentMenuController.get_command(self.viewer)
-
-        elif self.viewer.current_view == CommandField.print_c:
-            Errors.display(self.viewer.current_error)
-            PrintMenuViewer.display()
-            return PrintMenuController.get_command(self.viewer)
-
-        elif self.viewer.current_view == CommandField.edit_tournament_c:
-            Errors.display(self.viewer.current_error)
-            EditTournamentViewer.display(
-                self.tournament_list[self.viewer.selected_tournament], self.player_list
-            )
-            return EditTournamentController.get_command(
-                self.tournament_list, self.player_list, self.viewer
-            )
-
-        elif self.viewer.current_view == CommandField.turns_c:
-            Errors.display(self.viewer.current_error)
-            TurnsViewer.display(self.tournament_list[self.viewer.selected_tournament])
-            return TurnsController.get_command(
-                self.tournament_list[self.viewer.selected_tournament],
-                self.player_list,
-                self.viewer,
-            )
-
-        elif self.viewer.current_view == CommandField.edit_turn_c:
-            Errors.display(self.viewer.current_error)
-            EditTurnViewer.display(
-                self.tournament_list[self.viewer.selected_tournament],
-                self.viewer.selected_turn,
-                self.player_list,
-            )
-            return EditTurnController.get_command(
-                self.tournament_list[self.viewer.selected_tournament], self.viewer
-            )
-
-        return False
+    def exe_command(self, command, arguments):
+        """(Put description here)."""
+        return self.commands_controllers[self.current_view].exe_command(
+            command, arguments
+        )

@@ -8,7 +8,7 @@ class EditTurnController:
 
     def __init__(self):
         """Init Application class."""
-        pass
+        self.selected_turn = ""
 
     @staticmethod
     def get_command(tournament, viewer):

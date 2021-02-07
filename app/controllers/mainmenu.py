@@ -1,13 +1,11 @@
 """Project OC DAP 4 file with tournament related class."""
 
 from app.views.mainmenu import MainMenuViewer
-from app.views.errors import Errors
-
 
 from app.models.tournament import Tournament
 
-
 from app.config import CommandField
+from app.config import ViewName
 
 
 class MainMenuController:
@@ -22,44 +20,108 @@ class MainMenuController:
         self.command_names[CommandField.print_c] = self.goto_print_menu
         self.command_names[CommandField.unknown_c] = self.print_unknown_command
 
+        self.arguments_needed = {}
+        self.arguments_needed[CommandField.exit_c] = self.return_no_argument
+        self.arguments_needed[CommandField.new_c] = self.return_arguments_create_menu
+        self.arguments_needed[
+            CommandField.tournaments_c
+        ] = self.return_arguments_tournaments_menu
+        self.arguments_needed[CommandField.print_c] = self.return_no_argument
+        self.arguments_needed[CommandField.unknown_c] = self.return_no_argument
+
+        self.viewer = MainMenuViewer()
+
     def display(self):
         """(Put description here)."""
-        Errors.display(self.viewer.current_error)
-        MainMenuViewer.display()
+        self.viewer.display()
 
-    def get_arguments(self):
+    def get_arguments(self, command):
         """(Put description here)."""
-        return
+        return self.arguments_needed[command]()
 
-    def get_command(self, tournament_list, viewer):
+    def exe_command(self, command, arguments):
         """(Put description here)."""
-        command = input("Enter your command: ")
-
-        if command in self.command_names.keys:
-            return self.command_names[command]()
+        if command in self.command_names:
+            return self.command_names[command](arguments)
         else:
-            return self.command_names[CommandField.unknown_c]()
+            return self.command_names[CommandField.unknown_c](arguments)
 
-    def exit_application(self):
+    def exit_application(self, arguments):
+        """(Put description here)."""
         return True
 
-    def goto_create_menu(self):
+    def return_arguments_create_menu(self):
+        """(Put description here)."""
+        arguments = []
+        arguments.append("tournament_list")
+        arguments.append("controller")
+        arguments.append("edit_tournament_controller")
+        return arguments
+
+    def goto_create_menu(self, arguments):
+        """(Put description here)."""
+        tournament_list = arguments[0]
+        current_view = arguments[1].current_view
+        edit_tournament_controller = arguments[2]
+
         name_new = input("Enter your tournament name : ")
         tournament_list[name_new] = Tournament(name_new)
 
-        viewer.selected_tournament = name_new
-        viewer.current_view = CommandField.edit_tournament_c
-        viewer.current_error = ""
+        current_view = ViewName.view_edit_tournament
+        edit_tournament_controller.set_selected_tournament(
+            name_new, tournament_list[name_new]
+        )
+
+        arguments[0] = tournament_list
+        arguments[1].current_view = current_view
+        arguments[2] = edit_tournament_controller
+
+        self.viewer.warning = ""
 
         return False
 
-    def goto_tournaments_menu(self):
-        viewer.current_view = CommandField.tournaments_c
-        viewer.current_error = ""
+    def return_arguments_tournaments_menu(self):
+        """(Put description here)."""
+        arguments = []
+        arguments.append("controller")
+        return arguments
 
-    def goto_print_menu(self):
-        viewer.current_view = CommandField.print_c
-        viewer.current_error = ""
+    def goto_tournaments_menu(self, arguments):
+        """(Put description here)."""
+        current_view = arguments[0].current_view
 
-    def print_unknown_command(self):
-        viewer.current_error = "command unknown"
+        current_view = CommandField.tournaments_c
+
+        arguments[0].current_view = current_view
+
+        self.viewer.warning = ""
+
+        return False
+
+    def return_arguments_print_menu(self):
+        """(Put description here)."""
+        arguments = []
+        arguments.append("controller")
+        return arguments
+
+    def goto_print_menu(self, arguments):
+        """(Put description here)."""
+        current_view = arguments[0].current_view
+
+        current_view = CommandField.print_c
+
+        arguments[0].current_view = current_view
+
+        self.viewer.warning = ""
+
+        return False
+
+    def print_unknown_command(self, arguments):
+        """(Put description here)."""
+        self.viewer.warning = "command unknown"
+
+        return False
+
+    def return_no_argument(self):
+        """(Put description here)."""
+        return []
