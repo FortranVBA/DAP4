@@ -13,7 +13,7 @@ class Tournament:
         self.location = "Unknown"
         self.date = "Unknown"
         self.turn_number = 4
-        self.turns = []
+        self.turns = {}
         self.players_index = []
         self.time_control = ""
         self.description = ""
@@ -37,8 +37,8 @@ class Tournament:
         for player in self.players_index:
             player_rank[player] = player_list[player].ranking
 
-        self.turns.append(
-            Turn(name, SwissSystem.get_next_turn(previous_matchs, player_rank))
+        self.turns[name] = Turn(
+            name, SwissSystem.get_next_turn(previous_matchs, player_rank)
         )
 
     def get_previous_match(self):

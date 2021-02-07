@@ -61,7 +61,10 @@ class EditTournamentController:
 
     def get_arguments(self, command):
         """(Put description here)."""
-        return self.arguments_needed[command]()
+        if command in self.arguments_needed:
+            return self.arguments_needed[command]()
+        else:
+            return self.arguments_needed[CommandField.unknown_c]()
 
     def exe_command(self, command, arguments):
         """(Put description here)."""
@@ -123,6 +126,10 @@ class EditTournamentController:
         )
 
         tournament_list[self.selected_tournament].players_index.append(player_index_new)
+
+        self.set_selected_tournament(
+            self.selected_tournament, tournament_list[self.selected_tournament]
+        )
 
         arguments[0] = player_list
         arguments[1] = tournament_list
@@ -191,6 +198,10 @@ class EditTournamentController:
         )
         tournament_list[self.selected_tournament].players_index.append(player_index_new)
 
+        self.set_selected_tournament(
+            self.selected_tournament, tournament_list[self.selected_tournament]
+        )
+
         arguments[0] = player_list
         arguments[1] = tournament_list
 
@@ -216,7 +227,7 @@ class EditTournamentController:
 
         return False
 
-    def return_arguments_create_next_turn(self, arguments):
+    def return_arguments_create_next_turn(self):
         """(Put description here)."""
         arguments = []
         arguments.append("tournament_list")
@@ -235,8 +246,18 @@ class EditTournamentController:
         name_new = input("Enter turn name : ")
         tournament_list[self.selected_tournament].get_next_turn(name_new, player_list)
         current_view = ViewName.view_edit_turn
-        edit_turn_controller.selected_turn = (
-            len(tournament_list[self.selected_tournament].turns) - 1
+
+        blank_match_results = []
+        for match in tournament_list[self.selected_tournament].turns[name_new].matches:
+            blank_match_results.append([])
+
+        edit_turn_controller.set_selected_turn(
+            name_new,
+            tournament_list[self.selected_tournament].name,
+            tournament_list[self.selected_tournament]
+            .turns[name_new]
+            .get_matches_description(),
+            blank_match_results,
         )
 
         arguments[0] = tournament_list

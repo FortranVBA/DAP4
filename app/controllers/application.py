@@ -17,6 +17,7 @@ class Application:
 
         self.get_argument_functions = {}
         self.get_argument_functions["tournament_list"] = self.get_tournament_list
+        self.get_argument_functions["player_list"] = self.get_player_list
         self.get_argument_functions["controller"] = self.get_controller
         self.get_argument_functions[
             "edit_tournament_controller"
@@ -24,6 +25,10 @@ class Application:
         self.get_argument_functions[
             "tournaments_controller"
         ] = self.get_tournaments_controller
+        self.get_argument_functions[
+            "edit_turn_controller"
+        ] = self.get_edit_turn_controller
+        self.get_argument_functions["match"] = self.get_specific_match
 
     def run(self):
         """Run  Application class."""
@@ -48,13 +53,23 @@ class Application:
         needed_arguments = self.controller.get_arguments(command)
 
         for argument in needed_arguments:
-            arguments.append(self.get_argument_functions[argument]())
+            if argument in self.get_argument_functions:
+                arguments.append(self.get_argument_functions[argument]())
+            elif "match" in argument:
+                number = int(argument.replace("match", ""))
+                arguments.append(self.get_argument_functions["match"](number))
+            else:
+                print("Error get_arguments for command : " + command)
 
         return arguments
 
     def get_tournament_list(self):
         """(Put description here)."""
         return self.tournament_list
+
+    def get_player_list(self):
+        """(Put description here)."""
+        return self.player_list
 
     def get_controller(self):
         """(Put description here)."""
@@ -67,6 +82,25 @@ class Application:
     def get_tournaments_controller(self):
         """(Put description here)."""
         return self.controller.commands_controllers[ViewName.view_tournaments]
+
+    def get_edit_turn_controller(self):
+        """(Put description here)."""
+        return self.controller.commands_controllers[ViewName.view_edit_turn]
+
+    def get_specific_match(self, selected_match):
+        """(Put description here)."""
+        selected_tournament = self.controller.commands_controllers[
+            ViewName.view_edit_tournament
+        ].selected_tournament
+        selected_turn = self.controller.commands_controllers[
+            ViewName.view_edit_turn
+        ].selected_turn
+
+        return (
+            self.tournament_list[selected_tournament]
+            .turns[selected_turn]
+            .matches[selected_match]
+        )
 
 
 " sty -> coloration de la console"

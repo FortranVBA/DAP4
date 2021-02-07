@@ -29,7 +29,10 @@ class TournamentMenuController:
 
     def get_arguments(self, command):
         """(Put description here)."""
-        return self.arguments_needed[command]()
+        if command in self.arguments_needed:
+            return self.arguments_needed[command]()
+        else:
+            return self.arguments_needed[CommandField.unknown_c]()
 
     def exe_command(self, command, arguments):
         """(Put description here)."""

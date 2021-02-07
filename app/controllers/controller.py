@@ -28,6 +28,7 @@ class Controller:
         self.commands_controllers[
             ViewName.view_tournaments
         ] = TournamentMenuController()
+        self.commands_controllers[ViewName.view_edit_turn] = EditTurnController()
 
         self.current_error = ""
         self.selected_turn = 0

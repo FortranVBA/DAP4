@@ -16,6 +16,10 @@ class Turn:
         for match in matches_input:
             self.matches.append(Match(match))
 
-    def update_result(self):
+    def get_matches_description(self):
         """(Put description here)."""
-        pass
+        description = []
+        for match in self.matches:
+            description.append(match.opponents)
+
+        return description
