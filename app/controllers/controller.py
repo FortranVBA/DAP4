@@ -6,6 +6,8 @@ from app.controllers.mainmenu import MainMenuController
 from app.controllers.print import PrintMenuController
 from app.controllers.tournaments import TournamentMenuController
 from app.controllers.turns import TurnsController
+from app.controllers.players import PlayersController
+
 
 from app.config import ViewName
 
@@ -18,8 +20,8 @@ class Controller:
     def __init__(self, player_list, tournament_list):
         """Init Application class."""
         self.current_view = ViewName.view_main
-        self.commands_controllers = {}
 
+        self.commands_controllers = {}
         self.commands_controllers[ViewName.view_main] = MainMenuController()
         self.commands_controllers[
             ViewName.view_edit_tournament
@@ -30,6 +32,7 @@ class Controller:
         ] = TournamentMenuController()
         self.commands_controllers[ViewName.view_edit_turn] = EditTurnController()
         self.commands_controllers[ViewName.view_turns] = TurnsController()
+        self.commands_controllers[ViewName.view_players] = PlayersController()
 
         self.current_error = ""
         self.selected_turn = 0

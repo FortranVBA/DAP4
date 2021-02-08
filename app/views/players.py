@@ -3,24 +3,24 @@
 from app.config import CommandField
 
 
-class MainMenuViewer:
-    """Main viewer to be handled by application."""
+class PlayersViewer:
+    """Project application class."""
 
     def __init__(self):
-        """(Put description here)."""
+        """Init Application class."""
         self.warning = ""
+        self.player_names = []
 
     def display(self):
         """(Put description here)."""
         self.display_warning()
 
-        print("Main menu")
+        print("The list of players is the following :")
+        for player in self.player_names:
+            print(f" - {player}")
         print(" ")
         print("Command list :")
-        print(" - " + CommandField.new_c + " to create a new tournament")
-        print(" - " + CommandField.tournaments_c + " to see the list of tournaments")
-        print(" - " + CommandField.players_c + " to see the list of players")
-        print(" - " + CommandField.print_c + " to generate reports")
+        print(" - " + CommandField.back_c + " to go back to main menu")
         print(" - " + CommandField.exit_c + " to quit application")
 
     def get_warning(self):
@@ -36,3 +36,7 @@ class MainMenuViewer:
         print(" ")
         if not self.warning == "":
             print(self.get_warning())
+
+    def set_player_names(self, player_names):
+        """(Put description here)."""
+        self.player_names = player_names[:]

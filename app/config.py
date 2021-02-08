@@ -15,7 +15,8 @@ class CommandField:
     main_c = "m"
     match_result_c = "mr"
     new_c = "n"
-    print_c = "p"
+    players_c = "p"
+    print_c = "pr"
     unknown_c = "uk"
     tournaments_c = "t"
 
@@ -25,6 +26,7 @@ class ViewName:
 
     view_main = "v_main"
     view_tournaments = "v_tournaments"
+    view_players = "v_players"
     view_print = "v_print"
     view_edit_tournament = "v_edit_tour"
     view_turns = "v_turns"

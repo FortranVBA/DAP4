@@ -17,6 +17,7 @@ class MainMenuController:
         self.command_names[CommandField.exit_c] = self.exit_application
         self.command_names[CommandField.new_c] = self.goto_create_menu
         self.command_names[CommandField.tournaments_c] = self.goto_tournaments_menu
+        self.command_names[CommandField.players_c] = self.goto_players_menu
         self.command_names[CommandField.print_c] = self.goto_print_menu
         self.command_names[CommandField.unknown_c] = self.print_unknown_command
 
@@ -26,6 +27,9 @@ class MainMenuController:
         self.arguments_needed[
             CommandField.tournaments_c
         ] = self.return_arguments_tournaments_menu
+        self.arguments_needed[
+            CommandField.players_c
+        ] = self.return_arguments_players_menu
         self.arguments_needed[CommandField.print_c] = self.return_arguments_print_menu
         self.arguments_needed[CommandField.unknown_c] = self.return_no_argument
 
@@ -119,6 +123,31 @@ class MainMenuController:
         current_view = ViewName.view_print
 
         arguments[0].current_view = current_view
+
+        self.viewer.warning = ""
+
+        return False
+
+    def return_arguments_players_menu(self):
+        """(Put description here)."""
+        arguments = []
+        arguments.append("controller")
+        arguments.append("players_controller")
+        arguments.append("player_list")
+        return arguments
+
+    def goto_players_menu(self, arguments):
+        """(Put description here)."""
+        current_view = arguments[0].current_view
+        players_controller = arguments[1]
+        player_list = arguments[2]
+
+        current_view = ViewName.view_players
+        players_controller.set_player_names(player_list)
+
+        arguments[0].current_view = current_view
+        players_controller = arguments[1]
+        player_list = arguments[2]
 
         self.viewer.warning = ""
 

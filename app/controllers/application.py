@@ -28,6 +28,9 @@ class Application:
         self.get_argument_functions[
             "edit_turn_controller"
         ] = self.get_edit_turn_controller
+        self.get_argument_functions[
+            "players_controller"
+        ] = self.get_players_controller
         self.get_argument_functions["match"] = self.get_specific_match
         self.get_argument_functions["turns_controller"] = self.get_turns_controller
         self.get_argument_functions["active_tournament"] = self.get_active_tournament
@@ -131,6 +134,10 @@ class Application:
         ].selected_tournament
 
         return self.tournament_list[selected_tournament]
+
+    def get_players_controller(self):
+        """(Put description here)."""
+        return self.controller.commands_controllers[ViewName.view_players]
 
 
 " sty -> coloration de la console"
