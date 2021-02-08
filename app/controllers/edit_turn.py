@@ -85,15 +85,22 @@ class EditTurnController:
         """(Put description here)."""
         arguments = []
         arguments.append("controller")
+        arguments.append("turns_controller")
+        arguments.append("active_tournament")
         return arguments
 
     def goto_turns_menu(self, arguments):
         """(Put description here)."""
         current_view = arguments[0].current_view
+        turns_controller = arguments[1]
+        active_tournament = arguments[2]
 
         current_view = ViewName.view_turns
+        turns_controller.set_viewer(active_tournament)
 
         arguments[0].current_view = current_view
+        arguments[1] = turns_controller
+        arguments[2] = active_tournament
 
         self.viewer.warning = ""
 

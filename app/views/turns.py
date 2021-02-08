@@ -8,20 +8,42 @@ class TurnsViewer:
 
     def __init__(self):
         """Init Application class."""
-        pass
+        self.warning = ""
+        self.tournament_name = ""
+        self.turn_names = []
 
-    @staticmethod
-    def display(tournament):
+    def display(self):
         """(Put description here)."""
-        print(f"You are editing tournament {tournament.name}")
+        self.display_warning()
+
+        print(f"You are editing tournament {self.tournament_name}")
         print("List of turn :")
-        for turn in tournament.turns:
-            print(f" -  {turn.name}")
+        for turn in self.turn_names:
+            print(f" -  {turn}")
         print(" ")
         print("Command list :")
         number = 1
-        for turn in tournament.turns:
-            print(f" - {number}{CommandField.edit_turn_c} to edit {turn.name}")
+        for turn in self.turn_names:
+            print(f" - {number}{CommandField.edit_turn_c} to edit {turn}")
             number += 1
         print(" - " + CommandField.back_c + " to go back to main menu")
         print(" - " + CommandField.exit_c + " to quit application")
+
+    def get_warning(self):
+        """(Put description here)."""
+        if self.warning == "command unknown":
+            return "Warning : this command is not valid"
+        else:
+            return "Warning : unknown error occured"
+
+    def display_warning(self):
+        """(Put description here)."""
+        print(" ")
+        print(" ")
+        if not self.warning == "":
+            print(self.get_warning())
+
+    def set_viewer(self, tournament_name, turn_names):
+        """(Put description here)."""
+        self.tournament_name = tournament_name
+        self.turn_names = turn_names[:]

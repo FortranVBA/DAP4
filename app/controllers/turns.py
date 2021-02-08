@@ -1,6 +1,9 @@
 """Project OC DAP 4 file with tournament related class."""
 
+from app.views.turns import TurnsViewer
+
 from app.config import CommandField
+from app.config import ViewName
 
 
 class TurnsController:
@@ -8,32 +11,64 @@ class TurnsController:
 
     def __init__(self):
         """Init Application class."""
-        pass
+        self.command_names = {}
+        self.command_names[CommandField.exit_c] = self.exit_application
 
-    @staticmethod
-    def get_command(tournament, player_list, viewer):
+        self.arguments_needed = {}
+        self.arguments_needed[CommandField.exit_c] = self.return_no_argument
+
+        self.viewer = TurnsViewer()
+
+    def display(self):
         """(Put description here)."""
-        command = input("Enter your command: ")
+        self.viewer.display()
 
-        command_unknown = True
-        if command == CommandField.exit_c:
-            return True
-        elif command == CommandField.back_c:
-            viewer.current_view = CommandField.main_c
-            viewer.current_error = ""
+    def get_arguments(self, command):
+        """(Put description here)."""
+        if command in self.arguments_needed:
+            return self.arguments_needed[command]()
+        else:
+            return self.arguments_needed[CommandField.unknown_c]()
 
-        number = 1
-        for turn in tournament.turns:
-            if command == str(number) + CommandField.edit_turn_c:
-                viewer.current_view = CommandField.edit_turn_c
-                viewer.current_error = ""
-                viewer.selected_turn = number - 1
+    def exe_command(self, command, arguments):
+        """(Put description here)."""
+        if command in self.command_names:
+            return self.command_names[command](arguments)
+        else:
+            return self.command_names[CommandField.unknown_c](arguments)
 
-                command_unknown = False
+    def return_no_argument(self):
+        """(Put description here)."""
+        return []
 
-            number += 1
+    def exit_application(self, arguments):
+        """(Put description here)."""
+        return True
 
-        if command_unknown:
-            viewer.current_error = "command unknown"
+    def return_arguments_main_menu(self):
+        """(Put description here)."""
+        arguments = []
+        arguments.append("controller")
+        return arguments
+
+    def goto_main_menu(self, arguments):
+        """(Put description here)."""
+        current_view = arguments[0].current_view
+
+        current_view = ViewName.view_main
+
+        arguments[0].current_view = current_view
+
+        self.viewer.warning = ""
 
         return False
+
+    def print_unknown_command(self, arguments):
+        """(Put description here)."""
+        self.viewer.warning = "command unknown"
+
+        return False
+
+    def set_viewer(self, tournament):
+        """(Put description here)."""
+        self.viewer.set_viewer(tournament.name, list(tournament.turns.keys()))
