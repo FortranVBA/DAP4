@@ -33,16 +33,16 @@ class EditTurnController:
         """(Put description here)."""
         self.viewer.display()
 
-    def set_selected_turn(
-        self, name, tournament_name, match_description, match_results
-    ):
+    def set_selected_turn(self, tournament_name, turn):
         """(Put description here)."""
-        self.selected_turn = name
-        self.match_number = len(match_description)
+        self.selected_turn = turn.name
+        self.match_number = len(turn.matches)
         self.tournament_name = tournament_name
+        match_description = turn.get_matches_description()
+        match_results = turn.get_matches_results()
 
         self.viewer.set_selected_turn(
-            name, tournament_name, match_description, match_results
+            self.selected_turn, self.tournament_name, match_description, match_results
         )
 
     def get_arguments(self, command):

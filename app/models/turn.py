@@ -23,3 +23,11 @@ class Turn:
             description.append(match.opponents)
 
         return description
+
+    def get_matches_results(self):
+        """(Put description here)."""
+        results = []
+        for match in self.matches:
+            results.append(match.result)
+
+        return results

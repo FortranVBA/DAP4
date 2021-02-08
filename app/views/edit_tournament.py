@@ -58,7 +58,7 @@ class EditTournamentViewer:
         print(" - " + CommandField.generate_players_c + " to generate 8 players")
         print(" - " + CommandField.turns_c + " to view and edit turns")
         print(" - " + CommandField.create_next_turn_c + " to create the next turn")
-        print(" - " + CommandField.back_c + " to go back to main menu")
+        print(" - " + CommandField.back_c + " to go back to tournament menu")
         print(" - " + CommandField.exit_c + " to quit application")
 
     def get_warning(self):

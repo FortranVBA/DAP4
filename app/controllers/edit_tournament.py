@@ -45,9 +45,9 @@ class EditTournamentController:
         """(Put description here)."""
         self.viewer.display()
 
-    def set_selected_tournament(self, name, tournament):
+    def set_selected_tournament(self, tournament):
         """(Put description here)."""
-        self.selected_tournament = name
+        self.selected_tournament = tournament.name
         self.viewer.set_selected_tournament(
             tournament.name,
             tournament.location,
@@ -95,11 +95,11 @@ class EditTournamentController:
         current_view = ViewName.view_tournaments
         tournaments_controller.set_tournament_names(tournament_list)
 
+        self.viewer.warning = ""
+
         arguments[0].current_view = current_view
         arguments[1] = tournaments_controller
         arguments[2] = tournament_list
-
-        self.viewer.warning = ""
 
         return False
 
@@ -127,9 +127,7 @@ class EditTournamentController:
 
         tournament_list[self.selected_tournament].players_index.append(player_index_new)
 
-        self.set_selected_tournament(
-            self.selected_tournament, tournament_list[self.selected_tournament]
-        )
+        self.set_selected_tournament(tournament_list[self.selected_tournament])
 
         arguments[0] = player_list
         arguments[1] = tournament_list
@@ -198,9 +196,7 @@ class EditTournamentController:
         )
         tournament_list[self.selected_tournament].players_index.append(player_index_new)
 
-        self.set_selected_tournament(
-            self.selected_tournament, tournament_list[self.selected_tournament]
-        )
+        self.set_selected_tournament(tournament_list[self.selected_tournament])
 
         arguments[0] = player_list
         arguments[1] = tournament_list
@@ -247,17 +243,9 @@ class EditTournamentController:
         tournament_list[self.selected_tournament].get_next_turn(name_new, player_list)
         current_view = ViewName.view_edit_turn
 
-        blank_match_results = []
-        for match in tournament_list[self.selected_tournament].turns[name_new].matches:
-            blank_match_results.append([])
-
         edit_turn_controller.set_selected_turn(
-            name_new,
             tournament_list[self.selected_tournament].name,
-            tournament_list[self.selected_tournament]
-            .turns[name_new]
-            .get_matches_description(),
-            blank_match_results,
+            tournament_list[self.selected_tournament].turns[name_new],
         )
 
         arguments[0] = tournament_list

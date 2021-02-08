@@ -31,6 +31,7 @@ class Application:
         self.get_argument_functions["match"] = self.get_specific_match
         self.get_argument_functions["turns_controller"] = self.get_turns_controller
         self.get_argument_functions["active_tournament"] = self.get_active_tournament
+        self.get_argument_functions["turn"] = self.get_specific_turn
 
     def run(self):
         """Run  Application class."""
@@ -60,6 +61,9 @@ class Application:
             elif "match" in argument:
                 number = int(argument.replace("match", ""))
                 arguments.append(self.get_argument_functions["match"](number))
+            elif "turn" in argument:
+                number = int(argument.replace("turn", ""))
+                arguments.append(self.get_argument_functions["turn"](number))
             else:
                 print("Error get_arguments for command : " + command)
 
@@ -103,6 +107,18 @@ class Application:
             .turns[selected_turn]
             .matches[selected_match]
         )
+
+    def get_specific_turn(self, selected_turn):
+        """(Put description here)."""
+        selected_tournament = self.controller.commands_controllers[
+            ViewName.view_edit_tournament
+        ].selected_tournament
+
+        key_turn = list(self.tournament_list[selected_tournament].turns.keys())[
+            selected_turn
+        ]
+
+        return self.tournament_list[selected_tournament].turns[key_turn]
 
     def get_turns_controller(self):
         """(Put description here)."""

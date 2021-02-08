@@ -26,7 +26,7 @@ class TurnsViewer:
         for turn in self.turn_names:
             print(f" - {number}{CommandField.edit_turn_c} to edit {turn}")
             number += 1
-        print(" - " + CommandField.back_c + " to go back to main menu")
+        print(" - " + CommandField.back_c + " to go back to tournament")
         print(" - " + CommandField.exit_c + " to quit application")
 
     def get_warning(self):
