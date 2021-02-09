@@ -35,10 +35,7 @@ class SwissSystem:
             else:
                 opponent_index = 0
                 opponent = sorted_players_keys[opponent_index]
-                while (player, opponent) in previous_matchs or (
-                    opponent,
-                    player,
-                ) in previous_matchs:
+                while SwissSystem.is_match_played(opponent, player, previous_matchs):
                     opponent_index += 1
                     opponent = sorted_players_keys[opponent_index]
 
@@ -47,3 +44,11 @@ class SwissSystem:
                 sorted_players_keys.remove(opponent)
 
         return matchs_keys
+
+    @staticmethod
+    def is_match_played(opponent, player, previous_matchs):
+        """Init Tournament class."""
+        match_player_opponent_played = (player, opponent) in previous_matchs
+        match_opponent_player_played = (opponent, player) in previous_matchs
+
+        return match_player_opponent_played or match_opponent_player_played
