@@ -18,6 +18,7 @@ class PlayersController:
         self.command_names[CommandField.back_c] = self.goto_main_menu
         self.command_names[CommandField.unknown_c] = self.print_unknown_command
         self.command_names[CommandField.save_players_c] = self.save_database
+        self.command_names[CommandField.load_players_c] = self.load_database
 
         self.arguments_needed = {}
         self.arguments_needed[CommandField.exit_c] = self.return_no_argument
@@ -26,6 +27,9 @@ class PlayersController:
         self.arguments_needed[
             CommandField.save_players_c
         ] = self.return_arguments_save_database
+        self.arguments_needed[
+            CommandField.load_players_c
+        ] = self.return_arguments_load_database
 
         self.viewer = PlayersViewer()
 
@@ -50,7 +54,7 @@ class PlayersController:
     def set_player_names(self, player_list):
         """(Put description here)."""
         name_list = []
-        for player in player_list.values():
+        for player in player_list.content.values():
             name_list.append(player.surname + " " + player.name)
         self.viewer.set_player_names(name_list)
 
@@ -91,6 +95,26 @@ class PlayersController:
         player_list = arguments[0]
 
         player_list.save_tinyDB()
+
+        arguments[0] = player_list
+
+        self.viewer.warning = ""
+
+        return False
+
+    def return_arguments_load_database(self):
+        """(Put description here)."""
+        arguments = []
+        arguments.append("player_list")
+        return arguments
+
+    def load_database(self, arguments):
+        """(Put description here)."""
+        player_list = arguments[0]
+
+        player_list.load_fromtinyDB()
+        print(player_list)
+        self.set_player_names(player_list)
 
         arguments[0] = player_list
 

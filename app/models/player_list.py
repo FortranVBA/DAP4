@@ -35,3 +35,20 @@ class PlayerList:
             serialized_players.append(player.return_serialized_player())
 
         return serialized_players
+
+    def load_fromtinyDB(self):
+        """(Put description here)."""
+        db = TinyDB("db.json")
+        players_table = db.table("players")
+
+        serialized_players = players_table.all()
+
+        for serialized_player in serialized_players:
+            name = serialized_player["name"]
+            surname = serialized_player["surname"]
+            birth = serialized_player["birth_date"]
+            gender = serialized_player["gender"]
+            ranking = serialized_player["ranking"]
+
+            player_key = name + surname
+            self.content[player_key] = Player(name, surname, birth, gender, ranking)

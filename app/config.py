@@ -12,6 +12,7 @@ class CommandField:
     turns_c = "etus"
     exit_c = "ex"
     generate_players_c = "gp"
+    load_players_c = "lp"
     main_c = "m"
     match_result_c = "mr"
     new_c = "n"

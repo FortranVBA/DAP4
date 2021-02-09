@@ -140,14 +140,14 @@ class MainMenuController:
         """(Put description here)."""
         current_view = arguments[0].current_view
         players_controller = arguments[1]
-        player_list = arguments[2].content
+        player_list = arguments[2]
 
         current_view = ViewName.view_players
         players_controller.set_player_names(player_list)
 
         arguments[0].current_view = current_view
         players_controller = arguments[1]
-        arguments[2].content = player_list
+        arguments[2] = player_list
 
         self.viewer.warning = ""
 

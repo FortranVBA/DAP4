@@ -20,7 +20,8 @@ class PlayersViewer:
             print(f" - {player}")
         print(" ")
         print("Command list :")
-        print(" - " + CommandField.save_players_c + " to save players list")
+        print(" - " + CommandField.save_players_c + " to save players to database")
+        print(" - " + CommandField.load_players_c + " to load players to database")
         print(" - " + CommandField.back_c + " to go back to main menu")
         print(" - " + CommandField.exit_c + " to quit application")
 
