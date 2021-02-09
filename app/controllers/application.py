@@ -1,6 +1,7 @@
 """Project OC DAP 4 file with tournament related class."""
 
 from app.controllers.controller import Controller
+from app.models.player_list import PlayerList
 
 from app.config import ViewName
 
@@ -10,9 +11,9 @@ class Application:
 
     def __init__(self):
         """Init Application class."""
-        self.player_list = {}
+        self.player_list = PlayerList()
         self.tournament_list = {}
-        self.controller = Controller(self.player_list, self.tournament_list)
+        self.controller = Controller()
         self.exit = False
 
         self.get_argument_functions = {}
@@ -28,9 +29,7 @@ class Application:
         self.get_argument_functions[
             "edit_turn_controller"
         ] = self.get_edit_turn_controller
-        self.get_argument_functions[
-            "players_controller"
-        ] = self.get_players_controller
+        self.get_argument_functions["players_controller"] = self.get_players_controller
         self.get_argument_functions["match"] = self.get_specific_match
         self.get_argument_functions["turns_controller"] = self.get_turns_controller
         self.get_argument_functions["active_tournament"] = self.get_active_tournament

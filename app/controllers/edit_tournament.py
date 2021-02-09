@@ -2,8 +2,6 @@
 
 from app.views.edit_tournament import EditTournamentViewer
 
-from app.models.player import Player
-
 from app.config import CommandField
 from app.config import ViewName
 
@@ -121,10 +119,10 @@ class EditTournamentController:
         sex_new = input("Enter player sex : ")
         ranking_new = input("Enter player ranking : ")
         player_index_new = name_new + surname_new
-        player_list[player_index_new] = Player(
+
+        player_index_new = player_list.add_player(
             name_new, surname_new, birthday_new, sex_new, ranking_new
         )
-
         tournament_list[self.selected_tournament].players_index.append(player_index_new)
 
         self.set_selected_tournament(tournament_list[self.selected_tournament])
@@ -148,50 +146,42 @@ class EditTournamentController:
         player_list = arguments[0]
         tournament_list = arguments[1]
 
-        player_index_new = "p1"
-        player_list[player_index_new] = Player(
+        player_index_new = player_list.add_player(
             "Name1", "Surname1", "birthday_new", "sex_new", 5
         )
         tournament_list[self.selected_tournament].players_index.append(player_index_new)
 
-        player_index_new = "p2"
-        player_list[player_index_new] = Player(
+        player_index_new = player_list.add_player(
             "Name2", "Surname2", "birthday_new", "sex_new", 5
         )
         tournament_list[self.selected_tournament].players_index.append(player_index_new)
 
-        player_index_new = "p3"
-        player_list[player_index_new] = Player(
+        player_index_new = player_list.add_player(
             "Name3", "Surname3", "birthday_new", "sex_new", 5
         )
         tournament_list[self.selected_tournament].players_index.append(player_index_new)
 
-        player_index_new = "p4"
-        player_list[player_index_new] = Player(
+        player_index_new = player_list.add_player(
             "Name4", "Surname4", "birthday_new", "sex_new", 5
         )
         tournament_list[self.selected_tournament].players_index.append(player_index_new)
 
-        player_index_new = "p5"
-        player_list[player_index_new] = Player(
+        player_index_new = player_list.add_player(
             "Name5", "Surname5", "birthday_new", "sex_new", 5
         )
         tournament_list[self.selected_tournament].players_index.append(player_index_new)
 
-        player_index_new = "p6"
-        player_list[player_index_new] = Player(
+        player_index_new = player_list.add_player(
             "Name6", "Surname6", "birthday_new", "sex_new", 5
         )
         tournament_list[self.selected_tournament].players_index.append(player_index_new)
 
-        player_index_new = "p7"
-        player_list[player_index_new] = Player(
+        player_index_new = player_list.add_player(
             "Name7", "Surname7", "birthday_new", "sex_new", 5
         )
         tournament_list[self.selected_tournament].players_index.append(player_index_new)
 
-        player_index_new = "p8"
-        player_list[player_index_new] = Player(
+        player_index_new = player_list.add_player(
             "Name8", "Surname8", "birthday_new", "sex_new", 5
         )
         tournament_list[self.selected_tournament].players_index.append(player_index_new)
@@ -235,7 +225,7 @@ class EditTournamentController:
     def create_next_turn(self, arguments):
         """(Put description here)."""
         tournament_list = arguments[0]
-        player_list = arguments[1]
+        player_list = arguments[1].content
         current_view = arguments[2].current_view
         edit_turn_controller = arguments[3]
 
@@ -249,7 +239,7 @@ class EditTournamentController:
         )
 
         arguments[0] = tournament_list
-        arguments[1] = player_list
+        arguments[1].content = player_list
         arguments[2].current_view = current_view
         arguments[3] = edit_turn_controller
 

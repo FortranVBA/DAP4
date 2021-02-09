@@ -17,7 +17,7 @@ import os
 class Controller:
     """Project application class."""
 
-    def __init__(self, player_list, tournament_list):
+    def __init__(self):
         """Init Application class."""
         self.current_view = ViewName.view_main
 
