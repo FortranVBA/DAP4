@@ -17,11 +17,15 @@ class PlayersController:
         self.command_names[CommandField.exit_c] = self.exit_application
         self.command_names[CommandField.back_c] = self.goto_main_menu
         self.command_names[CommandField.unknown_c] = self.print_unknown_command
+        self.command_names[CommandField.save_players_c] = self.save_database
 
         self.arguments_needed = {}
         self.arguments_needed[CommandField.exit_c] = self.return_no_argument
         self.arguments_needed[CommandField.back_c] = self.return_arguments_main_menu
         self.arguments_needed[CommandField.unknown_c] = self.return_no_argument
+        self.arguments_needed[
+            CommandField.save_players_c
+        ] = self.return_arguments_save_database
 
         self.viewer = PlayersViewer()
 
@@ -71,6 +75,24 @@ class PlayersController:
         current_view = ViewName.view_main
 
         arguments[0].current_view = current_view
+
+        self.viewer.warning = ""
+
+        return False
+
+    def return_arguments_save_database(self):
+        """(Put description here)."""
+        arguments = []
+        arguments.append("player_list")
+        return arguments
+
+    def save_database(self, arguments):
+        """(Put description here)."""
+        player_list = arguments[0]
+
+        player_list.save_tinyDB()
+
+        arguments[0] = player_list
 
         self.viewer.warning = ""
 

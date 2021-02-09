@@ -17,6 +17,7 @@ class CommandField:
     new_c = "n"
     players_c = "p"
     print_c = "pr"
+    save_players_c = "sp"
     unknown_c = "uk"
     tournaments_c = "t"
 
