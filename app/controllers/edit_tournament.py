@@ -50,7 +50,7 @@ class EditTournamentController:
             else:
                 return self.command_names[CommandField.unknown_c]()
         else:
-            self.sub_controller.exe_command()
+            return self.sub_controller.exe_command(command)
 
     def exit_application(self):
         """(Put description here)."""

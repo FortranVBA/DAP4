@@ -17,7 +17,6 @@ class MainMenuViewer:
         print("Main menu")
         print(" ")
         print("Command list :")
-        print(" - " + CommandField.new_c + " to create a new tournament")
         print(" - " + CommandField.tournaments_c + " to see the list of tournaments")
         print(" - " + CommandField.players_c + " to see the list of players")
         print(" - " + CommandField.print_c + " to generate reports")

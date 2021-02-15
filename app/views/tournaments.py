@@ -1,5 +1,7 @@
 """Project OC DAP 4 file with tournament related class."""
 
+from app.models.tournament import Tournament
+
 from app.config import CommandField
 
 
@@ -9,17 +11,17 @@ class TournamentMenuViewer:
     def __init__(self):
         """(Put description here)."""
         self.warning = ""
-        self.tournaments_names = []
 
     def display(self):
         """(Put description here)."""
         self.display_warning()
 
         print("The list of tournament is the following :")
-        for tournament in self.tournaments_names:
-            print(f" - {tournament}")
+        for tournament in Tournament.get_all:
+            print(f" - {tournament.name}")
         print(" ")
         print("Command list :")
+        print(" - " + CommandField.new_c + " to create a new tournament")
         print(" - " + CommandField.back_c + " to go back to main menu")
         print(" - " + CommandField.exit_c + " to quit application")
 

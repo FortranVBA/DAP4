@@ -24,7 +24,7 @@ class MainMenuController:
 
         self.command_names = {}
         self.command_names[CommandField.exit_c] = self.exit_application
-        self.command_names[CommandField.new_c] = self.goto_create_menu
+        # self.command_names[CommandField.new_c] = self.goto_create_menu
         self.command_names[CommandField.tournaments_c] = self.goto_tournaments_menu
         self.command_names[CommandField.players_c] = self.goto_players_menu
         self.command_names[CommandField.print_c] = self.goto_print_menu
@@ -47,7 +47,11 @@ class MainMenuController:
             else:
                 return self.command_names[CommandField.unknown_c]()
         else:
-            self.sub_controller.exe_command(command)
+            is_exit = self.sub_controller.exe_command(command)
+            if self.sub_controller.current_view == ViewName.view_main:
+                self.current_view = ViewName.view_main
+                self.sub_controller = None
+            return is_exit
 
     def exit_application(self):
         """(Put description here)."""
@@ -71,22 +75,11 @@ class MainMenuController:
 
         return False
 
-    def return_arguments_tournaments_menu(self):
-        """(Put description here)."""
-        arguments = []
-        arguments.append("controller")
-        arguments.append("tournaments_controller")
-        arguments.append("tournament_list")
-        return arguments
-
     def goto_tournaments_menu(self):
         """(Put description here)."""
-        current_view = ViewName.view_tournaments
-        tournaments_controller.set_tournament_names(tournament_list)
+        self.sub_controller = TournamentMenuController()
 
-        arguments[0].current_view = current_view
-        arguments[1] = tournaments_controller
-        arguments[2] = tournament_list
+        self.current_view = ViewName.view_tournaments
 
         self.viewer.warning = ""
 

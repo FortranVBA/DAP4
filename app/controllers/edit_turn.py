@@ -13,6 +13,7 @@ class EditTurnController:
 
     def __init__(self, tournament, turn, is_new):
         """Init Application class."""
+        self.current_view = ViewName.view_edit_turn
         self.tournament = tournament
 
         if is_new:
@@ -89,13 +90,8 @@ class EditTurnController:
 
     def enter_score(self, match):
         """(Put description here)."""
-        update match !!!
-
-        
         score_player_1 = input(f"Enter score player {match.opponents[0]} : ")
         score_player_2 = input(f"Enter score player {match.opponents[1]} : ")
         match.update_result(score_player_1, score_player_2)
-
-        self.viewer.update_score(match)
 
         return False
