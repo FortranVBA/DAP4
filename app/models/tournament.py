@@ -2,10 +2,13 @@
 
 from app.models.swiss import SwissSystem
 from app.models.turn import Turn
+from app.models.player import Player
 
 
 class Tournament:
     """Tournament characteristics to be handled by application."""
+
+    get_all: dict = {}
 
     def __init__(self, name):
         """Init Tournament class."""
@@ -18,7 +21,9 @@ class Tournament:
         self.time_control = ""
         self.description = ""
 
-    def get_next_turn(self, name, player_list):
+        Tournament.get_all[self.name] = self
+
+    def get_next_turn(self, name):
         """(Put description here)."""
         previous_matchs = []
         player_rank = {}
@@ -35,7 +40,7 @@ class Tournament:
         # player_rank["p8"] = 12
 
         for player in self.players_index:
-            player_rank[player] = player_list[player].ranking
+            player_rank[player] = Player.get_all[player].ranking
 
         self.turns[name] = Turn(
             name, SwissSystem.get_next_turn(previous_matchs, player_rank)

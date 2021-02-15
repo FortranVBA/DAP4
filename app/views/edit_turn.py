@@ -31,23 +31,21 @@ class EditTurnViewer:
                 self.match_results[index_match] = updated_match.result
             index_match += 1
 
-    def display(self):
+    def display(self, tournament, turn):
         """(Put description here)."""
         self.display_warning()
 
-        print(
-            f"Editing turn {self.turn_selected} from tournament {self.tournament_name}"
-        )
+        print(f"Editing turn {turn.name} from tournament {tournament.name}")
         print("Matches list :")
-        for description, result in zip(self.match_description, self.match_results):
-            print(f" -  {description}  {result}")
+        for match in turn.matches:
+            print(f" -  {match.opponents}  {match.result}")
         print(" ")
         print("Command list :")
         number = 1
-        for description in self.match_description:
+        for match in turn.matches:
             print(
                 f" - {number}{CommandField.match_result_c} "
-                + f"to edit match results of {description}"
+                + f"to edit match results of {match.opponents}"
             )
             number += 1
         print(" - " + CommandField.back_c + " to go back to turns menu")

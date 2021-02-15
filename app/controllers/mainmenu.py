@@ -1,8 +1,14 @@
 """Project OC DAP 4 file with tournament related class."""
 
-from app.views.mainmenu import MainMenuViewer
+from app.controllers.edit_tournament import EditTournamentController
+from app.controllers.edit_turn import EditTurnController
+from app.controllers.print import PrintMenuController
+from app.controllers.tournaments import TournamentMenuController
+from app.controllers.turns import TurnsController
+from app.controllers.players import PlayersController
 
-from app.models.tournament import Tournament
+
+from app.views.mainmenu import MainMenuViewer
 
 from app.config import CommandField
 from app.config import ViewName
@@ -13,6 +19,9 @@ class MainMenuController:
 
     def __init__(self):
         """Init Application class."""
+        self.current_view = ViewName.view_main
+        self.sub_controller = None
+
         self.command_names = {}
         self.command_names[CommandField.exit_c] = self.exit_application
         self.command_names[CommandField.new_c] = self.goto_create_menu
@@ -21,39 +30,26 @@ class MainMenuController:
         self.command_names[CommandField.print_c] = self.goto_print_menu
         self.command_names[CommandField.unknown_c] = self.print_unknown_command
 
-        self.arguments_needed = {}
-        self.arguments_needed[CommandField.exit_c] = self.return_no_argument
-        self.arguments_needed[CommandField.new_c] = self.return_arguments_create_menu
-        self.arguments_needed[
-            CommandField.tournaments_c
-        ] = self.return_arguments_tournaments_menu
-        self.arguments_needed[
-            CommandField.players_c
-        ] = self.return_arguments_players_menu
-        self.arguments_needed[CommandField.print_c] = self.return_arguments_print_menu
-        self.arguments_needed[CommandField.unknown_c] = self.return_no_argument
-
         self.viewer = MainMenuViewer()
 
     def display(self):
         """(Put description here)."""
-        self.viewer.display()
-
-    def get_arguments(self, command):
-        """(Put description here)."""
-        if command in self.arguments_needed:
-            return self.arguments_needed[command]()
+        if self.current_view == ViewName.view_main:
+            self.viewer.display()
         else:
-            return self.arguments_needed[CommandField.unknown_c]()
+            self.sub_controller.display()
 
-    def exe_command(self, command, arguments):
+    def exe_command(self, command):
         """(Put description here)."""
-        if command in self.command_names:
-            return self.command_names[command](arguments)
+        if self.current_view == ViewName.view_main:
+            if command in self.command_names:
+                return self.command_names[command]()
+            else:
+                return self.command_names[CommandField.unknown_c]()
         else:
-            return self.command_names[CommandField.unknown_c](arguments)
+            self.sub_controller.exe_command(command)
 
-    def exit_application(self, arguments):
+    def exit_application(self):
         """(Put description here)."""
         return True
 
@@ -65,21 +61,11 @@ class MainMenuController:
         arguments.append("edit_tournament_controller")
         return arguments
 
-    def goto_create_menu(self, arguments):
+    def goto_create_menu(self):
         """(Put description here)."""
-        tournament_list = arguments[0]
-        current_view = arguments[1].current_view
-        edit_tournament_controller = arguments[2]
+        self.sub_controller = EditTournamentController(None, True)
 
-        name_new = input("Enter your tournament name : ")
-        tournament_list[name_new] = Tournament(name_new)
-
-        current_view = ViewName.view_edit_tournament
-        edit_tournament_controller.set_selected_tournament(tournament_list[name_new])
-
-        arguments[0] = tournament_list
-        arguments[1].current_view = current_view
-        arguments[2] = edit_tournament_controller
+        self.current_view = ViewName.view_edit_tournament
 
         self.viewer.warning = ""
 
@@ -93,12 +79,8 @@ class MainMenuController:
         arguments.append("tournament_list")
         return arguments
 
-    def goto_tournaments_menu(self, arguments):
+    def goto_tournaments_menu(self):
         """(Put description here)."""
-        current_view = arguments[0].current_view
-        tournaments_controller = arguments[1]
-        tournament_list = arguments[2]
-
         current_view = ViewName.view_tournaments
         tournaments_controller.set_tournament_names(tournament_list)
 
@@ -116,10 +98,8 @@ class MainMenuController:
         arguments.append("controller")
         return arguments
 
-    def goto_print_menu(self, arguments):
+    def goto_print_menu(self):
         """(Put description here)."""
-        current_view = arguments[0].current_view
-
         current_view = ViewName.view_print
 
         arguments[0].current_view = current_view
@@ -136,12 +116,8 @@ class MainMenuController:
         arguments.append("player_list")
         return arguments
 
-    def goto_players_menu(self, arguments):
+    def goto_players_menu(self):
         """(Put description here)."""
-        current_view = arguments[0].current_view
-        players_controller = arguments[1]
-        player_list = arguments[2]
-
         current_view = ViewName.view_players
         players_controller.set_player_names(player_list)
 
@@ -153,7 +129,7 @@ class MainMenuController:
 
         return False
 
-    def print_unknown_command(self, arguments):
+    def print_unknown_command(self):
         """(Put description here)."""
         self.viewer.warning = "command unknown"
 

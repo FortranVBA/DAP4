@@ -1,77 +1,58 @@
 """Project OC DAP 4 file with tournament related class."""
 
 from app.views.edit_tournament import EditTournamentViewer
+from app.controllers.edit_turn import EditTurnController
 
 from app.config import CommandField
 from app.config import ViewName
+
+from app.models.tournament import Tournament
+from app.models.player import Player
 
 
 class EditTournamentController:
     """Project application class."""
 
-    def __init__(self):
+    def __init__(self, tournament, is_new):
         """Init Application class."""
-        self.selected_tournament = ""
+        self.current_view = ViewName.view_edit_tournament
+        self.sub_controller = None
 
-        self.command_names = {}
-        self.command_names[CommandField.exit_c] = self.exit_application
-        self.command_names[CommandField.back_c] = self.goto_tournaments_menu
-        self.command_names[CommandField.add_player_c] = self.add_player
-        self.command_names[CommandField.generate_players_c] = self.generate_player
-        self.command_names[CommandField.turns_c] = self.goto_turns_menu
-        self.command_names[CommandField.create_next_turn_c] = self.create_next_turn
+        if is_new:
+            name_new = input("Enter your tournament name : ")
+            self.tournament = Tournament(name_new)
+        else:
+            self.tournament = tournament
 
-        self.arguments_needed = {}
-        self.arguments_needed[CommandField.exit_c] = self.return_no_argument
-        self.arguments_needed[
-            CommandField.back_c
-        ] = self.return_arguments_tournaments_menu
-        self.arguments_needed[
-            CommandField.add_player_c
-        ] = self.return_arguments_add_player
-        self.arguments_needed[
-            CommandField.generate_players_c
-        ] = self.return_arguments_generate_player
-        self.arguments_needed[CommandField.turns_c] = self.return_arguments_turns_menu
-        self.arguments_needed[
-            CommandField.create_next_turn_c
-        ] = self.return_arguments_create_next_turn
+        self.command_names = {
+            CommandField.exit_c: self.exit_application,
+            CommandField.back_c: self.goto_tournaments_menu,
+            CommandField.add_player_c: self.add_player,
+            CommandField.generate_players_c: self.generate_player,
+            CommandField.turns_c: self.goto_turns_menu,
+            CommandField.create_next_turn_c: self.create_next_turn,
+        }
 
         self.viewer = EditTournamentViewer()
 
     def display(self):
         """(Put description here)."""
-        self.viewer.display()
-
-    def set_selected_tournament(self, tournament):
-        """(Put description here)."""
-        self.selected_tournament = tournament.name
-        self.viewer.set_selected_tournament(
-            tournament.name,
-            tournament.location,
-            tournament.date,
-            tournament.turn_number,
-            len(tournament.turns),
-            len(tournament.players_index),
-            tournament.time_control,
-            tournament.description,
-        )
-
-    def get_arguments(self, command):
-        """(Put description here)."""
-        if command in self.arguments_needed:
-            return self.arguments_needed[command]()
+        if self.current_view == ViewName.view_edit_tournament:
+            self.viewer.display(self.tournament)
         else:
-            return self.arguments_needed[CommandField.unknown_c]()
+            self.sub_controller.display()
 
-    def exe_command(self, command, arguments):
+    def exe_command(self, command):
         """(Put description here)."""
-        if command in self.command_names:
-            return self.command_names[command](arguments)
+        if self.current_view == ViewName.view_edit_tournament:
+            if command in self.command_names:
+                return self.command_names[command]()
+            else:
+                return self.command_names[CommandField.unknown_c]()
         else:
-            return self.command_names[CommandField.unknown_c](arguments)
+            self.sub_controller.exe_command()
 
-    def exit_application(self, arguments):
+    def exit_application(self):
         """(Put description here)."""
         return True
 
@@ -101,13 +82,6 @@ class EditTournamentController:
 
         return False
 
-    def return_arguments_add_player(self):
-        """(Put description here)."""
-        arguments = []
-        arguments.append("player_list")
-        arguments.append("tournament_list")
-        return arguments
-
     def add_player(self, arguments):
         """(Put description here)."""
         player_list = arguments[0]
@@ -134,62 +108,17 @@ class EditTournamentController:
 
         return False
 
-    def return_arguments_generate_player(self):
+    def generate_player(self):
         """(Put description here)."""
-        arguments = []
-        arguments.append("player_list")
-        arguments.append("tournament_list")
-        return arguments
-
-    def generate_player(self, arguments):
-        """(Put description here)."""
-        player_list = arguments[0]
-        tournament_list = arguments[1]
-
-        player_index_new = player_list.add_player(
-            "Name1", "Surname1", "birthday_new", "sex_new", 5
-        )
-        tournament_list[self.selected_tournament].players_index.append(player_index_new)
-
-        player_index_new = player_list.add_player(
-            "Name2", "Surname2", "birthday_new", "sex_new", 5
-        )
-        tournament_list[self.selected_tournament].players_index.append(player_index_new)
-
-        player_index_new = player_list.add_player(
-            "Name3", "Surname3", "birthday_new", "sex_new", 5
-        )
-        tournament_list[self.selected_tournament].players_index.append(player_index_new)
-
-        player_index_new = player_list.add_player(
-            "Name4", "Surname4", "birthday_new", "sex_new", 5
-        )
-        tournament_list[self.selected_tournament].players_index.append(player_index_new)
-
-        player_index_new = player_list.add_player(
-            "Name5", "Surname5", "birthday_new", "sex_new", 5
-        )
-        tournament_list[self.selected_tournament].players_index.append(player_index_new)
-
-        player_index_new = player_list.add_player(
-            "Name6", "Surname6", "birthday_new", "sex_new", 5
-        )
-        tournament_list[self.selected_tournament].players_index.append(player_index_new)
-
-        player_index_new = player_list.add_player(
-            "Name7", "Surname7", "birthday_new", "sex_new", 5
-        )
-        tournament_list[self.selected_tournament].players_index.append(player_index_new)
-
-        player_index_new = player_list.add_player(
-            "Name8", "Surname8", "birthday_new", "sex_new", 5
-        )
-        tournament_list[self.selected_tournament].players_index.append(player_index_new)
-
-        self.set_selected_tournament(tournament_list[self.selected_tournament])
-
-        arguments[0] = player_list
-        arguments[1] = tournament_list
+        for number in range(1, 9):
+            new_player = Player(
+                "Name" + str(number),
+                "Surname" + str(number),
+                "birthday_new",
+                "sex_new",
+                21 + 2 * number,
+            )
+            self.tournament.players_index.append(new_player.player_index)
 
         self.viewer.warning = ""
 
@@ -222,26 +151,11 @@ class EditTournamentController:
         arguments.append("edit_turn_controller")
         return arguments
 
-    def create_next_turn(self, arguments):
+    def create_next_turn(self):
         """(Put description here)."""
-        tournament_list = arguments[0]
-        player_list = arguments[1].content
-        current_view = arguments[2].current_view
-        edit_turn_controller = arguments[3]
+        self.sub_controller = EditTurnController(self.tournament, None, True)
 
-        name_new = input("Enter turn name : ")
-        tournament_list[self.selected_tournament].get_next_turn(name_new, player_list)
-        current_view = ViewName.view_edit_turn
-
-        edit_turn_controller.set_selected_turn(
-            tournament_list[self.selected_tournament].name,
-            tournament_list[self.selected_tournament].turns[name_new],
-        )
-
-        arguments[0] = tournament_list
-        arguments[1].content = player_list
-        arguments[2].current_view = current_view
-        arguments[3] = edit_turn_controller
+        self.current_view = ViewName.view_edit_turn
 
         self.viewer.warning = ""
 
@@ -252,7 +166,3 @@ class EditTournamentController:
         self.viewer.warning = "command unknown"
 
         return False
-
-    def return_no_argument(self):
-        """(Put description here)."""
-        return []

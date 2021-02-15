@@ -5,81 +5,56 @@ from app.views.edit_turn import EditTurnViewer
 from app.config import CommandField
 from app.config import ViewName
 
+# from app.models.turn import Turn
+
 
 class EditTurnController:
     """Project application class."""
 
-    def __init__(self):
+    def __init__(self, tournament, turn, is_new):
         """Init Application class."""
-        self.selected_turn = ""
-        self.match_number = 0
-        self.tournament_name = ""
+        self.tournament = tournament
+
+        if is_new:
+            name_new = input("Enter turn name : ")
+            self.tournament.get_next_turn(name_new)
+            self.turn = self.tournament.turns[name_new]
+        else:
+            self.turn = turn
 
         self.command_names = {}
         self.command_names[CommandField.exit_c] = self.exit_application
         self.command_names[CommandField.back_c] = self.goto_turns_menu
         self.command_names[CommandField.match_result_c] = self.enter_score
 
-        self.arguments_needed = {}
-        self.arguments_needed[CommandField.exit_c] = self.return_no_argument
-        self.arguments_needed[CommandField.back_c] = self.return_arguments_turns_menu
-        self.arguments_needed[
-            CommandField.match_result_c
-        ] = self.return_arguments_enter_score
-
         self.viewer = EditTurnViewer()
 
     def display(self):
         """(Put description here)."""
-        self.viewer.display()
+        self.viewer.display(self.tournament, self.turn)
 
-    def set_selected_turn(self, tournament_name, turn):
-        """(Put description here)."""
-        self.selected_turn = turn.name
-        self.match_number = len(turn.matches)
-        self.tournament_name = tournament_name
-        match_description = turn.get_matches_description()
-        match_results = turn.get_matches_results()
-
-        self.viewer.set_selected_turn(
-            self.selected_turn, self.tournament_name, match_description, match_results
-        )
-
-    def get_arguments(self, command):
-        """(Put description here)."""
-        if command in self.arguments_needed:
-            return self.arguments_needed[command]()
-        else:
-            for number in range(1, self.match_number + 1):
-                if command == str(number) + CommandField.match_result_c:
-                    return self.arguments_needed[CommandField.match_result_c](number)
-
-            return self.arguments_needed[CommandField.unknown_c]()
-
-    def exe_command(self, command, arguments):
+    def exe_command(self, command):
         """(Put description here)."""
         if command in self.command_names:
-            return self.command_names[command](arguments)
+            return self.command_names[command]()
         else:
-            for number in range(1, self.match_number + 1):
+            number = 1
+            for match in self.turn.matches:
                 if command == str(number) + CommandField.match_result_c:
-                    return self.command_names[CommandField.match_result_c](arguments)
+                    return self.command_names[CommandField.match_result_c](match)
+                number += 1
 
-            return self.command_names[CommandField.unknown_c](arguments)
+            return self.command_names[CommandField.unknown_c]()
 
-    def exit_application(self, arguments):
+    def exit_application(self):
         """(Put description here)."""
         return True
 
-    def print_unknown_command(self, arguments):
+    def print_unknown_command(self):
         """(Put description here)."""
         self.viewer.warning = "command unknown"
 
         return False
-
-    def return_no_argument(self):
-        """(Put description here)."""
-        return []
 
     def return_arguments_turns_menu(self):
         """(Put description here)."""
@@ -112,15 +87,14 @@ class EditTurnController:
         arguments.append("match" + str(number_match - 1))
         return arguments
 
-    def enter_score(self, arguments):
+    def enter_score(self, match):
         """(Put description here)."""
-        match = arguments[0]
+        update match !!!
 
+        
         score_player_1 = input(f"Enter score player {match.opponents[0]} : ")
         score_player_2 = input(f"Enter score player {match.opponents[1]} : ")
         match.update_result(score_player_1, score_player_2)
-
-        arguments[0] = match
 
         self.viewer.update_score(match)
 
