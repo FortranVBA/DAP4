@@ -1,10 +1,6 @@
 """Project OC DAP 4 file with tournament related class."""
 
-from app.controllers.edit_tournament import EditTournamentController
-from app.controllers.edit_turn import EditTurnController
-from app.controllers.print import PrintMenuController
 from app.controllers.tournaments import TournamentMenuController
-from app.controllers.turns import TurnsController
 from app.controllers.players import PlayersController
 
 
@@ -24,10 +20,8 @@ class MainMenuController:
 
         self.command_names = {}
         self.command_names[CommandField.exit_c] = self.exit_application
-        # self.command_names[CommandField.new_c] = self.goto_create_menu
         self.command_names[CommandField.tournaments_c] = self.goto_tournaments_menu
         self.command_names[CommandField.players_c] = self.goto_players_menu
-        self.command_names[CommandField.print_c] = self.goto_print_menu
         self.command_names[CommandField.unknown_c] = self.print_unknown_command
 
         self.viewer = MainMenuViewer()
@@ -57,45 +51,11 @@ class MainMenuController:
         """(Put description here)."""
         return True
 
-    def return_arguments_create_menu(self):
-        """(Put description here)."""
-        arguments = []
-        arguments.append("tournament_list")
-        arguments.append("controller")
-        arguments.append("edit_tournament_controller")
-        return arguments
-
-    def goto_create_menu(self):
-        """(Put description here)."""
-        self.sub_controller = EditTournamentController(None, True)
-
-        self.current_view = ViewName.view_edit_tournament
-
-        self.viewer.warning = ""
-
-        return False
-
     def goto_tournaments_menu(self):
         """(Put description here)."""
         self.sub_controller = TournamentMenuController()
 
         self.current_view = ViewName.view_tournaments
-
-        self.viewer.warning = ""
-
-        return False
-
-    def return_arguments_print_menu(self):
-        """(Put description here)."""
-        arguments = []
-        arguments.append("controller")
-        return arguments
-
-    def goto_print_menu(self):
-        """(Put description here)."""
-        current_view = ViewName.view_print
-
-        arguments[0].current_view = current_view
 
         self.viewer.warning = ""
 
@@ -111,12 +71,9 @@ class MainMenuController:
 
     def goto_players_menu(self):
         """(Put description here)."""
-        current_view = ViewName.view_players
-        players_controller.set_player_names(player_list)
+        self.sub_controller = PlayersController()
 
-        arguments[0].current_view = current_view
-        players_controller = arguments[1]
-        arguments[2] = player_list
+        self.current_view = ViewName.view_players
 
         self.viewer.warning = ""
 

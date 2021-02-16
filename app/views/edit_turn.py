@@ -9,27 +9,6 @@ class EditTurnViewer:
     def __init__(self):
         """Init Application class."""
         self.warning = ""
-        self.turn_selected = ""
-        self.tournament_name = ""
-        self.match_description = []
-        self.match_results = []
-
-    def set_selected_turn(
-        self, name, tournament_name, match_description, match_results
-    ):
-        """Init Application class."""
-        self.turn_selected = name
-        self.tournament_name = tournament_name
-        self.match_description = match_description[:]
-        self.match_results = match_results[:]
-
-    def update_score(self, updated_match):
-        """(Put description here)."""
-        index_match = 0
-        for match in self.match_description:
-            if str(match) == str(updated_match.opponents):
-                self.match_results[index_match] = updated_match.result
-            index_match += 1
 
     def display(self, tournament, turn):
         """(Put description here)."""

@@ -18,10 +18,14 @@ class TournamentMenuViewer:
 
         print("The list of tournament is the following :")
         for tournament in Tournament.get_all:
-            print(f" - {tournament.name}")
+            print(f" - {tournament}")
         print(" ")
         print("Command list :")
         print(" - " + CommandField.new_c + " to create a new tournament")
+        number = 1
+        for tournament in Tournament.get_all:
+            print(f" - {number}{CommandField.edit_tournament_c} to edit {tournament}")
+            number += 1
         print(" - " + CommandField.back_c + " to go back to main menu")
         print(" - " + CommandField.exit_c + " to quit application")
 

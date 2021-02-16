@@ -1,5 +1,7 @@
 """Project OC DAP 4 file with tournament related class."""
 
+from app.models.player import Player
+
 from app.config import CommandField
 
 
@@ -9,14 +11,13 @@ class PlayersViewer:
     def __init__(self):
         """Init Application class."""
         self.warning = ""
-        self.player_names = []
 
     def display(self):
         """(Put description here)."""
         self.display_warning()
 
         print("The list of players is the following :")
-        for player in self.player_names:
+        for player in Player.get_all:
             print(f" - {player}")
         print(" ")
         print("Command list :")
@@ -38,7 +39,3 @@ class PlayersViewer:
         print(" ")
         if not self.warning == "":
             print(self.get_warning())
-
-    def set_player_names(self, player_names):
-        """(Put description here)."""
-        self.player_names = player_names[:]

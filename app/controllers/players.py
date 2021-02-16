@@ -1,5 +1,7 @@
 """Project OC DAP 4 file with tournament related class."""
 
+from app.models.player import Player
+
 from app.views.players import PlayersViewer
 
 from app.config import CommandField
@@ -11,7 +13,8 @@ class PlayersController:
 
     def __init__(self):
         """Init Application class."""
-        self.player_number = 0
+        self.current_view = ViewName.view_players
+        self.sub_controller = None
 
         self.command_names = {}
         self.command_names[CommandField.exit_c] = self.exit_application
@@ -20,103 +23,45 @@ class PlayersController:
         self.command_names[CommandField.save_players_c] = self.save_database
         self.command_names[CommandField.load_players_c] = self.load_database
 
-        self.arguments_needed = {}
-        self.arguments_needed[CommandField.exit_c] = self.return_no_argument
-        self.arguments_needed[CommandField.back_c] = self.return_arguments_main_menu
-        self.arguments_needed[CommandField.unknown_c] = self.return_no_argument
-        self.arguments_needed[
-            CommandField.save_players_c
-        ] = self.return_arguments_save_database
-        self.arguments_needed[
-            CommandField.load_players_c
-        ] = self.return_arguments_load_database
-
         self.viewer = PlayersViewer()
 
     def display(self):
         """(Put description here)."""
-        self.viewer.display()
-
-    def get_arguments(self, command):
-        """(Put description here)."""
-        if command in self.arguments_needed:
-            return self.arguments_needed[command]()
+        if self.current_view == ViewName.view_players:
+            self.viewer.display()
         else:
-            return self.arguments_needed[CommandField.unknown_c]()
+            self.sub_controller.display()
 
-    def exe_command(self, command, arguments):
+    def exe_command(self, command):
         """(Put description here)."""
         if command in self.command_names:
-            return self.command_names[command](arguments)
+            return self.command_names[command]()
         else:
-            return self.command_names[CommandField.unknown_c](arguments)
+            return self.command_names[CommandField.unknown_c]()
 
-    def set_player_names(self, player_list):
-        """(Put description here)."""
-        name_list = []
-        for player in player_list.content.values():
-            name_list.append(player.surname + " " + player.name)
-        self.viewer.set_player_names(name_list)
-
-    def return_no_argument(self):
-        """(Put description here)."""
-        return []
-
-    def exit_application(self, arguments):
+    def exit_application(self):
         """(Put description here)."""
         return True
 
-    def return_arguments_main_menu(self):
+    def goto_main_menu(self):
         """(Put description here)."""
-        arguments = []
-        arguments.append("controller")
-        return arguments
-
-    def goto_main_menu(self, arguments):
-        """(Put description here)."""
-        current_view = arguments[0].current_view
-
-        current_view = ViewName.view_main
-
-        arguments[0].current_view = current_view
+        self.current_view = ViewName.view_main
 
         self.viewer.warning = ""
 
         return False
 
-    def return_arguments_save_database(self):
+    def save_database(self):
         """(Put description here)."""
-        arguments = []
-        arguments.append("player_list")
-        return arguments
-
-    def save_database(self, arguments):
-        """(Put description here)."""
-        player_list = arguments[0]
-
-        player_list.save_tinyDB()
-
-        arguments[0] = player_list
+        Player.save_tinyDB()
 
         self.viewer.warning = ""
 
         return False
 
-    def return_arguments_load_database(self):
+    def load_database(self):
         """(Put description here)."""
-        arguments = []
-        arguments.append("player_list")
-        return arguments
-
-    def load_database(self, arguments):
-        """(Put description here)."""
-        player_list = arguments[0]
-
-        player_list.load_fromtinyDB()
-        print(player_list)
-        self.set_player_names(player_list)
-
-        arguments[0] = player_list
+        Player.load_fromtinyDB()
 
         self.viewer.warning = ""
 

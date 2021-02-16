@@ -1,7 +1,8 @@
 """Project OC DAP 4 file with tournament related class."""
 
+from app.controllers.turns import TurnsController
+
 from app.views.edit_tournament import EditTournamentViewer
-from app.controllers.edit_turn import EditTurnController
 
 from app.config import CommandField
 from app.config import ViewName
@@ -30,7 +31,7 @@ class EditTournamentController:
             CommandField.add_player_c: self.add_player,
             CommandField.generate_players_c: self.generate_player,
             CommandField.turns_c: self.goto_turns_menu,
-            CommandField.create_next_turn_c: self.create_next_turn,
+            CommandField.unknown_c: self.print_unknown_command,
         }
 
         self.viewer = EditTournamentViewer()
@@ -50,35 +51,21 @@ class EditTournamentController:
             else:
                 return self.command_names[CommandField.unknown_c]()
         else:
-            return self.sub_controller.exe_command(command)
+            is_exit = self.sub_controller.exe_command(command)
+            if self.sub_controller.current_view == ViewName.view_edit_tournament:
+                self.current_view = ViewName.view_edit_tournament
+                self.sub_controller = None
+            return is_exit
 
     def exit_application(self):
         """(Put description here)."""
         return True
 
-    def return_arguments_tournaments_menu(self):
+    def goto_tournaments_menu(self):
         """(Put description here)."""
-        arguments = []
-        arguments.append("controller")
-        arguments.append("tournaments_controller")
-        arguments.append("tournament_list")
-
-        return arguments
-
-    def goto_tournaments_menu(self, arguments):
-        """(Put description here)."""
-        current_view = arguments[0].current_view
-        tournaments_controller = arguments[1]
-        tournament_list = arguments[2]
-
-        current_view = ViewName.view_tournaments
-        tournaments_controller.set_tournament_names(tournament_list)
+        self.current_view = ViewName.view_tournaments
 
         self.viewer.warning = ""
-
-        arguments[0].current_view = current_view
-        arguments[1] = tournaments_controller
-        arguments[2] = tournament_list
 
         return False
 
@@ -124,44 +111,17 @@ class EditTournamentController:
 
         return False
 
-    def return_arguments_turns_menu(self):
+    def goto_turns_menu(self):
         """(Put description here)."""
-        arguments = []
-        arguments.append("controller")
-        return arguments
+        self.sub_controller = TurnsController(self.tournament)
 
-    def goto_turns_menu(self, arguments):
-        """(Put description here)."""
-        current_view = arguments[0].current_view
-
-        current_view = ViewName.view_turns
-
-        arguments[0].current_view = current_view
+        self.current_view = ViewName.view_turns
 
         self.viewer.warning = ""
 
         return False
 
-    def return_arguments_create_next_turn(self):
-        """(Put description here)."""
-        arguments = []
-        arguments.append("tournament_list")
-        arguments.append("player_list")
-        arguments.append("controller")
-        arguments.append("edit_turn_controller")
-        return arguments
-
-    def create_next_turn(self):
-        """(Put description here)."""
-        self.sub_controller = EditTurnController(self.tournament, None, True)
-
-        self.current_view = ViewName.view_edit_turn
-
-        self.viewer.warning = ""
-
-        return False
-
-    def print_unknown_command(self, arguments):
+    def print_unknown_command(self):
         """(Put description here)."""
         self.viewer.warning = "command unknown"
 

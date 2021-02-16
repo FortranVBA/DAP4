@@ -29,27 +29,27 @@ class Player:
             "ranking": self.ranking,
         }
 
-    @classmethod
-    def save_tinyDB(self):
+    @staticmethod
+    def save_tinyDB():
         """(Put description here)."""
         db = TinyDB("db.json")
         players_table = db.table("players")
         players_table.truncate()
 
-        serialized_players = self.get_serialized_players()
+        serialized_players = Player.get_serialized_players()
         players_table.insert_multiple(serialized_players)
 
-    @classmethod
-    def get_serialized_players(self):
+    @staticmethod
+    def get_serialized_players():
         """(Put description here)."""
         serialized_players = []
-        for player in self.content.values():
+        for player in Player.get_all.values():
             serialized_players.append(player.return_serialized_player())
 
         return serialized_players
 
-    @classmethod
-    def load_fromtinyDB(self):
+    @staticmethod
+    def load_fromtinyDB():
         """(Put description here)."""
         db = TinyDB("db.json")
         players_table = db.table("players")
@@ -63,5 +63,4 @@ class Player:
             gender = serialized_player["gender"]
             ranking = serialized_player["ranking"]
 
-            player_key = name + surname
-            self.content[player_key] = Player(name, surname, birth, gender, ranking)
+            Player(name, surname, birth, gender, ranking)

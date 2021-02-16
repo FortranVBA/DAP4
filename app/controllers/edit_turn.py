@@ -27,6 +27,7 @@ class EditTurnController:
         self.command_names[CommandField.exit_c] = self.exit_application
         self.command_names[CommandField.back_c] = self.goto_turns_menu
         self.command_names[CommandField.match_result_c] = self.enter_score
+        self.command_names[CommandField.unknown_c] = self.print_unknown_command
 
         self.viewer = EditTurnViewer()
 
@@ -57,36 +58,13 @@ class EditTurnController:
 
         return False
 
-    def return_arguments_turns_menu(self):
+    def goto_turns_menu(self):
         """(Put description here)."""
-        arguments = []
-        arguments.append("controller")
-        arguments.append("turns_controller")
-        arguments.append("active_tournament")
-        return arguments
-
-    def goto_turns_menu(self, arguments):
-        """(Put description here)."""
-        current_view = arguments[0].current_view
-        turns_controller = arguments[1]
-        active_tournament = arguments[2]
-
-        current_view = ViewName.view_turns
-        turns_controller.set_viewer(active_tournament)
-
-        arguments[0].current_view = current_view
-        arguments[1] = turns_controller
-        arguments[2] = active_tournament
+        self.current_view = ViewName.view_turns
 
         self.viewer.warning = ""
 
         return False
-
-    def return_arguments_enter_score(self, number_match):
-        """(Put description here)."""
-        arguments = []
-        arguments.append("match" + str(number_match - 1))
-        return arguments
 
     def enter_score(self, match):
         """(Put description here)."""

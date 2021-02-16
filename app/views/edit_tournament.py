@@ -27,7 +27,6 @@ class EditTournamentViewer:
         print(" - " + CommandField.add_player_c + " to add player")
         print(" - " + CommandField.generate_players_c + " to generate 8 players")
         print(" - " + CommandField.turns_c + " to view and edit turns")
-        print(" - " + CommandField.create_next_turn_c + " to create the next turn")
         print(" - " + CommandField.back_c + " to go back to tournament menu")
         print(" - " + CommandField.exit_c + " to quit application")
 

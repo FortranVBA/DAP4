@@ -9,22 +9,21 @@ class TurnsViewer:
     def __init__(self):
         """Init Application class."""
         self.warning = ""
-        self.tournament_name = ""
-        self.turn_names = []
 
-    def display(self):
+    def display(self, tournament):
         """(Put description here)."""
         self.display_warning()
 
-        print(f"You are editing tournament {self.tournament_name}")
+        print(f"You are editing tournament {tournament.name}")
         print("List of turn :")
-        for turn in self.turn_names:
+        for turn in tournament.turns:
             print(f" -  {turn}")
         print(" ")
         print("Command list :")
+        print(" - " + CommandField.create_next_turn_c + " to create the next turn")
         number = 1
-        for turn in self.turn_names:
-            print(f" - {number}{CommandField.edit_turn_c} to edit {turn}")
+        for turn in tournament.turns.values():
+            print(f" - {number}{CommandField.edit_turn_c} to edit {turn.name}")
             number += 1
         print(" - " + CommandField.back_c + " to go back to tournament")
         print(" - " + CommandField.exit_c + " to quit application")
@@ -42,8 +41,3 @@ class TurnsViewer:
         print(" ")
         if not self.warning == "":
             print(self.get_warning())
-
-    def set_viewer(self, tournament_name, turn_names):
-        """(Put description here)."""
-        self.tournament_name = tournament_name
-        self.turn_names = turn_names[:]
