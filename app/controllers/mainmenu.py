@@ -77,7 +77,3 @@ class MainMenuController:
         self.viewer.warning = "command unknown"
 
         return False
-
-    def return_no_argument(self):
-        """(Put description here)."""
-        return []
