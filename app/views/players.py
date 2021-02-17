@@ -21,10 +21,10 @@ class PlayersViewer:
             print(f" - {player}")
         print(" ")
         print("Command list :")
-        print(" - " + CommandField.save_players_c + " to save players to database")
-        print(" - " + CommandField.load_players_c + " to load players to database")
-        print(" - " + CommandField.back_c + " to go back to main menu")
-        print(" - " + CommandField.exit_c + " to quit application")
+        print(" - " + CommandField.SAVE_PLAYERS + " to save players to database")
+        print(" - " + CommandField.LOAD_PLAYERS + " to load players to database")
+        print(" - " + CommandField.BACK + " to go back to main menu")
+        print(" - " + CommandField.EXIT + " to quit application")
 
     def get_warning(self):
         """(Put description here)."""

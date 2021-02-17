@@ -23,12 +23,12 @@ class EditTurnViewer:
         number = 1
         for match in turn.matches:
             print(
-                f" - {number}{CommandField.match_result_c} "
+                f" - {number}{CommandField.MATCH_RESULT} "
                 + f"to edit match results of {match.opponents}"
             )
             number += 1
-        print(" - " + CommandField.back_c + " to go back to turns menu")
-        print(" - " + CommandField.exit_c + " to quit application")
+        print(" - " + CommandField.BACK + " to go back to turns menu")
+        print(" - " + CommandField.EXIT + " to quit application")
 
     def get_warning(self):
         """(Put description here)."""

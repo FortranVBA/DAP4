@@ -13,22 +13,22 @@ class PlayersController:
 
     def __init__(self):
         """Init Application class."""
-        self.current_view = ViewName.view_players
+        self.current_view = ViewName.PLAYERS
         self.sub_controller = None
 
         self.command_names = {
-            CommandField.exit_c: self.exit_application,
-            CommandField.back_c: self.goto_main_menu,
-            CommandField.unknown_c: self.print_unknown_command,
-            CommandField.save_players_c: self.save_database,
-            CommandField.load_players_c: self.load_database,
+            CommandField.EXIT: self.exit_application,
+            CommandField.BACK: self.goto_main_menu,
+            CommandField.UNKNOWN: self.print_unknown_command,
+            CommandField.SAVE_PLAYERS: self.save_database,
+            CommandField.LOAD_PLAYERS: self.load_database,
         }
 
         self.viewer = PlayersViewer()
 
     def display(self):
         """(Put description here)."""
-        if self.current_view == ViewName.view_players:
+        if self.current_view == ViewName.PLAYERS:
             self.viewer.display()
         else:
             self.sub_controller.display()
@@ -38,7 +38,7 @@ class PlayersController:
         if command in self.command_names:
             return self.command_names[command]()
         else:
-            return self.command_names[CommandField.unknown_c]()
+            return self.command_names[CommandField.UNKNOWN]()
 
     def exit_application(self):
         """(Put description here)."""
@@ -46,7 +46,7 @@ class PlayersController:
 
     def goto_main_menu(self):
         """(Put description here)."""
-        self.current_view = ViewName.view_main
+        self.current_view = ViewName.MAIN
 
         self.viewer.warning = ""
 

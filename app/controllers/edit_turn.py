@@ -13,7 +13,7 @@ class EditTurnController:
 
     def __init__(self, tournament, turn, is_new):
         """Init Application class."""
-        self.current_view = ViewName.view_edit_turn
+        self.current_view = ViewName.EDIT_TURN
         self.tournament = tournament
 
         if is_new:
@@ -24,10 +24,10 @@ class EditTurnController:
             self.turn = turn
 
         self.command_names = {
-            CommandField.exit_c: self.exit_application,
-            CommandField.back_c: self.goto_turns_menu,
-            CommandField.match_result_c: self.enter_score,
-            CommandField.unknown_c: self.print_unknown_command,
+            CommandField.EXIT: self.exit_application,
+            CommandField.BACK: self.goto_turns_menu,
+            CommandField.MATCH_RESULT: self.enter_score,
+            CommandField.UNKNOWN: self.print_unknown_command,
         }
 
         self.viewer = EditTurnViewer()
@@ -43,11 +43,11 @@ class EditTurnController:
         else:
             number = 1
             for match in self.turn.matches:
-                if command == str(number) + CommandField.match_result_c:
-                    return self.command_names[CommandField.match_result_c](match)
+                if command == str(number) + CommandField.MATCH_RESULT:
+                    return self.command_names[CommandField.MATCH_RESULT](match)
                 number += 1
 
-            return self.command_names[CommandField.unknown_c]()
+            return self.command_names[CommandField.UNKNOWN]()
 
     def exit_application(self):
         """(Put description here)."""
@@ -61,7 +61,7 @@ class EditTurnController:
 
     def goto_turns_menu(self):
         """(Put description here)."""
-        self.current_view = ViewName.view_turns
+        self.current_view = ViewName.TURNS
 
         self.viewer.warning = ""
 

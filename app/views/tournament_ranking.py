@@ -20,10 +20,10 @@ class TournamentRankingViewer:
             print(f" -  {player}")
         print(" ")
         print("Command list :")
-        print(" - " + CommandField.add_player_c + " to add player")
-        print(" - " + CommandField.generate_players_c + " to generate 8 players")
-        print(" - " + CommandField.back_c + " to go back to tournament")
-        print(" - " + CommandField.exit_c + " to quit application")
+        print(" - " + CommandField.ADD_PLAYER + " to add player")
+        print(" - " + CommandField.GENERATE_PLAYERS + " to generate 8 players")
+        print(" - " + CommandField.BACK + " to go back to tournament")
+        print(" - " + CommandField.EXIT + " to quit application")
 
     def get_warning(self):
         """(Put description here)."""

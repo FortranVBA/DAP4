@@ -15,36 +15,36 @@ class MainMenuController:
 
     def __init__(self):
         """Init Application class."""
-        self.current_view = ViewName.view_main
+        self.current_view = ViewName.MAIN
         self.sub_controller = None
 
         self.command_names = {
-            CommandField.exit_c: self.exit_application,
-            CommandField.tournaments_c: self.goto_tournaments_menu,
-            CommandField.players_c: self.goto_players_menu,
-            CommandField.unknown_c: self.print_unknown_command,
+            CommandField.EXIT: self.exit_application,
+            CommandField.TOURNAMENTS: self.goto_tournaments_menu,
+            CommandField.PLAYERS: self.goto_players_menu,
+            CommandField.UNKNOWN: self.print_unknown_command,
         }
 
         self.viewer = MainMenuViewer()
 
     def display(self):
         """(Put description here)."""
-        if self.current_view == ViewName.view_main:
+        if self.current_view == ViewName.MAIN:
             self.viewer.display()
         else:
             self.sub_controller.display()
 
     def exe_command(self, command):
         """(Put description here)."""
-        if self.current_view == ViewName.view_main:
+        if self.current_view == ViewName.MAIN:
             if command in self.command_names:
                 return self.command_names[command]()
             else:
-                return self.command_names[CommandField.unknown_c]()
+                return self.command_names[CommandField.UNKNOWN]()
         else:
             is_exit = self.sub_controller.exe_command(command)
-            if self.sub_controller.current_view == ViewName.view_main:
-                self.current_view = ViewName.view_main
+            if self.sub_controller.current_view == ViewName.MAIN:
+                self.current_view = ViewName.MAIN
                 self.sub_controller = None
             return is_exit
 
@@ -56,7 +56,7 @@ class MainMenuController:
         """(Put description here)."""
         self.sub_controller = TournamentMenuController()
 
-        self.current_view = ViewName.view_tournaments
+        self.current_view = ViewName.TOURNAMENTS
 
         self.viewer.warning = ""
 
@@ -66,7 +66,7 @@ class MainMenuController:
         """(Put description here)."""
         self.sub_controller = PlayersController()
 
-        self.current_view = ViewName.view_players
+        self.current_view = ViewName.PLAYERS
 
         self.viewer.warning = ""
 

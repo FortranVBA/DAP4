@@ -21,21 +21,19 @@ class TournamentMenuViewer:
             print(f" - {tournament}")
         print(" ")
         print("Command list :")
-        print(" - " + CommandField.new_c + " to create a new tournament")
+        print(" - " + CommandField.NEW + " to create a new tournament")
         number = 1
         for tournament in Tournament.get_all:
-            print(f" - {number}{CommandField.edit_tournament_c} to edit {tournament}")
+            print(f" - {number}{CommandField.EDIT_TOURNAMENT} to edit {tournament}")
             number += 1
         print(
-            " - " + CommandField.save_tournaments_c + " to save tournaments to database"
+            " - " + CommandField.SAVE_TOURNAMENTS + " to save tournaments to database"
         )
         print(
-            " - "
-            + CommandField.load_tournaments_c
-            + " to load tournaments from database"
+            " - " + CommandField.LOAD_TOURNAMENTS + " to load tournaments from database"
         )
-        print(" - " + CommandField.back_c + " to go back to main menu")
-        print(" - " + CommandField.exit_c + " to quit application")
+        print(" - " + CommandField.BACK + " to go back to main menu")
+        print(" - " + CommandField.EXIT + " to quit application")
 
     def get_warning(self):
         """(Put description here)."""

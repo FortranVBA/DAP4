@@ -24,10 +24,10 @@ class EditTournamentViewer:
         print(f"Description  {tournament.description}")
         print(" ")
         print("Command list :")
-        print(" - " + CommandField.ranking_c + " to edit players and see ranking")
-        print(" - " + CommandField.turns_c + " to view and edit turns")
-        print(" - " + CommandField.back_c + " to go back to tournament menu")
-        print(" - " + CommandField.exit_c + " to quit application")
+        print(" - " + CommandField.RANKING + " to edit players and see ranking")
+        print(" - " + CommandField.TURNS + " to view and edit turns")
+        print(" - " + CommandField.BACK + " to go back to tournament menu")
+        print(" - " + CommandField.EXIT + " to quit application")
 
     def get_warning(self):
         """(Put description here)."""

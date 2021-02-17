@@ -13,39 +13,39 @@ class TournamentRankingController:
 
     def __init__(self, tournament):
         """Init Application class."""
-        self.current_view = ViewName.view_ranking
+        self.current_view = ViewName.RANKING
         self.sub_controller = None
 
         self.tournament = tournament
 
         self.command_names = {
-            CommandField.exit_c: self.exit_application,
-            CommandField.add_player_c: self.add_player,
-            CommandField.generate_players_c: self.generate_player,
-            CommandField.back_c: self.goto_edit_tournament_menu,
-            CommandField.unknown_c: self.print_unknown_command,
+            CommandField.EXIT: self.exit_application,
+            CommandField.ADD_PLAYER: self.add_player,
+            CommandField.GENERATE_PLAYERS: self.generate_player,
+            CommandField.BACK: self.goto_edit_tournament_menu,
+            CommandField.UNKNOWN: self.print_unknown_command,
         }
 
         self.viewer = TournamentRankingViewer()
 
     def display(self):
         """(Put description here)."""
-        if self.current_view == ViewName.view_ranking:
+        if self.current_view == ViewName.RANKING:
             self.viewer.display(self.tournament)
         else:
             self.sub_controller.display()
 
     def exe_command(self, command):
         """(Put description here)."""
-        if self.current_view == ViewName.view_ranking:
+        if self.current_view == ViewName.RANKING:
             if command in self.command_names:
                 return self.command_names[command]()
             else:
-                return self.command_names[CommandField.unknown_c]()
+                return self.command_names[CommandField.UNKNOWN]()
         else:
             is_exit = self.sub_controller.exe_command(command)
-            if self.sub_controller.current_view == ViewName.view_ranking:
-                self.current_view = ViewName.view_ranking
+            if self.sub_controller.current_view == ViewName.RANKING:
+                self.current_view = ViewName.RANKING
                 self.sub_controller = None
             return is_exit
 
@@ -94,7 +94,7 @@ class TournamentRankingController:
 
     def goto_edit_tournament_menu(self):
         """(Put description here)."""
-        self.current_view = ViewName.view_edit_tournament
+        self.current_view = ViewName.EDIT_TOURNAMENT
 
         self.viewer.warning = ""
 

@@ -20,13 +20,13 @@ class TurnsViewer:
             print(f" -  {turn}")
         print(" ")
         print("Command list :")
-        print(" - " + CommandField.create_next_turn_c + " to create the next turn")
+        print(" - " + CommandField.CREATE_NEXT_TURN + " to create the next turn")
         number = 1
         for turn in tournament.turns.values():
-            print(f" - {number}{CommandField.edit_turn_c} to edit {turn.name}")
+            print(f" - {number}{CommandField.EDIT_TURN} to edit {turn.name}")
             number += 1
-        print(" - " + CommandField.back_c + " to go back to tournament")
-        print(" - " + CommandField.exit_c + " to quit application")
+        print(" - " + CommandField.BACK + " to go back to tournament")
+        print(" - " + CommandField.EXIT + " to quit application")
 
     def get_warning(self):
         """(Put description here)."""

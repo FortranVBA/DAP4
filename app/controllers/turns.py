@@ -13,45 +13,45 @@ class TurnsController:
 
     def __init__(self, tournament):
         """Init Application class."""
-        self.current_view = ViewName.view_turns
+        self.current_view = ViewName.TURNS
         self.sub_controller = None
 
         self.tournament = tournament
 
         self.command_names = {
-            CommandField.create_next_turn_c: self.create_next_turn,
-            CommandField.exit_c: self.exit_application,
-            CommandField.back_c: self.goto_edit_tournament,
-            CommandField.edit_turn_c: self.goto_edit_turn_menu,
-            CommandField.unknown_c: self.print_unknown_command,
+            CommandField.CREATE_NEXT_TURN: self.create_next_turn,
+            CommandField.EXIT: self.exit_application,
+            CommandField.BACK: self.goto_edit_tournament,
+            CommandField.EDIT_TURN: self.goto_edit_turn_menu,
+            CommandField.UNKNOWN: self.print_unknown_command,
         }
 
         self.viewer = TurnsViewer()
 
     def display(self):
         """(Put description here)."""
-        if self.current_view == ViewName.view_turns:
+        if self.current_view == ViewName.TURNS:
             self.viewer.display(self.tournament)
         else:
             self.sub_controller.display()
 
     def exe_command(self, command):
         """(Put description here)."""
-        if self.current_view == ViewName.view_turns:
+        if self.current_view == ViewName.TURNS:
             if command in self.command_names:
                 return self.command_names[command]()
             else:
                 number = 1
                 for turn in self.tournament.turns.values():
-                    if command == str(number) + CommandField.edit_turn_c:
-                        return self.command_names[CommandField.edit_turn_c](turn)
+                    if command == str(number) + CommandField.EDIT_TURN:
+                        return self.command_names[CommandField.EDIT_TURN](turn)
                     number += 1
 
-                return self.command_names[CommandField.unknown_c]()
+                return self.command_names[CommandField.UNKNOWN]()
         else:
             is_exit = self.sub_controller.exe_command(command)
-            if self.sub_controller.current_view == ViewName.view_turns:
-                self.current_view = ViewName.view_turns
+            if self.sub_controller.current_view == ViewName.TURNS:
+                self.current_view = ViewName.TURNS
                 self.sub_controller = None
             return is_exit
 
@@ -61,7 +61,7 @@ class TurnsController:
 
     def goto_edit_tournament(self):
         """(Put description here)."""
-        self.current_view = ViewName.view_edit_tournament
+        self.current_view = ViewName.EDIT_TOURNAMENT
 
         self.viewer.warning = ""
 
@@ -77,7 +77,7 @@ class TurnsController:
         """(Put description here)."""
         self.sub_controller = EditTurnController(self.tournament, turn, False)
 
-        self.current_view = ViewName.view_edit_turn
+        self.current_view = ViewName.EDIT_TURN
 
         self.viewer.warning = ""
 
@@ -87,7 +87,7 @@ class TurnsController:
         """(Put description here)."""
         self.sub_controller = EditTurnController(self.tournament, None, True)
 
-        self.current_view = ViewName.view_edit_turn
+        self.current_view = ViewName.EDIT_TURN
 
         self.viewer.warning = ""
 
