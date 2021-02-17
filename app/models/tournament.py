@@ -103,6 +103,28 @@ class Tournament:
 
         return result
 
+    def get_player_scores(self):
+        """(Put description here)."""
+        scores = {}
+
+        for player in self.players_index:
+            scores[player] = 0
+
+        for turn in self.turns.values():
+            for match in turn.matches:
+                if not match.result == ():
+                    if match.opponents[0]:
+                        scores[match.opponents[0]] += float(match.result[0])
+
+                    if match.opponents[1]:
+                        scores[match.opponents[1]] += float(match.result[1])
+
+        sorted_scores = dict(
+            sorted(scores.items(), key=lambda item: item[1], reverse=True)
+        )
+
+        return sorted_scores
+
     @staticmethod
     def get_serialized_tournament():
         """(Put description here)."""

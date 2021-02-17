@@ -16,8 +16,8 @@ class TournamentRankingViewer:
 
         print(f"You are editing tournament {tournament.name}")
         print("List of players :")
-        for player in tournament.players_index:
-            print(f" -  {player}")
+        for player, score in tournament.get_player_scores().items():
+            print(f" -  {player} - {score}")
         print(" ")
         print("Command list :")
         print(" - " + CommandField.ADD_PLAYER + " to add player")
