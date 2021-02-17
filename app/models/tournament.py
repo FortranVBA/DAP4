@@ -137,6 +137,8 @@ class Tournament:
     @staticmethod
     def save_tinyDB():
         """(Put description here)."""
+        Player.save_tinyDB()
+
         db = TinyDB("db.json")
         tournaments_table = db.table("tournaments")
         tournaments_table.truncate()
@@ -147,6 +149,8 @@ class Tournament:
     @staticmethod
     def load_fromtinyDB():
         """(Put description here)."""
+        Player.load_fromtinyDB()
+
         db = TinyDB("db.json")
         tournaments_table = db.table("tournaments")
 
