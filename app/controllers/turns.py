@@ -18,12 +18,13 @@ class TurnsController:
 
         self.tournament = tournament
 
-        self.command_names = {CommandField.create_next_turn_c: self.create_next_turn}
-
-        self.command_names[CommandField.exit_c] = self.exit_application
-        self.command_names[CommandField.back_c] = self.goto_edit_tournament
-        self.command_names[CommandField.edit_turn_c] = self.goto_edit_turn_menu
-        self.command_names[CommandField.unknown_c] = self.print_unknown_command
+        self.command_names = {
+            CommandField.create_next_turn_c: self.create_next_turn,
+            CommandField.exit_c: self.exit_application,
+            CommandField.back_c: self.goto_edit_tournament,
+            CommandField.edit_turn_c: self.goto_edit_turn_menu,
+            CommandField.unknown_c: self.print_unknown_command,
+        }
 
         self.viewer = TurnsViewer()
 

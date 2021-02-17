@@ -23,11 +23,12 @@ class EditTurnController:
         else:
             self.turn = turn
 
-        self.command_names = {}
-        self.command_names[CommandField.exit_c] = self.exit_application
-        self.command_names[CommandField.back_c] = self.goto_turns_menu
-        self.command_names[CommandField.match_result_c] = self.enter_score
-        self.command_names[CommandField.unknown_c] = self.print_unknown_command
+        self.command_names = {
+            CommandField.exit_c: self.exit_application,
+            CommandField.back_c: self.goto_turns_menu,
+            CommandField.match_result_c: self.enter_score,
+            CommandField.unknown_c: self.print_unknown_command,
+        }
 
         self.viewer = EditTurnViewer()
 

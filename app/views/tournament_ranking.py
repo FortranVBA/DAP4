@@ -3,11 +3,11 @@
 from app.config import CommandField
 
 
-class EditTournamentViewer:
+class TournamentRankingViewer:
     """Project application class."""
 
     def __init__(self):
-        """(Put description here)."""
+        """Init Application class."""
         self.warning = ""
 
     def display(self, tournament):
@@ -15,18 +15,14 @@ class EditTournamentViewer:
         self.display_warning()
 
         print(f"You are editing tournament {tournament.name}")
-        print(f" Location :  {tournament.location}")
-        print(f" Date  {tournament.date}")
-        print(f" Number of turns  {tournament.turn_number}")
-        print(f"Number of rounds created : {len(tournament.turns)}")
-        print(f"Number of players : {len(tournament.players_index)}")
-        print(f" Time control {tournament.time_control}")
-        print(f"Description  {tournament.description}")
+        print("List of players :")
+        for player in tournament.players_index:
+            print(f" -  {player}")
         print(" ")
         print("Command list :")
-        print(" - " + CommandField.ranking_c + " to edit players and see ranking")
-        print(" - " + CommandField.turns_c + " to view and edit turns")
-        print(" - " + CommandField.back_c + " to go back to tournament menu")
+        print(" - " + CommandField.add_player_c + " to add player")
+        print(" - " + CommandField.generate_players_c + " to generate 8 players")
+        print(" - " + CommandField.back_c + " to go back to tournament")
         print(" - " + CommandField.exit_c + " to quit application")
 
     def get_warning(self):

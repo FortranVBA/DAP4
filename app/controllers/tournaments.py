@@ -18,16 +18,15 @@ class TournamentMenuController:
         self.current_view = ViewName.view_tournaments
         self.sub_controller = None
 
-        self.command_names = {}
-        self.command_names[CommandField.new_c] = self.goto_create_menu
-        self.command_names[CommandField.exit_c] = self.exit_application
-        self.command_names[CommandField.back_c] = self.goto_main_menu
-        self.command_names[CommandField.unknown_c] = self.print_unknown_command
-        self.command_names[
-            CommandField.edit_tournament_c
-        ] = self.goto_edit_tournament_menu
-        self.command_names[CommandField.save_tournaments_c] = self.save_database
-        self.command_names[CommandField.load_tournaments_c] = self.load_database
+        self.command_names = {
+            CommandField.new_c: self.goto_create_menu,
+            CommandField.exit_c: self.exit_application,
+            CommandField.back_c: self.goto_main_menu,
+            CommandField.unknown_c: self.print_unknown_command,
+            CommandField.edit_tournament_c: self.goto_edit_tournament_menu,
+            CommandField.save_tournaments_c: self.save_database,
+            CommandField.load_tournaments_c: self.load_database,
+        }
 
         self.viewer = TournamentMenuViewer()
 

@@ -18,11 +18,12 @@ class MainMenuController:
         self.current_view = ViewName.view_main
         self.sub_controller = None
 
-        self.command_names = {}
-        self.command_names[CommandField.exit_c] = self.exit_application
-        self.command_names[CommandField.tournaments_c] = self.goto_tournaments_menu
-        self.command_names[CommandField.players_c] = self.goto_players_menu
-        self.command_names[CommandField.unknown_c] = self.print_unknown_command
+        self.command_names = {
+            CommandField.exit_c: self.exit_application,
+            CommandField.tournaments_c: self.goto_tournaments_menu,
+            CommandField.players_c: self.goto_players_menu,
+            CommandField.unknown_c: self.print_unknown_command,
+        }
 
         self.viewer = MainMenuViewer()
 

@@ -16,12 +16,13 @@ class PlayersController:
         self.current_view = ViewName.view_players
         self.sub_controller = None
 
-        self.command_names = {}
-        self.command_names[CommandField.exit_c] = self.exit_application
-        self.command_names[CommandField.back_c] = self.goto_main_menu
-        self.command_names[CommandField.unknown_c] = self.print_unknown_command
-        self.command_names[CommandField.save_players_c] = self.save_database
-        self.command_names[CommandField.load_players_c] = self.load_database
+        self.command_names = {
+            CommandField.exit_c: self.exit_application,
+            CommandField.back_c: self.goto_main_menu,
+            CommandField.unknown_c: self.print_unknown_command,
+            CommandField.save_players_c: self.save_database,
+            CommandField.load_players_c: self.load_database,
+        }
 
         self.viewer = PlayersViewer()
 

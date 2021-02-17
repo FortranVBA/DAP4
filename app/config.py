@@ -18,6 +18,7 @@ class CommandField:
     match_result_c = "mr"
     new_c = "n"
     players_c = "p"
+    ranking_c = "r"
     save_players_c = "sp"
     save_tournaments_c = "st"
     unknown_c = "uk"
@@ -29,6 +30,7 @@ class ViewName:
 
     view_main = "v_main"
     view_tournaments = "v_tournaments"
+    view_ranking = "v_ranking"
     view_players = "v_players"
     view_print = "v_print"
     view_edit_tournament = "v_edit_tour"
