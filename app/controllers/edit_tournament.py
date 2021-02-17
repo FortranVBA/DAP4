@@ -69,27 +69,18 @@ class EditTournamentController:
 
         return False
 
-    def add_player(self, arguments):
+    def add_player(self):
         """(Put description here)."""
-        player_list = arguments[0]
-        tournament_list = arguments[1]
-
         name_new = input("Enter player name : ")
         surname_new = input("Enter player surname : ")
         birthday_new = input("Enter player birth date : ")
         sex_new = input("Enter player sex : ")
         ranking_new = input("Enter player ranking : ")
-        player_index_new = name_new + surname_new
 
-        player_index_new = player_list.add_player(
-            name_new, surname_new, birthday_new, sex_new, ranking_new
+        new_player = Player(
+            name_new, surname_new, birthday_new, sex_new, int(ranking_new)
         )
-        tournament_list[self.selected_tournament].players_index.append(player_index_new)
-
-        self.set_selected_tournament(tournament_list[self.selected_tournament])
-
-        arguments[0] = player_list
-        arguments[1] = tournament_list
+        self.tournament.players_index.append(new_player.player_index)
 
         self.viewer.warning = ""
 

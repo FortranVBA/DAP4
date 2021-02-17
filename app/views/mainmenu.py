@@ -19,7 +19,6 @@ class MainMenuViewer:
         print("Command list :")
         print(" - " + CommandField.tournaments_c + " to see the list of tournaments")
         print(" - " + CommandField.players_c + " to see the list of players")
-        print(" - " + CommandField.print_c + " to generate reports")
         print(" - " + CommandField.exit_c + " to quit application")
 
     def get_warning(self):

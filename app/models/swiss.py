@@ -18,14 +18,19 @@ class SwissSystem:
         sorted_players_keys = list(sorted_dict.keys())
 
         if not previous_matchs:
-            # Implémenter : Si nombre impair, enlever le dernier joueur
+            if len(sorted_players_keys) % 2 == 1:
+                last_player = sorted_players_keys[-1]
+                matchs_keys.append((last_player,))
+                match_results.append(())
+                sorted_players_keys.remove(last_player)
+
             middle = len(sorted_players_keys) // 2
-            players = sorted_players_keys[middle:]
-            opponents = sorted_players_keys[:middle]
+            players = sorted_players_keys[:middle]
+            opponents = sorted_players_keys[middle:]
 
             for player, opponent in zip(players, opponents):
-                matchs_keys.append([player, opponent])
-                match_results.append([])
+                matchs_keys.append((player, opponent))
+                match_results.append(())
 
             return matchs_keys, match_results
 
@@ -42,7 +47,7 @@ class SwissSystem:
                     opponent = sorted_players_keys[opponent_index]
 
                 matchs_keys.append((player, opponent))
-                match_results.append([])
+                match_results.append(())
                 sorted_players_keys.remove(player)
                 sorted_players_keys.remove(opponent)
 
