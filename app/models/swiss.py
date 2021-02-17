@@ -12,6 +12,7 @@ class SwissSystem:
     def get_next_turn(previous_matchs, players_rank):
         """Init Tournament class."""
         matchs_keys = []
+        match_results = []
 
         sorted_dict = dict(sorted(players_rank.items(), key=lambda item: item[1]))
         sorted_players_keys = list(sorted_dict.keys())
@@ -24,8 +25,9 @@ class SwissSystem:
 
             for player, opponent in zip(players, opponents):
                 matchs_keys.append([player, opponent])
+                match_results.append([])
 
-            return matchs_keys
+            return matchs_keys, match_results
 
         while sorted_players_keys:
             player = sorted_players_keys.pop(0)
@@ -40,10 +42,14 @@ class SwissSystem:
                     opponent = sorted_players_keys[opponent_index]
 
                 matchs_keys.append((player, opponent))
+                match_results.append([])
                 sorted_players_keys.remove(player)
                 sorted_players_keys.remove(opponent)
 
-        return matchs_keys
+        print(matchs_keys)
+        print(match_results)
+
+        return matchs_keys, match_results
 
     @staticmethod
     def is_match_played(opponent, player, previous_matchs):

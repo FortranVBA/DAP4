@@ -26,6 +26,14 @@ class TournamentMenuViewer:
         for tournament in Tournament.get_all:
             print(f" - {number}{CommandField.edit_tournament_c} to edit {tournament}")
             number += 1
+        print(
+            " - " + CommandField.save_tournaments_c + " to save tournaments to database"
+        )
+        print(
+            " - "
+            + CommandField.load_tournaments_c
+            + " to load tournaments from database"
+        )
         print(" - " + CommandField.back_c + " to go back to main menu")
         print(" - " + CommandField.exit_c + " to quit application")
 

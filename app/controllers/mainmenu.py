@@ -61,14 +61,6 @@ class MainMenuController:
 
         return False
 
-    def return_arguments_players_menu(self):
-        """(Put description here)."""
-        arguments = []
-        arguments.append("controller")
-        arguments.append("players_controller")
-        arguments.append("player_list")
-        return arguments
-
     def goto_players_menu(self):
         """(Put description here)."""
         self.sub_controller = PlayersController()

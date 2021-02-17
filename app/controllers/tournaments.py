@@ -26,6 +26,8 @@ class TournamentMenuController:
         self.command_names[
             CommandField.edit_tournament_c
         ] = self.goto_edit_tournament_menu
+        self.command_names[CommandField.save_tournaments_c] = self.save_database
+        self.command_names[CommandField.load_tournaments_c] = self.load_database
 
         self.viewer = TournamentMenuViewer()
 
@@ -91,6 +93,22 @@ class TournamentMenuController:
         self.sub_controller = EditTournamentController(tournament, False)
 
         self.current_view = ViewName.view_edit_tournament
+
+        self.viewer.warning = ""
+
+        return False
+
+    def save_database(self):
+        """(Put description here)."""
+        Tournament.save_tinyDB()
+
+        self.viewer.warning = ""
+
+        return False
+
+    def load_database(self):
+        """(Put description here)."""
+        Tournament.load_fromtinyDB()
 
         self.viewer.warning = ""
 
