@@ -1,5 +1,7 @@
 """Project OC DAP 4 file with tournament related class."""
 
+from app.models.player import Player
+
 from app.config import CommandField
 
 
@@ -20,6 +22,10 @@ class TournamentRankingViewer:
             print(f" -  {player} - {score}")
         print(" ")
         print("Command list :")
+        number = 1
+        for player in Player.get_all:
+            print(f" - {number}{CommandField.EDIT_PLAYER} to edit {player}")
+            number += 1
         print(" - " + CommandField.ADD_PLAYER + " to add player")
         print(" - " + CommandField.GENERATE_PLAYERS + " to generate 8 players")
         print(" - " + CommandField.BACK + " to go back to tournament")

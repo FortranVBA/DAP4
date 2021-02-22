@@ -1,18 +1,49 @@
 """Project OC DAP 4 file with tournament related class."""
 
 from app.controllers.commands import PrintUnknownCommand
+from app.controllers.commands import GoBackMenu
 
-from app.views.edit_tournament import EditTournamentViewer
+from app.views.edit_player import EditPlayerViewer
 
 from app.config import CommandField
-from app.config import ViewName
-
-from app.models.player import Player
 
 
 class EditPlayerController:
-    def __init__(self, player, is_new):
+    """Project application class."""
+
+    def __init__(self, player, tournament):
         """Init Application class."""
-        if is_new:
-            name_new = input("Enter your tournament name : ")
-            self.tournament = Tournament(name_new)
+        self._app = None
+        self.player = player
+        self.tournament = tournament
+
+        self.command_names = {
+            CommandField.EXIT: self.exit_application,
+            CommandField.BACK: self.go_back,
+            CommandField.UNKNOWN: self.print_unknown_command,
+        }
+
+        self.viewer = EditPlayerViewer()
+
+    def display(self):
+        """(Put description here)."""
+        self.viewer.display(self.player)
+
+    def exe_command(self, command):
+        """(Put description here)."""
+        if command in self.command_names:
+            return self.command_names[command]()
+        else:
+            return self.command_names[CommandField.UNKNOWN]()
+
+    def exit_application(self):
+        """(Put description here)."""
+        return True
+
+    def print_unknown_command(self):
+        """(Put description here)."""
+        return PrintUnknownCommand(self.viewer).exe_command()
+
+    def go_back(self):
+        """(Put description here)."""
+        return GoBackMenu(self._app, self.viewer, self.tournament).exe_command()

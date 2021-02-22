@@ -113,6 +113,55 @@ class GeneratePlayers:
         return False
 
 
+class GoBackMenu:
+    """Project application class."""
+
+    def __init__(self, _app, viewer, tournament):
+        """Init Application class."""
+        self._app = _app
+        self.viewer = viewer
+        self.tournament = tournament
+
+    def exe_command(self):
+        """(Put description here)."""
+        if self.tournament:
+            from app.controllers.tournament_ranking import TournamentRankingController
+
+            self._app.change_controller(TournamentRankingController(self.tournament))
+
+            self.viewer.warning = ""
+
+        else:
+            from app.controllers.players import PlayersController
+
+            self._app.change_controller(PlayersController())
+
+            self.viewer.warning = ""
+
+        return False
+
+
+class GotoEditPlayer:
+    """Project application class."""
+
+    def __init__(self, _app, viewer, player, tournament):
+        """Init Application class."""
+        self._app = _app
+        self.viewer = viewer
+        self.player = player
+        self.tournament = tournament
+
+    def exe_command(self):
+        """(Put description here)."""
+        from app.controllers.edit_player import EditPlayerController
+
+        self._app.change_controller(EditPlayerController(self.player, self.tournament))
+
+        self.viewer.warning = ""
+
+        return False
+
+
 class GotoEditTournament:
     """Project application class."""
 

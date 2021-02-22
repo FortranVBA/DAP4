@@ -4,8 +4,11 @@ from app.controllers.commands import PrintUnknownCommand
 from app.controllers.commands import LoadPlayerDatabase
 from app.controllers.commands import SavePlayerDatabase
 from app.controllers.commands import GotoMainMenu
+from app.controllers.commands import GotoEditPlayer
 
 from app.views.players import PlayersViewer
+
+from app.models.player import Player
 
 from app.config import CommandField
 
@@ -21,6 +24,7 @@ class PlayersController:
             CommandField.EXIT: self.exit_application,
             CommandField.BACK: self.goto_main_menu,
             CommandField.UNKNOWN: self.print_unknown_command,
+            CommandField.EDIT_PLAYER: self.goto_edit_player_menu,
             CommandField.SAVE_PLAYERS: self.save_database,
             CommandField.LOAD_PLAYERS: self.load_database,
         }
@@ -36,6 +40,12 @@ class PlayersController:
         if command in self.command_names:
             return self.command_names[command]()
         else:
+            number = 1
+            for player in Player.get_all.values():
+                if command == str(number) + CommandField.EDIT_PLAYER:
+                    return self.command_names[CommandField.EDIT_PLAYER](player)
+                number += 1
+
             return self.command_names[CommandField.UNKNOWN]()
 
     def exit_application(self):
@@ -57,3 +67,7 @@ class PlayersController:
     def print_unknown_command(self, arguments):
         """(Put description here)."""
         return PrintUnknownCommand(self.viewer).exe_command()
+
+    def goto_edit_player_menu(self, player):
+        """(Put description here)."""
+        return GotoEditPlayer(self._app, self.viewer, player, None).exe_command()

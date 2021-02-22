@@ -7,6 +7,7 @@ class CommandField:
     ADD_PLAYER = "ap"
     BACK = "b"
     CREATE_NEXT_TURN = "cnt"
+    EDIT_PLAYER = "ep"
     EDIT_TOURNAMENT = "eto"
     EDIT_TURN = "etu"
     TURNS = "etus"
