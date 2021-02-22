@@ -1,11 +1,13 @@
 """Project OC DAP 4 file with tournament related class."""
 
-from app.models.player import Player
+from app.controllers.commands import PrintUnknownCommand
+from app.controllers.commands import LoadPlayerDatabase
+from app.controllers.commands import SavePlayerDatabase
+from app.controllers.commands import GotoMainMenu
 
 from app.views.players import PlayersViewer
 
 from app.config import CommandField
-from app.config import ViewName
 
 
 class PlayersController:
@@ -13,8 +15,7 @@ class PlayersController:
 
     def __init__(self):
         """Init Application class."""
-        self.current_view = ViewName.PLAYERS
-        self.sub_controller = None
+        self._app = None
 
         self.command_names = {
             CommandField.EXIT: self.exit_application,
@@ -28,10 +29,7 @@ class PlayersController:
 
     def display(self):
         """(Put description here)."""
-        if self.current_view == ViewName.PLAYERS:
-            self.viewer.display()
-        else:
-            self.sub_controller.display()
+        self.viewer.display()
 
     def exe_command(self, command):
         """(Put description here)."""
@@ -46,30 +44,16 @@ class PlayersController:
 
     def goto_main_menu(self):
         """(Put description here)."""
-        self.current_view = ViewName.MAIN
-
-        self.viewer.warning = ""
-
-        return False
+        return GotoMainMenu(self._app, self.viewer).exe_command()
 
     def save_database(self):
         """(Put description here)."""
-        Player.save_tinyDB()
-
-        self.viewer.warning = ""
-
-        return False
+        return SavePlayerDatabase(self.viewer).exe_command()
 
     def load_database(self):
         """(Put description here)."""
-        Player.load_fromtinyDB()
-
-        self.viewer.warning = ""
-
-        return False
+        return LoadPlayerDatabase(self.viewer).exe_command()
 
     def print_unknown_command(self, arguments):
         """(Put description here)."""
-        self.viewer.warning = "command unknown"
-
-        return False
+        return PrintUnknownCommand(self.viewer).exe_command()

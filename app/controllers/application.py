@@ -10,17 +10,17 @@ class Application:
 
     def __init__(self):
         """Init Application class."""
-        self.main_controller = MainMenuController()
+        self.change_controller(MainMenuController())
 
         self.is_exit = False
 
     def run(self):
         """Run  Application class."""
         while not self.is_exit:
-            self.main_controller.display()
+            self.controller.display()
 
             command = self.get_command()
-            self.is_exit = self.main_controller.exe_command(command)
+            self.is_exit = self.controller.exe_command(command)
 
             # self.controller.clear_screen()
         return
@@ -32,7 +32,7 @@ class Application:
 
     def display(self):
         """(Put description here)."""
-        self.main_controller.display()
+        self.controller.display()
 
     def clear_screen(self):
         """(Put description here)."""
@@ -41,6 +41,11 @@ class Application:
     def exe_command(self, command):
         """(Put description here)."""
         return self.commands_controllers[self.current_view].exe_command(command)
+
+    def change_controller(self, new_controller):
+        """(Put description here)."""
+        self.controller = new_controller
+        self.controller._app = self
 
 
 " sty -> coloration de la console"

@@ -1,5 +1,7 @@
 """Project OC DAP 4 file with tournament related class."""
 
+from app.controllers.commands import PrintUnknownCommand
+
 from app.views.edit_tournament import EditTournamentViewer
 
 from app.config import CommandField

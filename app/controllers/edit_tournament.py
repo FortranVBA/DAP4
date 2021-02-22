@@ -1,12 +1,13 @@
 """Project OC DAP 4 file with tournament related class."""
 
-from app.controllers.turns import TurnsController
-from app.controllers.tournament_ranking import TournamentRankingController
+from app.controllers.commands import PrintUnknownCommand
+from app.controllers.commands import GotoRankingMenu
+from app.controllers.commands import GotoTurnsMenu
+from app.controllers.commands import GotoTournamentsMenu
 
 from app.views.edit_tournament import EditTournamentViewer
 
 from app.config import CommandField
-from app.config import ViewName
 
 from app.models.tournament import Tournament
 
@@ -16,8 +17,7 @@ class EditTournamentController:
 
     def __init__(self, tournament, is_new):
         """Init Application class."""
-        self.current_view = ViewName.EDIT_TOURNAMENT
-        self.sub_controller = None
+        self._app = None
 
         if is_new:
             name_new = input("Enter your tournament name : ")
@@ -37,24 +37,14 @@ class EditTournamentController:
 
     def display(self):
         """(Put description here)."""
-        if self.current_view == ViewName.EDIT_TOURNAMENT:
-            self.viewer.display(self.tournament)
-        else:
-            self.sub_controller.display()
+        self.viewer.display(self.tournament)
 
     def exe_command(self, command):
         """(Put description here)."""
-        if self.current_view == ViewName.EDIT_TOURNAMENT:
-            if command in self.command_names:
-                return self.command_names[command]()
-            else:
-                return self.command_names[CommandField.UNKNOWN]()
+        if command in self.command_names:
+            return self.command_names[command]()
         else:
-            is_exit = self.sub_controller.exe_command(command)
-            if self.sub_controller.current_view == ViewName.EDIT_TOURNAMENT:
-                self.current_view = ViewName.EDIT_TOURNAMENT
-                self.sub_controller = None
-            return is_exit
+            return self.command_names[CommandField.UNKNOWN]()
 
     def exit_application(self):
         """(Put description here)."""
@@ -62,34 +52,16 @@ class EditTournamentController:
 
     def goto_tournaments_menu(self):
         """(Put description here)."""
-        self.current_view = ViewName.TOURNAMENTS
-
-        self.viewer.warning = ""
-
-        return False
+        return GotoTournamentsMenu(self._app, self.viewer).exe_command()
 
     def goto_turns_menu(self):
         """(Put description here)."""
-        self.sub_controller = TurnsController(self.tournament)
-
-        self.current_view = ViewName.TURNS
-
-        self.viewer.warning = ""
-
-        return False
+        return GotoTurnsMenu(self._app, self.viewer, self.tournament).exe_command()
 
     def goto_ranking_menu(self):
         """(Put description here)."""
-        self.sub_controller = TournamentRankingController(self.tournament)
-
-        self.current_view = ViewName.RANKING
-
-        self.viewer.warning = ""
-
-        return False
+        return GotoRankingMenu(self._app, self.viewer, self.tournament).exe_command()
 
     def print_unknown_command(self):
         """(Put description here)."""
-        self.viewer.warning = "command unknown"
-
-        return False
+        return PrintUnknownCommand(self.viewer).exe_command()

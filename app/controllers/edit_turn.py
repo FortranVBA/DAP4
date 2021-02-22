@@ -1,11 +1,13 @@
 """Project OC DAP 4 file with tournament related class."""
 
+from app.controllers.commands import PrintUnknownCommand
+from app.controllers.commands import EnterScore
+from app.controllers.commands import GotoTurnsMenu
+
+
 from app.views.edit_turn import EditTurnViewer
 
 from app.config import CommandField
-from app.config import ViewName
-
-# from app.models.turn import Turn
 
 
 class EditTurnController:
@@ -13,7 +15,7 @@ class EditTurnController:
 
     def __init__(self, tournament, turn, is_new):
         """Init Application class."""
-        self.current_view = ViewName.EDIT_TURN
+        self._app = None
         self.tournament = tournament
 
         if is_new:
@@ -55,22 +57,12 @@ class EditTurnController:
 
     def print_unknown_command(self):
         """(Put description here)."""
-        self.viewer.warning = "command unknown"
-
-        return False
+        return PrintUnknownCommand(self.viewer).exe_command()
 
     def goto_turns_menu(self):
         """(Put description here)."""
-        self.current_view = ViewName.TURNS
-
-        self.viewer.warning = ""
-
-        return False
+        return GotoTurnsMenu(self._app, self.viewer, self.tournament).exe_command()
 
     def enter_score(self, match):
         """(Put description here)."""
-        score_player_1 = input(f"Enter score player {match.opponents[0]} : ")
-        score_player_2 = input(f"Enter score player {match.opponents[1]} : ")
-        match.update_result(score_player_1, score_player_2)
-
-        return False
+        return EnterScore(match).exe_command()
