@@ -21,6 +21,7 @@ class EditPlayerViewer:
         print(f" - Gender : {player.gender}")
         print(f" - Ranking : {player.ranking}")
         print("Command list :")
+        print(" - " + CommandField.UPDATE_RANKING + " to update player ranking")
         print(" - " + CommandField.BACK + " to go back to previous menu")
         print(" - " + CommandField.EXIT + " to quit application")
 

@@ -2,6 +2,7 @@
 
 from app.controllers.commands import PrintUnknownCommand
 from app.controllers.commands import GoBackMenu
+from app.controllers.commands import UpdatePlayerRanking
 
 from app.views.edit_player import EditPlayerViewer
 
@@ -21,6 +22,7 @@ class EditPlayerController:
             CommandField.EXIT: self.exit_application,
             CommandField.BACK: self.go_back,
             CommandField.UNKNOWN: self.print_unknown_command,
+            CommandField.UPDATE_RANKING: self.update_ranking,
         }
 
         self.viewer = EditPlayerViewer()
@@ -47,3 +49,7 @@ class EditPlayerController:
     def go_back(self):
         """(Put description here)."""
         return GoBackMenu(self._app, self.viewer, self.tournament).exe_command()
+
+    def update_ranking(self):
+        """(Put description here)."""
+        return UpdatePlayerRanking(self.viewer, self.player).exe_command()

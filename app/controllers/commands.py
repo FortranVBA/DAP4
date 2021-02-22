@@ -386,3 +386,22 @@ class SaveTournamentDatabase:
         self.viewer.warning = ""
 
         return False
+
+
+class UpdatePlayerRanking:
+    """Project application class."""
+
+    def __init__(self, viewer, player):
+        """Init Application class."""
+        self.viewer = viewer
+        self.player = player
+
+    def exe_command(self):
+        """(Put description here)."""
+        ranking_new = input("Enter new player ranking : ")
+
+        self.player.ranking = ranking_new
+
+        self.viewer.warning = ""
+
+        return False

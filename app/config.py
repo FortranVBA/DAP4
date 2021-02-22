@@ -22,6 +22,7 @@ class CommandField:
     SAVE_PLAYERS = "sp"
     SAVE_TOURNAMENTS = "st"
     UNKNOWN = "uk"
+    UPDATE_RANKING = "ur"
     TOURNAMENTS = "t"
 
 
