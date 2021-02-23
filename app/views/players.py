@@ -17,8 +17,11 @@ class PlayersViewer:
         self.display_warning()
 
         print("The list of players is the following :")
-        for player in Player.get_all:
-            print(f" - {player}")
+        if not (
+            self.warning == "players alphabetical" or self.warning == "players ranking"
+        ):
+            for player in Player.get_all:
+                print(f" - {player}")
         print(" ")
         print("Command list :")
         number = 1
@@ -27,13 +30,40 @@ class PlayersViewer:
             number += 1
         print(" - " + CommandField.SAVE_PLAYERS + " to save players to database")
         print(" - " + CommandField.LOAD_PLAYERS + " to load players to database")
+        print(
+            " - "
+            + CommandField.PLAYERS_ALPHABETIC
+            + " to list players in alphabetic order"
+        )
+        print(
+            " - " + CommandField.PLAYERS_RANKING + " to list players in ranking order"
+        )
         print(" - " + CommandField.BACK + " to go back to main menu")
         print(" - " + CommandField.EXIT + " to quit application")
 
     def get_warning(self):
         """(Put description here)."""
         if self.warning == "command unknown":
-            return "Warning : this command is not valid"
+            print("Warning : this command is not valid")
+
+        elif self.warning == "players alphabetical":
+            sorted_list = dict(
+                sorted(
+                    Player.get_all.items(), key=lambda item: str(item[1].name).lower()
+                )
+            )
+            print("The list of players (aphabetic order) is the following :")
+            for player in sorted_list:
+                print(f" - {player}")
+
+        elif self.warning == "players ranking":
+            sorted_list = dict(
+                sorted(Player.get_all.items(), key=lambda item: int(item[1].ranking))
+            )
+            print("The list of players (ranking order) is the following :")
+            for player in sorted_list.values():
+                print(f" - {player.name} : {player.ranking}")
+
         else:
             return "Warning : unknown error occured"
 
@@ -42,4 +72,4 @@ class PlayersViewer:
         print(" ")
         print(" ")
         if not self.warning == "":
-            print(self.get_warning())
+            self.get_warning()

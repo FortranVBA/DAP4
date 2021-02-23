@@ -5,6 +5,8 @@ from app.controllers.commands import LoadPlayerDatabase
 from app.controllers.commands import SavePlayerDatabase
 from app.controllers.commands import GotoMainMenu
 from app.controllers.commands import GotoEditPlayer
+from app.controllers.commands import ListPlayersAlphabeticalCommand
+from app.controllers.commands import ListPlayersRankingCommand
 
 from app.views.players import PlayersViewer
 
@@ -27,6 +29,8 @@ class PlayersController:
             CommandField.EDIT_PLAYER: self.goto_edit_player_menu,
             CommandField.SAVE_PLAYERS: self.save_database,
             CommandField.LOAD_PLAYERS: self.load_database,
+            CommandField.PLAYERS_ALPHABETIC: self.list_alphabetical,
+            CommandField.PLAYERS_RANKING: self.list_ranking,
         }
 
         self.viewer = PlayersViewer()
@@ -64,10 +68,18 @@ class PlayersController:
         """(Put description here)."""
         return LoadPlayerDatabase(self.viewer).exe_command()
 
-    def print_unknown_command(self, arguments):
+    def print_unknown_command(self):
         """(Put description here)."""
         return PrintUnknownCommand(self.viewer).exe_command()
 
     def goto_edit_player_menu(self, player):
         """(Put description here)."""
         return GotoEditPlayer(self._app, self.viewer, player, None).exe_command()
+
+    def list_alphabetical(self):
+        """(Put description here)."""
+        return ListPlayersAlphabeticalCommand(self.viewer).exe_command()
+
+    def list_ranking(self):
+        """(Put description here)."""
+        return ListPlayersRankingCommand(self.viewer).exe_command()

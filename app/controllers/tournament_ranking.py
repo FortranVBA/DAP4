@@ -5,10 +5,10 @@ from app.controllers.commands import GotoEditTournament
 from app.controllers.commands import GeneratePlayers
 from app.controllers.commands import AddPlayer
 from app.controllers.commands import GotoEditPlayer
+from app.controllers.commands import ListPlayersAlphabeticalCommand
+from app.controllers.commands import ListPlayersRankingCommand
 
 from app.views.tournament_ranking import TournamentRankingViewer
-
-from app.models.player import Player
 
 from app.config import CommandField
 
@@ -29,6 +29,8 @@ class TournamentRankingController:
             CommandField.EDIT_PLAYER: self.goto_edit_player_menu,
             CommandField.BACK: self.goto_edit_tournament_menu,
             CommandField.UNKNOWN: self.print_unknown_command,
+            CommandField.PLAYERS_ALPHABETIC: self.list_alphabetical,
+            CommandField.PLAYERS_RANKING: self.list_ranking,
         }
 
         self.viewer = TournamentRankingViewer()
@@ -43,7 +45,7 @@ class TournamentRankingController:
             return self.command_names[command]()
         else:
             number = 1
-            for player in Player.get_all.values():
+            for player, score in self.tournament.get_player_scores().items():
                 if command == str(number) + CommandField.EDIT_PLAYER:
                     return self.command_names[CommandField.EDIT_PLAYER](player)
                 number += 1
@@ -75,3 +77,11 @@ class TournamentRankingController:
         return GotoEditPlayer(
             self._app, self.viewer, player, self.tournament
         ).exe_command()
+
+    def list_alphabetical(self):
+        """(Put description here)."""
+        return ListPlayersAlphabeticalCommand(self.viewer).exe_command()
+
+    def list_ranking(self):
+        """(Put description here)."""
+        return ListPlayersRankingCommand(self.viewer).exe_command()

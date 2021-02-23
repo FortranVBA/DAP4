@@ -6,14 +6,12 @@ from app.models.match import Match
 class Turn:
     """Player characteristics to be handled by application."""
 
-    def __init__(self, name, matches_input, matches_result):
+    def __init__(self, name, matches_input, matches_result, time_begin, time_end):
         """Init Match class."""
-        from datetime import datetime
-
         self.name = name
         self.matches = []
-        self.time_begin = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
-        self.time_end = ""
+        self.time_begin = time_begin
+        self.time_end = time_end
 
         for match, result in zip(matches_input, matches_result):
             self.matches.append(Match(match, result))

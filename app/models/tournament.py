@@ -36,7 +36,6 @@ class Tournament:
         description,
     ):
         """(Put description here)."""
-        print(turns_parameters)
         self.location = location
         self.date = date
         self.turn_number = turn_number
@@ -74,22 +73,19 @@ class Tournament:
         previous_matchs = self.get_previous_match()
         player_rank = self.get_player_rank()
 
-        # previous_matchs = [["p1", "p4"], ["p8", "p6"], ["p3", "p5"], ["p7", "p2"]]
-
-        # player_rank["p1"] = 5
-        # player_rank["p2"] = 99
-        # player_rank["p3"] = 54
-        # player_rank["p4"] = 7
-        # player_rank["p5"] = 60
-        # player_rank["p6"] = 42
-        # player_rank["p7"] = 97
-        # player_rank["p8"] = 12
-
         matches_input, match_result = SwissSystem.get_next_turn(
             previous_matchs, player_rank
         )
 
-        self.turns[name] = Turn(name, matches_input, match_result)
+        from datetime import datetime
+
+        self.turns[name] = Turn(
+            name,
+            matches_input,
+            match_result,
+            datetime.now().strftime("%m/%d/%Y, %H:%M:%S"),
+            "",
+        )
 
     def get_previous_match(self):
         """(Put description here)."""

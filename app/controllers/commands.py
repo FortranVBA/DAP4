@@ -322,6 +322,48 @@ class GotoTurnsMenu:
         return False
 
 
+class ListMatchesCommand:
+    """Project application class."""
+
+    def __init__(self, viewer):
+        """Init Application class."""
+        self.viewer = viewer
+
+    def exe_command(self):
+        """(Put description here)."""
+        self.viewer.warning = "matches"
+
+        return False
+
+
+class ListPlayersAlphabeticalCommand:
+    """Project application class."""
+
+    def __init__(self, viewer):
+        """Init Application class."""
+        self.viewer = viewer
+
+    def exe_command(self):
+        """(Put description here)."""
+        self.viewer.warning = "players alphabetical"
+
+        return False
+
+
+class ListPlayersRankingCommand:
+    """Project application class."""
+
+    def __init__(self, viewer):
+        """Init Application class."""
+        self.viewer = viewer
+
+    def exe_command(self):
+        """(Put description here)."""
+        self.viewer.warning = "players ranking"
+
+        return False
+
+
 class LoadPlayerDatabase:
     """Project application class."""
 

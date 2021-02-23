@@ -12,7 +12,7 @@ class TurnsViewer:
 
     def display(self, tournament):
         """(Put description here)."""
-        self.display_warning()
+        self.display_warning(tournament)
 
         print(f"You are editing tournament {tournament.name}")
         print("List of turn :")
@@ -25,19 +25,26 @@ class TurnsViewer:
         for turn in tournament.turns.values():
             print(f" - {number}{CommandField.EDIT_TURN} to edit {turn.name}")
             number += 1
+        print(" - " + CommandField.MATCHES + " to list all matches")
         print(" - " + CommandField.BACK + " to go back to tournament")
         print(" - " + CommandField.EXIT + " to quit application")
 
-    def get_warning(self):
+    def get_warning(self, tournament):
         """(Put description here)."""
         if self.warning == "command unknown":
-            return "Warning : this command is not valid"
-        else:
-            return "Warning : unknown error occured"
+            print("Warning : this command is not valid")
 
-    def display_warning(self):
+        elif self.warning == "matches":
+            for turn in tournament.turns.values():
+                for match in turn.matches:
+                    print(f" -  {match.opponents}  {match.result}")
+
+        else:
+            print("Warning : unknown error occured")
+
+    def display_warning(self, tournament):
         """(Put description here)."""
         print(" ")
         print(" ")
         if not self.warning == "":
-            print(self.get_warning())
+            self.get_warning(tournament)

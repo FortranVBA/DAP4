@@ -4,6 +4,7 @@ from app.controllers.commands import GotoEditTurnMenu
 from app.controllers.commands import GotoEditTournament
 from app.controllers.commands import CreateNextTurn
 from app.controllers.commands import PrintUnknownCommand
+from app.controllers.commands import ListMatchesCommand
 
 from app.views.turns import TurnsViewer
 
@@ -26,6 +27,7 @@ class TurnsController:
             CommandField.BACK: self.goto_edit_tournament,
             CommandField.EDIT_TURN: self.goto_edit_turn_menu,
             CommandField.UNKNOWN: self.print_unknown_command,
+            CommandField.MATCHES: self.list_matches,
         }
 
     def display(self):
@@ -66,3 +68,7 @@ class TurnsController:
     def create_next_turn(self):
         """(Put description here)."""
         return CreateNextTurn(self._app, self.viewer, self.tournament).exe_command()
+
+    def list_matches(self):
+        """(Put description here)."""
+        return ListMatchesCommand(self.viewer).exe_command()
