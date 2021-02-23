@@ -18,8 +18,10 @@ class TournamentRankingViewer:
 
         print(f"You are editing tournament {tournament.name}")
         print("List of players :")
+        number = 1
         for player, score in tournament.get_player_scores().items():
-            print(f" -  {player} - {score}")
+            print(f" - {number} - {player} - {score}")
+            number += 1
         print(" ")
         print("Command list :")
         number = 1

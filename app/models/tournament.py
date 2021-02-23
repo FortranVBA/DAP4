@@ -85,18 +85,11 @@ class Tournament:
         # player_rank["p7"] = 97
         # player_rank["p8"] = 12
 
-        print(" ")
-        print("matchs ")
-        print(previous_matchs)
-        print(" ")
-        print("ranks ")
-        print(player_rank)
-
         matches_input, match_result = SwissSystem.get_next_turn(
             previous_matchs, player_rank
         )
 
-        self.turns[name] = Turn(name, matches_input, match_result, "", "")
+        self.turns[name] = Turn(name, matches_input, match_result)
 
     def get_previous_match(self):
         """(Put description here)."""
@@ -133,10 +126,8 @@ class Tournament:
         for turn in self.turns.values():
             for match in turn.matches:
                 if not match.result == ():
-                    if match.opponents[0]:
-                        scores[match.opponents[0]] += float(match.result[0])
-
-                    if match.opponents[1]:
+                    scores[match.opponents[0]] += float(match.result[0])
+                    if len(match.opponents) == 2:
                         scores[match.opponents[1]] += float(match.result[1])
 
         sorted_scores = dict(

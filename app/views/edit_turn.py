@@ -15,6 +15,8 @@ class EditTurnViewer:
         self.display_warning()
 
         print(f"Editing turn {turn.name} from tournament {tournament.name}")
+        print(f"Time begin: {turn.time_begin}")
+        print(f"Time end: {turn.time_end}")
         print("Matches list :")
         for match in turn.matches:
             print(f" -  {match.opponents}  {match.result}")
@@ -22,11 +24,12 @@ class EditTurnViewer:
         print("Command list :")
         number = 1
         for match in turn.matches:
-            print(
-                f" - {number}{CommandField.MATCH_RESULT} "
-                + f"to edit match results of {match.opponents}"
-            )
-            number += 1
+            if len(match.opponents) == 2:
+                print(
+                    f" - {number}{CommandField.MATCH_RESULT} "
+                    + f"to edit match results of {match.opponents}"
+                )
+                number += 1
         print(" - " + CommandField.BACK + " to go back to turns menu")
         print(" - " + CommandField.EXIT + " to quit application")
 

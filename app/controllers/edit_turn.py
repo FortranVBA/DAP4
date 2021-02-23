@@ -3,7 +3,7 @@
 from app.controllers.commands import PrintUnknownCommand
 from app.controllers.commands import EnterScore
 from app.controllers.commands import GotoTurnsMenu
-
+from app.controllers.commands import CompleteEndTurn
 
 from app.views.edit_turn import EditTurnViewer
 
@@ -45,9 +45,10 @@ class EditTurnController:
         else:
             number = 1
             for match in self.turn.matches:
-                if command == str(number) + CommandField.MATCH_RESULT:
-                    return self.command_names[CommandField.MATCH_RESULT](match)
-                number += 1
+                if len(match.opponents) == 2:
+                    if command == str(number) + CommandField.MATCH_RESULT:
+                        return self.command_names[CommandField.MATCH_RESULT](match)
+                    number += 1
 
             return self.command_names[CommandField.UNKNOWN]()
 
@@ -65,4 +66,7 @@ class EditTurnController:
 
     def enter_score(self, match):
         """(Put description here)."""
-        return EnterScore(match).exe_command()
+        first_command = EnterScore(match).exe_command()
+        second_command = CompleteEndTurn(self.turn).exe_command()
+
+        return first_command and second_command

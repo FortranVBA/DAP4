@@ -21,7 +21,7 @@ class SwissSystem:
             if len(sorted_players_keys) % 2 == 1:
                 last_player = sorted_players_keys[-1]
                 matchs_keys.append((last_player,))
-                match_results.append(())
+                match_results.append((1,))
                 sorted_players_keys.remove(last_player)
 
             middle = len(sorted_players_keys) // 2
@@ -38,6 +38,7 @@ class SwissSystem:
             player = sorted_players_keys.pop(0)
             if not sorted_players_keys:
                 matchs_keys.append((player,))
+                match_results.append((1,))
 
             else:
                 opponent_index = 0

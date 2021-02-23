@@ -30,6 +30,26 @@ class AddPlayer:
         return False
 
 
+class CompleteEndTurn:
+    """Project application class."""
+
+    def __init__(self, turn):
+        """Init Application class."""
+        self.turn = turn
+
+    def exe_command(self):
+        """(Put description here)."""
+        for result in self.turn.get_matches_results():
+            if len(result) == 0:
+                return False
+
+        from datetime import datetime
+
+        self.turn.time_end = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+
+        return False
+
+
 class CreateNextTurn:
     """Project application class."""
 
