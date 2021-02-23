@@ -48,7 +48,6 @@ class SwissSystem:
 
                 matchs_keys.append((player, opponent))
                 match_results.append(())
-                sorted_players_keys.remove(player)
                 sorted_players_keys.remove(opponent)
 
         print(matchs_keys)

@@ -71,8 +71,8 @@ class Tournament:
 
     def get_next_turn(self, name):
         """(Put description here)."""
-        previous_matchs = []
-        player_rank = {}
+        previous_matchs = self.get_previous_match()
+        player_rank = self.get_player_rank()
 
         # previous_matchs = [["p1", "p4"], ["p8", "p6"], ["p3", "p5"], ["p7", "p2"]]
 
@@ -85,8 +85,12 @@ class Tournament:
         # player_rank["p7"] = 97
         # player_rank["p8"] = 12
 
-        for player in self.players_index:
-            player_rank[player] = Player.get_all[player].ranking
+        print(" ")
+        print("matchs ")
+        print(previous_matchs)
+        print(" ")
+        print("ranks ")
+        print(player_rank)
 
         matches_input, match_result = SwissSystem.get_next_turn(
             previous_matchs, player_rank
@@ -97,11 +101,27 @@ class Tournament:
     def get_previous_match(self):
         """(Put description here)."""
         result = []
-        for turn in self.turns:
+        for turn in self.turns.values():
             for match in turn.matches:
-                pass
+                result.append(match.opponents)
 
         return result
+
+    def get_player_rank(self):
+        """(Put description here)."""
+        results = {}
+
+        if len(self.turns) == 0:
+            for player in self.players_index:
+                results[player] = Player.get_all[player].ranking
+
+        else:
+            number = 1
+            for player in self.get_player_scores():
+                results[player] = number
+                number += 1
+
+        return results
 
     def get_player_scores(self):
         """(Put description here)."""
