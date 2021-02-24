@@ -2,8 +2,6 @@
 
 from app.controllers.mainmenu import MainMenuController
 
-import os
-
 
 class Application:
     """Project application class."""
@@ -22,7 +20,7 @@ class Application:
             command = self.get_command()
             self.is_exit = self.controller.exe_command(command)
 
-            self.clear_screen()
+            self.separate_screen()
         return
 
     def get_command(self):
@@ -34,9 +32,15 @@ class Application:
         """(Put description here)."""
         self.controller.display()
 
-    def clear_screen(self):
+    def separate_screen(self):
         """(Put description here)."""
-        os.system("cls")
+        print(" ")
+        print(" ")
+        print("-----------------------------------")
+        print("-----------------------------------")
+        print("-----------------------------------")
+        print(" ")
+        print(" ")
 
     def exe_command(self, command):
         """(Put description here)."""

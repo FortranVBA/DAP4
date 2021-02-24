@@ -28,8 +28,9 @@ class TournamentRankingViewer:
         for player, score in tournament.get_player_scores().items():
             print(f" - {number}{CommandField.EDIT_PLAYER} to edit {player}")
             number += 1
-        print(" - " + CommandField.ADD_PLAYER + " to add player")
-        print(" - " + CommandField.GENERATE_PLAYERS + " to generate 8 players")
+        if len(tournament.turns) == 0:
+            print(" - " + CommandField.ADD_PLAYER + " to add player")
+            print(" - " + CommandField.GENERATE_PLAYERS + " to generate 8 players")
         print(
             " - "
             + CommandField.PLAYERS_ALPHABETIC

@@ -43,6 +43,7 @@ class TournamentRankingController:
 
     def exe_command(self, command):
         """(Put description here)."""
+        self.update_commands()
         if command in self.command_names:
             return self.command_names[command]()
         else:
@@ -88,3 +89,14 @@ class TournamentRankingController:
     def list_ranking(self):
         """(Put description here)."""
         return ListPlayersRankingCommand(self.viewer).exe_command()
+
+    def update_commands(self):
+        """(Put description here)."""
+        if len(self.tournament.turns) == 0:
+            self.command_names[CommandField.ADD_PLAYER] = self.add_player
+            self.command_names[CommandField.GENERATE_PLAYERS] = self.generate_player
+        else:
+            self.command_names[CommandField.ADD_PLAYER] = self.print_unknown_command
+            self.command_names[
+                CommandField.GENERATE_PLAYERS
+            ] = self.print_unknown_command
