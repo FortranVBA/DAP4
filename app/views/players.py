@@ -20,13 +20,16 @@ class PlayersViewer:
         if not (
             self.warning == "players alphabetical" or self.warning == "players ranking"
         ):
-            for player in Player.get_all:
-                print(f" - {player}")
+            for player in Player.get_all.values():
+                print(f" - {player.name} {player.surname}")
         print(" ")
         print("Command list :")
         number = 1
-        for player in Player.get_all:
-            print(f" - {number}{CommandField.EDIT_PLAYER} to edit {player}")
+        for player in Player.get_all.values():
+            print(
+                f" - {number}{CommandField.EDIT_PLAYER} "
+                + f"to edit {player.name} {player.surname}"
+            )
             number += 1
         print(" - " + CommandField.SAVE_PLAYERS + " to save players to database")
         print(" - " + CommandField.LOAD_PLAYERS + " to load players to database")
@@ -53,8 +56,8 @@ class PlayersViewer:
                 )
             )
             print("The list of players (aphabetic order) is the following :")
-            for player in sorted_list:
-                print(f" - {player}")
+            for player in sorted_list.values():
+                print(f" - {player.name} {player.surname}")
 
         elif self.warning == "players ranking":
             sorted_list = dict(
@@ -62,7 +65,7 @@ class PlayersViewer:
             )
             print("The list of players (ranking order) is the following :")
             for player in sorted_list.values():
-                print(f" - {player.name} : {player.ranking}")
+                print(f" - {player.name} {player.surname} : {player.ranking}")
 
         else:
             return "Warning : unknown error occured"

@@ -19,14 +19,19 @@ class TournamentRankingViewer:
         print(f"You are editing tournament {tournament.name}")
         print("List of players :")
         number = 1
-        for player, score in tournament.get_player_scores().items():
-            print(f" - {number} - {player} - {score}")
+        for player_name, score in tournament.get_player_scores().items():
+            player = Player.get_all[player_name]
+            print(f" - {number} - {player.name} {player.surname} - {score}")
             number += 1
         print(" ")
         print("Command list :")
         number = 1
-        for player, score in tournament.get_player_scores().items():
-            print(f" - {number}{CommandField.EDIT_PLAYER} to edit {player}")
+        for player_name, score in tournament.get_player_scores().items():
+            player = Player.get_all[player_name]
+            print(
+                f" - {number}{CommandField.EDIT_PLAYER} "
+                + f"to edit {player.name} {player.surname}"
+            )
             number += 1
         if len(tournament.turns) == 0:
             print(" - " + CommandField.ADD_PLAYER + " to add player")
@@ -49,8 +54,8 @@ class TournamentRankingViewer:
 
         elif self.warning == "players alphabetical":
             tournament_players = {}
-            for player in tournament.players_index:
-                tournament_players[player] = Player.get_all[player]
+            for player_name in tournament.players_index:
+                tournament_players[player_name] = Player.get_all[player_name]
 
             sorted_list = dict(
                 sorted(
@@ -59,13 +64,13 @@ class TournamentRankingViewer:
                 )
             )
             print("The list of players (aphabetic order) is the following :")
-            for player in sorted_list:
-                print(f" - {player}")
+            for player in sorted_list.values():
+                print(f" - {player.name} {player.surname}")
 
         elif self.warning == "players ranking":
             tournament_players = {}
-            for player in tournament.players_index:
-                tournament_players[player] = Player.get_all[player]
+            for player_name in tournament.players_index:
+                tournament_players[player_name] = Player.get_all[player_name]
 
             sorted_list = dict(
                 sorted(
@@ -74,7 +79,7 @@ class TournamentRankingViewer:
             )
             print("The list of players (ranking order) is the following :")
             for player in sorted_list.values():
-                print(f" - {player.name} : {player.ranking}")
+                print(f" - {player.name} {player.surname} : {player.ranking}")
 
         else:
             print("Warning : unknown error occured")
