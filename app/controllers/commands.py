@@ -13,12 +13,26 @@ class AddPlayer:
     def exe_command(self):
         """(Put description here)."""
         from app.models.player import Player
+        import re
 
         name_new = input("Enter player name : ")
         surname_new = input("Enter player surname : ")
-        birthday_new = input("Enter player birth date : ")
-        sex_new = input("Enter player sex : ")
+
+        date_format = re.compile(".{2}/.{2}/.{4}")
+        birthday_new = input("Enter player birth date (format dd/mm/yyyy): ")
+        while not date_format.match(birthday_new):
+            print("Only authorized format is dd/mm/yyyy")
+            birthday_new = input("Enter player birth date (format dd/mm/yyyy): ")
+
+        sex_new = input("Enter player sex (M or F): ")
+        while sex_new not in ["M", "F"]:
+            print("Only authorized values are 'M' or 'F'")
+            sex_new = input("Enter player sex (M or F): ")
+
         ranking_new = input("Enter player ranking : ")
+        while not self.is_string_positive_integer(ranking_new):
+            print("Only authorized values are positive integers")
+            ranking_new = input("Enter player ranking : ")
 
         new_player = Player(
             name_new, surname_new, birthday_new, sex_new, int(ranking_new)
@@ -28,6 +42,17 @@ class AddPlayer:
         self.viewer.warning = ""
 
         return False
+
+    def is_string_positive_integer(self, input_string):
+        """(Put description here)."""
+        try:
+            int(input_string)
+            if int(input_string) > 0:
+                return True
+            else:
+                return False
+        except ValueError:
+            return False
 
 
 class CompleteEndTurn:
@@ -143,7 +168,16 @@ class EditTournamentTimeControl:
 
     def exe_command(self):
         """(Put description here)."""
-        new_time_control = input("Enter tournament time control : ")
+        new_time_control = input(
+            "Enter tournament time control (bullet, blitz or rapide): "
+        )
+        while new_time_control not in ["bullet", "blitz", "rapide", ""]:
+            print("Only authorized values are 'bullet', 'blitz', 'rapide'")
+            print("or leave it blank.")
+            new_time_control = input(
+                "Enter tournament time control (bullet, blitz or rapide): "
+            )
+
         self.tournament.time_control = new_time_control
 
         return False
@@ -159,9 +193,24 @@ class EditTournamentTurnNumber:
     def exe_command(self):
         """(Put description here)."""
         new_turn_number = input("Enter number of tournament turns : ")
+        while not self.is_string_positive_integer(new_turn_number):
+            print("Only authorized values are positive integers.")
+            new_turn_number = input("Enter number of tournament turns : ")
+
         self.tournament.turn_number = new_turn_number
 
         return False
+
+    def is_string_positive_integer(self, input_string):
+        """(Put description here)."""
+        try:
+            int(input_string)
+            if int(input_string) > 0:
+                return True
+            else:
+                return False
+        except ValueError:
+            return False
 
 
 class EnterScore:

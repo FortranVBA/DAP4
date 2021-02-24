@@ -10,6 +10,8 @@ from app.controllers.commands import ListPlayersRankingCommand
 
 from app.views.tournament_ranking import TournamentRankingViewer
 
+from app.models.player import Player
+
 from app.config import CommandField
 
 
@@ -45,8 +47,9 @@ class TournamentRankingController:
             return self.command_names[command]()
         else:
             number = 1
-            for player, score in self.tournament.get_player_scores().items():
+            for player_name, score in self.tournament.get_player_scores().items():
                 if command == str(number) + CommandField.EDIT_PLAYER:
+                    player = Player.get_all[player_name]
                     return self.command_names[CommandField.EDIT_PLAYER](player)
                 number += 1
 
