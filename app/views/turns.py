@@ -33,11 +33,17 @@ class TurnsViewer:
         """(Put description here)."""
         if self.warning == "command unknown":
             print("Warning : this command is not valid")
+            print(" ")
 
         elif self.warning == "matches":
             for turn in tournament.turns.values():
                 for match in turn.matches:
                     print(f" -  {match.opponents}  {match.result}")
+
+        elif self.warning == "results missing":
+            print("Warning : Results are missing in previous turn")
+            print("New turn creation has been cancelled.")
+            print(" ")
 
         else:
             print("Warning : unknown error occured")

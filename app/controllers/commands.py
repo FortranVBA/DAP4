@@ -88,6 +88,13 @@ class CreateNextTurn:
         """(Put description here)."""
         from app.controllers.edit_turn import EditTurnController
 
+        for turn in self.tournament.turns.values():
+            for result in turn.get_matches_results():
+                if len(result) == 0:
+                    self.viewer.warning = "results missing"
+
+                    return False
+
         self._app.change_controller(EditTurnController(self.tournament, None, True))
 
         self.viewer.warning = ""
