@@ -22,7 +22,7 @@ class Application:
             command = self.get_command()
             self.is_exit = self.controller.exe_command(command)
 
-            # self.controller.clear_screen()
+            self.clear_screen()
         return
 
     def get_command(self):
@@ -46,6 +46,3 @@ class Application:
         """(Put description here)."""
         self.controller = new_controller
         self.controller._app = self
-
-
-" sty -> coloration de la console"

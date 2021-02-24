@@ -89,6 +89,81 @@ class CreateTournament:
         return False
 
 
+class EditTournamentDate:
+    """Project application class."""
+
+    def __init__(self, tournament):
+        """Init Application class."""
+        self.tournament = tournament
+
+    def exe_command(self):
+        """(Put description here)."""
+        new_date = input("Enter tournament date : ")
+        self.tournament.date = new_date
+
+        return False
+
+
+class EditTournamentDescription:
+    """Project application class."""
+
+    def __init__(self, tournament):
+        """Init Application class."""
+        self.tournament = tournament
+
+    def exe_command(self):
+        """(Put description here)."""
+        new_description = input("Enter tournament description : ")
+        self.tournament.description = new_description
+
+        return False
+
+
+class EditTournamentLocation:
+    """Project application class."""
+
+    def __init__(self, tournament):
+        """Init Application class."""
+        self.tournament = tournament
+
+    def exe_command(self):
+        """(Put description here)."""
+        new_location = input("Enter tournament location : ")
+        self.tournament.location = new_location
+
+        return False
+
+
+class EditTournamentTimeControl:
+    """Project application class."""
+
+    def __init__(self, tournament):
+        """Init Application class."""
+        self.tournament = tournament
+
+    def exe_command(self):
+        """(Put description here)."""
+        new_time_control = input("Enter tournament time control : ")
+        self.tournament.time_control = new_time_control
+
+        return False
+
+
+class EditTournamentTurnNumber:
+    """Project application class."""
+
+    def __init__(self, tournament):
+        """Init Application class."""
+        self.tournament = tournament
+
+    def exe_command(self):
+        """(Put description here)."""
+        new_turn_number = input("Enter number of tournament turns : ")
+        self.tournament.turn_number = new_turn_number
+
+        return False
+
+
 class EnterScore:
     """Project application class."""
 
@@ -99,7 +174,27 @@ class EnterScore:
     def exe_command(self):
         """(Put description here)."""
         score_player_1 = input(f"Enter score player {self.match.opponents[0]} : ")
+        value_incorrect = True
+        while value_incorrect:
+            if score_player_1 in ["0", "0.5", "1"]:
+                value_incorrect = False
+            else:
+                print("Incorrect value (put 0 / 0.5 or 1)")
+                score_player_1 = input(
+                    f"Enter score player {self.match.opponents[0]} : "
+                )
+
         score_player_2 = input(f"Enter score player {self.match.opponents[1]} : ")
+        value_incorrect = True
+        while value_incorrect:
+            if score_player_2 in ["0", "0.5", "1"]:
+                value_incorrect = False
+            else:
+                print("Incorrect value (put 0 / 0.5 or 1)")
+                score_player_2 = input(
+                    f"Enter score player {self.match.opponents[1]} : "
+                )
+
         self.match.update_result(score_player_1, score_player_2)
 
         return False

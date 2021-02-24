@@ -24,6 +24,12 @@ class CommandField:
     RANKING = "r"
     SAVE_PLAYERS = "sp"
     SAVE_TOURNAMENTS = "st"
+    TOURNAMENT_DATE = "tda"
+    TOURNAMENT_LOCATION = "tl"
+    TOURNAMENT_TURN_NUMBER = "ttu"
+    TOURNAMENT_TIME = "tti"
+    TOURNAMENT_DESCRIPTION = "tde"
+
     UNKNOWN = "uk"
     UPDATE_RANKING = "ur"
     TOURNAMENTS = "t"

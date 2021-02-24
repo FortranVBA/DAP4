@@ -4,6 +4,11 @@ from app.controllers.commands import PrintUnknownCommand
 from app.controllers.commands import GotoRankingMenu
 from app.controllers.commands import GotoTurnsMenu
 from app.controllers.commands import GotoTournamentsMenu
+from app.controllers.commands import EditTournamentLocation
+from app.controllers.commands import EditTournamentDate
+from app.controllers.commands import EditTournamentTurnNumber
+from app.controllers.commands import EditTournamentTimeControl
+from app.controllers.commands import EditTournamentDescription
 
 from app.views.edit_tournament import EditTournamentViewer
 
@@ -20,7 +25,14 @@ class EditTournamentController:
         self._app = None
 
         if is_new:
-            name_new = input("Enter your tournament name : ")
+            already_exists = True
+            while already_exists:
+                name_new = input("Enter your tournament name : ")
+                if name_new in Tournament.get_all:
+                    print("This name is already taken, please enter another one.")
+                else:
+                    already_exists = False
+
             self.tournament = Tournament(name_new)
         else:
             self.tournament = tournament
@@ -31,6 +43,11 @@ class EditTournamentController:
             CommandField.TURNS: self.goto_turns_menu,
             CommandField.UNKNOWN: self.print_unknown_command,
             CommandField.RANKING: self.goto_ranking_menu,
+            CommandField.TOURNAMENT_LOCATION: self.edit_tournament_location,
+            CommandField.TOURNAMENT_DATE: self.edit_tournament_date,
+            CommandField.TOURNAMENT_TURN_NUMBER: self.edit_tournament_turns_number,
+            CommandField.TOURNAMENT_TIME: self.edit_tournament_time_control,
+            CommandField.TOURNAMENT_DESCRIPTION: self.edit_tournament_description,
         }
 
         self.viewer = EditTournamentViewer()
@@ -65,3 +82,23 @@ class EditTournamentController:
     def print_unknown_command(self):
         """(Put description here)."""
         return PrintUnknownCommand(self.viewer).exe_command()
+
+    def edit_tournament_location(self):
+        """(Put description here)."""
+        return EditTournamentLocation(self.tournament).exe_command()
+
+    def edit_tournament_date(self):
+        """(Put description here)."""
+        return EditTournamentDate(self.tournament).exe_command()
+
+    def edit_tournament_turns_number(self):
+        """(Put description here)."""
+        return EditTournamentTurnNumber(self.tournament).exe_command()
+
+    def edit_tournament_time_control(self):
+        """(Put description here)."""
+        return EditTournamentTimeControl(self.tournament).exe_command()
+
+    def edit_tournament_description(self):
+        """(Put description here)."""
+        return EditTournamentDescription(self.tournament).exe_command()

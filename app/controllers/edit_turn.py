@@ -19,7 +19,14 @@ class EditTurnController:
         self.tournament = tournament
 
         if is_new:
-            name_new = input("Enter turn name : ")
+            already_exists = True
+            while already_exists:
+                name_new = input("Enter your turn name : ")
+                if name_new in tournament.turns:
+                    print("This name is already taken, please enter another one.")
+                else:
+                    already_exists = False
+
             self.tournament.get_next_turn(name_new)
             self.turn = self.tournament.turns[name_new]
         else:
