@@ -123,10 +123,29 @@ class EditTournamentDate:
 
     def exe_command(self):
         """(Put description here)."""
-        new_date = input("Enter tournament date : ")
+        new_date = input(
+            "Enter tournament date (format dd/mm/yyyy separated by blank space): "
+        )
+        while not self.is_date_format_correct(new_date):
+            print("Only authorized format is dd/mm/yyyy separated by blank space")
+            new_date = input(
+                "Enter tournament date (format dd/mm/yyyy separated by blank space): "
+            )
+
         self.tournament.date = new_date
 
         return False
+
+    def is_date_format_correct(self, input_string):
+        """(Put description here)."""
+        import re
+
+        date_format = re.compile(".{2}/.{2}/.{4}")
+        for date in input_string.split():
+            if not date_format.match(date):
+                return False
+
+        return True
 
 
 class EditTournamentDescription:
