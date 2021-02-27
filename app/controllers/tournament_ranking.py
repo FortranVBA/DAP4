@@ -53,9 +53,4 @@ class TournamentRankingController:
         ]
 
         if len(self.tournament.turns) > 0:
-            self.command_names.remove(
-                AddPlayer(self._app, self.viewer, self.tournament)
-            )
-            self.command_names.remove(
-                GeneratePlayers(self._app, self.viewer, self.tournament)
-            )
+            del self.command_names[-2]
