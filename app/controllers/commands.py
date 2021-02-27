@@ -1,5 +1,7 @@
 """Project OC DAP 4 file with tournament related class."""
 
+from app.config import CommandField
+
 
 class AddPlayer:
     """Project application class."""
@@ -54,25 +56,12 @@ class AddPlayer:
         except ValueError:
             return False
 
-
-class CompleteEndTurn:
-    """Project application class."""
-
-    def __init__(self, turn):
-        """Init Application class."""
-        self.turn = turn
-
-    def exe_command(self):
+    def is_valid(self, command_name):
         """(Put description here)."""
-        for result in self.turn.get_matches_results():
-            if len(result) == 0:
-                return False
-
-        from datetime import datetime
-
-        self.turn.time_end = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
-
-        return False
+        if command_name == CommandField.ADD_PLAYER:
+            return True
+        else:
+            return False
 
 
 class CreateNextTurn:
@@ -101,6 +90,13 @@ class CreateNextTurn:
 
         return False
 
+    def is_valid(self, command_name):
+        """(Put description here)."""
+        if command_name == CommandField.CREATE_NEXT_TURN:
+            return True
+        else:
+            return False
+
 
 class CreateTournament:
     """Project application class."""
@@ -119,6 +115,13 @@ class CreateTournament:
         self.viewer.warning = ""
 
         return False
+
+    def is_valid(self, command_name):
+        """(Put description here)."""
+        if command_name == CommandField.NEW:
+            return True
+        else:
+            return False
 
 
 class EditTournamentDate:
@@ -154,6 +157,13 @@ class EditTournamentDate:
 
         return True
 
+    def is_valid(self, command_name):
+        """(Put description here)."""
+        if command_name == CommandField.TOURNAMENT_DATE:
+            return True
+        else:
+            return False
+
 
 class EditTournamentDescription:
     """Project application class."""
@@ -169,6 +179,13 @@ class EditTournamentDescription:
 
         return False
 
+    def is_valid(self, command_name):
+        """(Put description here)."""
+        if command_name == CommandField.TOURNAMENT_DESCRIPTION:
+            return True
+        else:
+            return False
+
 
 class EditTournamentLocation:
     """Project application class."""
@@ -183,6 +200,13 @@ class EditTournamentLocation:
         self.tournament.location = new_location
 
         return False
+
+    def is_valid(self, command_name):
+        """(Put description here)."""
+        if command_name == CommandField.TOURNAMENT_LOCATION:
+            return True
+        else:
+            return False
 
 
 class EditTournamentTimeControl:
@@ -207,6 +231,13 @@ class EditTournamentTimeControl:
         self.tournament.time_control = new_time_control
 
         return False
+
+    def is_valid(self, command_name):
+        """(Put description here)."""
+        if command_name == CommandField.TOURNAMENT_TIME:
+            return True
+        else:
+            return False
 
 
 class EditTournamentTurnNumber:
@@ -238,15 +269,30 @@ class EditTournamentTurnNumber:
         except ValueError:
             return False
 
+    def is_valid(self, command_name):
+        """(Put description here)."""
+        if command_name == CommandField.TOURNAMENT_TURN_NUMBER:
+            return True
+        else:
+            return False
+
 
 class EnterScore:
     """Project application class."""
 
-    def __init__(self, match):
+    def __init__(self, turn):
         """Init Application class."""
-        self.match = match
+        self.match = None
+        self.turn = turn
 
     def exe_command(self):
+        """(Put description here)."""
+        self.input_new_score()
+        self.complete_end_turn()
+
+        return False
+
+    def input_new_score(self):
         """(Put description here)."""
         score_player_1 = input(f"Enter score player {self.match.opponents[0]} : ")
         value_incorrect = True
@@ -272,7 +318,46 @@ class EnterScore:
 
         self.match.update_result(score_player_1, score_player_2)
 
+    def complete_end_turn(self):
+        """(Put description here)."""
+        for result in self.turn.get_matches_results():
+            if len(result) == 0:
+                return False
+
+        from datetime import datetime
+
+        self.turn.time_end = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+
+    def is_valid(self, command_name):
+        """(Put description here)."""
+        number = 1
+        for match in self.turn.matches:
+            if len(match.opponents) == 2:
+                if command_name == str(number) + CommandField.MATCH_RESULT:
+                    self.match = match
+                    return True
+                number += 1
+
         return False
+
+
+class ExitApplication:
+    """Project application class."""
+
+    def __init__(self):
+        """Init Application class."""
+        pass
+
+    def exe_command(self):
+        """(Put description here)."""
+        return True
+
+    def is_valid(self, command_name):
+        """(Put description here)."""
+        if command_name == CommandField.EXIT:
+            return True
+        else:
+            return False
 
 
 class GeneratePlayers:
@@ -302,43 +387,109 @@ class GeneratePlayers:
 
         return False
 
+    def is_valid(self, command_name):
+        """(Put description here)."""
+        if command_name == CommandField.GENERATE_PLAYERS:
+            return True
+        else:
+            return False
+
 
 class GoBackMenu:
+    """Project application class."""
+
+    def __init__(self, _app, viewer, menu_name, tournament):
+        """Init Application class."""
+        self._app = _app
+        self.viewer = viewer
+        self.menu_name = menu_name
+        self.tournament = tournament
+
+    def exe_command(self):
+        """(Put description here)."""
+        if self.menu_name == "main":
+            return self.go_to_main_menu()
+        if self.menu_name == "edit_tournament":
+            return self.go_to_edit_tournament()
+        if self.menu_name == "tournaments":
+            return self.go_to_tournaments_menu()
+        if self.menu_name == "turns":
+            return self.go_to_turns_menu()
+        elif self.tournament:
+            return self.go_to_tournament_ranking()
+        else:
+            return self.go_to_players_menu()
+
+    def go_to_main_menu(self):
+        """(Put description here)."""
+        from app.controllers.mainmenu import MainMenuController
+
+        self._app.change_controller(MainMenuController())
+
+        self.viewer.warning = ""
+
+        return False
+
+    def go_to_tournament_ranking(self):
+        """(Put description here)."""
+        from app.controllers.tournament_ranking import TournamentRankingController
+
+        self._app.change_controller(TournamentRankingController(self.tournament))
+        self.viewer.warning = ""
+        return False
+
+    def go_to_players_menu(self):
+        """(Put description here)."""
+        from app.controllers.players import PlayersController
+
+        self._app.change_controller(PlayersController())
+        self.viewer.warning = ""
+        return False
+
+    def go_to_tournaments_menu(self):
+        """(Put description here)."""
+        from app.controllers.tournaments import TournamentMenuController
+
+        self._app.change_controller(TournamentMenuController())
+        self.viewer.warning = ""
+        return False
+
+    def go_to_edit_tournament(self):
+        """(Put description here)."""
+        from app.controllers.edit_tournament import EditTournamentController
+
+        self._app.change_controller(EditTournamentController(self.tournament, False))
+
+        self.viewer.warning = ""
+
+        return False
+
+    def go_to_turns_menu(self):
+        """(Put description here)."""
+        from app.controllers.turns import TurnsController
+
+        self._app.change_controller(TurnsController(self.tournament))
+
+        self.viewer.warning = ""
+
+        return False
+
+    def is_valid(self, command_name):
+        """(Put description here)."""
+        if command_name == CommandField.BACK:
+            return True
+        else:
+            return False
+
+
+class GotoEditPlayer:
     """Project application class."""
 
     def __init__(self, _app, viewer, tournament):
         """Init Application class."""
         self._app = _app
         self.viewer = viewer
-        self.tournament = tournament
-
-    def exe_command(self):
-        """(Put description here)."""
-        if self.tournament:
-            from app.controllers.tournament_ranking import TournamentRankingController
-
-            self._app.change_controller(TournamentRankingController(self.tournament))
-
-            self.viewer.warning = ""
-
-        else:
-            from app.controllers.players import PlayersController
-
-            self._app.change_controller(PlayersController())
-
-            self.viewer.warning = ""
-
-        return False
-
-
-class GotoEditPlayer:
-    """Project application class."""
-
-    def __init__(self, _app, viewer, player, tournament):
-        """Init Application class."""
-        self._app = _app
-        self.viewer = viewer
-        self.player = player
+        self.player = None
         self.tournament = tournament
 
     def exe_command(self):
@@ -351,15 +502,36 @@ class GotoEditPlayer:
 
         return False
 
+    def is_valid(self, command_name):
+        """(Put description here)."""
+        from app.models.player import Player
+
+        if self.tournament:
+            number = 1
+            for player_name, score in self.tournament.get_player_scores().items():
+                if command_name == str(number) + CommandField.EDIT_PLAYER:
+                    player = Player.get_all[player_name]
+                    return self.command_names[CommandField.EDIT_PLAYER](player)
+                number += 1
+        else:
+            number = 1
+            for player in Player.get_all.values():
+                if command_name == str(number) + CommandField.EDIT_PLAYER:
+                    self.player = player
+                    return True
+                number += 1
+
+        return False
+
 
 class GotoEditTournament:
     """Project application class."""
 
-    def __init__(self, _app, viewer, tournament):
+    def __init__(self, _app, viewer):
         """Init Application class."""
         self._app = _app
         self.viewer = viewer
-        self.tournament = tournament
+        self.tournament = None
 
     def exe_command(self):
         """(Put description here)."""
@@ -371,16 +543,28 @@ class GotoEditTournament:
 
         return False
 
+    def is_valid(self, command_name):
+        """(Put description here)."""
+        from app.models.tournament import Tournament
+
+        number = 1
+        for tournament in Tournament.get_all.values():
+            if command_name == str(number) + CommandField.EDIT_TOURNAMENT:
+                self.tournament = tournament
+                return True
+            number += 1
+        return False
+
 
 class GotoEditTurnMenu:
     """Project application class."""
 
-    def __init__(self, _app, viewer, tournament, turn):
+    def __init__(self, _app, viewer, tournament):
         """Init Application class."""
         self._app = _app
         self.viewer = viewer
         self.tournament = tournament
-        self.turn = turn
+        self.turn = None
 
     def exe_command(self):
         """(Put description here)."""
@@ -394,22 +578,14 @@ class GotoEditTurnMenu:
 
         return False
 
-
-class GotoMainMenu:
-    """Project application class."""
-
-    def __init__(self, _app, viewer):
-        """Init Application class."""
-        self._app = _app
-        self.viewer = viewer
-
-    def exe_command(self):
+    def is_valid(self, command_name):
         """(Put description here)."""
-        from app.controllers.mainmenu import MainMenuController
-
-        self._app.change_controller(MainMenuController())
-
-        self.viewer.warning = ""
+        number = 1
+        for turn in self.tournament.turns.values():
+            if command_name == str(number) + CommandField.EDIT_TURN:
+                self.turn = turn
+                return True
+            number += 1
 
         return False
 
@@ -432,6 +608,13 @@ class GotoPlayersMenu:
 
         return False
 
+    def is_valid(self, command_name):
+        """(Put description here)."""
+        if command_name == CommandField.PLAYERS:
+            return True
+        else:
+            return False
+
 
 class GotoRankingMenu:
     """Project application class."""
@@ -452,6 +635,13 @@ class GotoRankingMenu:
 
         return False
 
+    def is_valid(self, command_name):
+        """(Put description here)."""
+        if command_name == CommandField.RANKING:
+            return True
+        else:
+            return False
+
 
 class GotoTournamentsMenu:
     """Project application class."""
@@ -470,6 +660,13 @@ class GotoTournamentsMenu:
         self.viewer.warning = ""
 
         return False
+
+    def is_valid(self, command_name):
+        """(Put description here)."""
+        if command_name == CommandField.TOURNAMENTS:
+            return True
+        else:
+            return False
 
 
 class GotoTurnsMenu:
@@ -491,6 +688,13 @@ class GotoTurnsMenu:
 
         return False
 
+    def is_valid(self, command_name):
+        """(Put description here)."""
+        if command_name == CommandField.TURNS:
+            return True
+        else:
+            return False
+
 
 class ListMatchesCommand:
     """Project application class."""
@@ -504,6 +708,13 @@ class ListMatchesCommand:
         self.viewer.warning = "matches"
 
         return False
+
+    def is_valid(self, command_name):
+        """(Put description here)."""
+        if command_name == CommandField.MATCHES:
+            return True
+        else:
+            return False
 
 
 class ListPlayersAlphabeticalCommand:
@@ -519,6 +730,13 @@ class ListPlayersAlphabeticalCommand:
 
         return False
 
+    def is_valid(self, command_name):
+        """(Put description here)."""
+        if command_name == CommandField.PLAYERS_ALPHABETIC:
+            return True
+        else:
+            return False
+
 
 class ListPlayersRankingCommand:
     """Project application class."""
@@ -532,6 +750,13 @@ class ListPlayersRankingCommand:
         self.viewer.warning = "players ranking"
 
         return False
+
+    def is_valid(self, command_name):
+        """(Put description here)."""
+        if command_name == CommandField.PLAYERS_RANKING:
+            return True
+        else:
+            return False
 
 
 class LoadPlayerDatabase:
@@ -551,6 +776,13 @@ class LoadPlayerDatabase:
 
         return False
 
+    def is_valid(self, command_name):
+        """(Put description here)."""
+        if command_name == CommandField.LOAD_PLAYERS:
+            return True
+        else:
+            return False
+
 
 class LoadTournamentDatabase:
     """Project application class."""
@@ -569,6 +801,13 @@ class LoadTournamentDatabase:
 
         return False
 
+    def is_valid(self, command_name):
+        """(Put description here)."""
+        if command_name == CommandField.LOAD_TOURNAMENTS:
+            return True
+        else:
+            return False
+
 
 class PrintUnknownCommand:
     """Project application class."""
@@ -582,6 +821,10 @@ class PrintUnknownCommand:
         self.viewer.warning = "command unknown"
 
         return False
+
+    def is_valid(self, command_name):
+        """(Put description here)."""
+        return True
 
 
 class SavePlayerDatabase:
@@ -601,6 +844,13 @@ class SavePlayerDatabase:
 
         return False
 
+    def is_valid(self, command_name):
+        """(Put description here)."""
+        if command_name == CommandField.SAVE_PLAYERS:
+            return True
+        else:
+            return False
+
 
 class SaveTournamentDatabase:
     """Project application class."""
@@ -618,6 +868,13 @@ class SaveTournamentDatabase:
         self.viewer.warning = ""
 
         return False
+
+    def is_valid(self, command_name):
+        """(Put description here)."""
+        if command_name == CommandField.SAVE_TOURNAMENTS:
+            return True
+        else:
+            return False
 
 
 class UpdatePlayerRanking:
@@ -637,3 +894,10 @@ class UpdatePlayerRanking:
         self.viewer.warning = ""
 
         return False
+
+    def is_valid(self, command_name):
+        """(Put description here)."""
+        if command_name == CommandField.UPDATE_RANKING:
+            return True
+        else:
+            return False

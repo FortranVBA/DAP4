@@ -9,7 +9,6 @@ class Application:
     def __init__(self):
         """Init Application class."""
         self.change_controller(MainMenuController())
-
         self.is_exit = False
 
     def run(self):
@@ -17,8 +16,8 @@ class Application:
         while not self.is_exit:
             self.controller.display()
 
-            command = self.get_command()
-            self.is_exit = self.controller.exe_command(command)
+            self.controller.get_command()
+            self.is_exit = self.controller.command.exe_command()
 
             self.separate_screen()
         return

@@ -3,10 +3,9 @@
 from app.controllers.commands import PrintUnknownCommand
 from app.controllers.commands import GoBackMenu
 from app.controllers.commands import UpdatePlayerRanking
+from app.controllers.commands import ExitApplication
 
 from app.views.edit_player import EditPlayerViewer
-
-from app.config import CommandField
 
 
 class EditPlayerController:
@@ -18,12 +17,7 @@ class EditPlayerController:
         self.player = player
         self.tournament = tournament
 
-        self.command_names = {
-            CommandField.EXIT: self.exit_application,
-            CommandField.BACK: self.go_back,
-            CommandField.UNKNOWN: self.print_unknown_command,
-            CommandField.UPDATE_RANKING: self.update_ranking,
-        }
+        self.command_names = []
 
         self.viewer = EditPlayerViewer()
 
@@ -31,25 +25,17 @@ class EditPlayerController:
         """(Put description here)."""
         self.viewer.display(self.player)
 
-    def exe_command(self, command):
+    def get_command(self):
         """(Put description here)."""
-        if command in self.command_names:
-            return self.command_names[command]()
-        else:
-            return self.command_names[CommandField.UNKNOWN]()
+        command_input = input("Enter your command: ")
 
-    def exit_application(self):
-        """(Put description here)."""
-        return True
+        self.command_names = [
+            PrintUnknownCommand(self.viewer),
+            ExitApplication(),
+            GoBackMenu(self._app, self.viewer, "", self.tournament),
+            UpdatePlayerRanking(self.viewer, self.player),
+        ]
 
-    def print_unknown_command(self):
-        """(Put description here)."""
-        return PrintUnknownCommand(self.viewer).exe_command()
-
-    def go_back(self):
-        """(Put description here)."""
-        return GoBackMenu(self._app, self.viewer, self.tournament).exe_command()
-
-    def update_ranking(self):
-        """(Put description here)."""
-        return UpdatePlayerRanking(self.viewer, self.player).exe_command()
+        for command in self.command_names:
+            if command.is_valid(command_input):
+                self.command = command
