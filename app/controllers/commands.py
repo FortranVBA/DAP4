@@ -111,9 +111,7 @@ class CreateTournament:
         from app.controllers.edit_tournament import EditTournamentController
 
         self._app.change_controller(EditTournamentController(None, True))
-
         self.viewer.warning = ""
-
         return False
 
     def is_valid(self, command_name):
@@ -425,9 +423,7 @@ class GoBackMenu:
         from app.controllers.mainmenu import MainMenuController
 
         self._app.change_controller(MainMenuController())
-
         self.viewer.warning = ""
-
         return False
 
     def go_to_tournament_ranking(self):
@@ -459,9 +455,7 @@ class GoBackMenu:
         from app.controllers.edit_tournament import EditTournamentController
 
         self._app.change_controller(EditTournamentController(self.tournament, False))
-
         self.viewer.warning = ""
-
         return False
 
     def go_to_turns_menu(self):
@@ -469,9 +463,7 @@ class GoBackMenu:
         from app.controllers.turns import TurnsController
 
         self._app.change_controller(TurnsController(self.tournament))
-
         self.viewer.warning = ""
-
         return False
 
     def is_valid(self, command_name):
@@ -497,9 +489,7 @@ class GotoEditPlayer:
         from app.controllers.edit_player import EditPlayerController
 
         self._app.change_controller(EditPlayerController(self.player, self.tournament))
-
         self.viewer.warning = ""
-
         return False
 
     def is_valid(self, command_name):
@@ -510,8 +500,8 @@ class GotoEditPlayer:
             number = 1
             for player_name, score in self.tournament.get_player_scores().items():
                 if command_name == str(number) + CommandField.EDIT_PLAYER:
-                    player = Player.get_all[player_name]
-                    return self.command_names[CommandField.EDIT_PLAYER](player)
+                    self.player = Player.get_all[player_name]
+                    return True
                 number += 1
         else:
             number = 1
@@ -538,9 +528,7 @@ class GotoEditTournament:
         from app.controllers.edit_tournament import EditTournamentController
 
         self._app.change_controller(EditTournamentController(self.tournament, False))
-
         self.viewer.warning = ""
-
         return False
 
     def is_valid(self, command_name):
@@ -573,9 +561,7 @@ class GotoEditTurnMenu:
         self._app.change_controller(
             EditTurnController(self.tournament, self.turn, False)
         )
-
         self.viewer.warning = ""
-
         return False
 
     def is_valid(self, command_name):
@@ -603,9 +589,7 @@ class GotoPlayersMenu:
         from app.controllers.players import PlayersController
 
         self._app.change_controller(PlayersController())
-
         self.viewer.warning = ""
-
         return False
 
     def is_valid(self, command_name):
@@ -630,9 +614,7 @@ class GotoRankingMenu:
         from app.controllers.tournament_ranking import TournamentRankingController
 
         self._app.change_controller(TournamentRankingController(self.tournament))
-
         self.viewer.warning = ""
-
         return False
 
     def is_valid(self, command_name):
@@ -656,9 +638,7 @@ class GotoTournamentsMenu:
         from app.controllers.tournaments import TournamentMenuController
 
         self._app.change_controller(TournamentMenuController())
-
         self.viewer.warning = ""
-
         return False
 
     def is_valid(self, command_name):
@@ -683,9 +663,7 @@ class GotoTurnsMenu:
         from app.controllers.turns import TurnsController
 
         self._app.change_controller(TurnsController(self.tournament))
-
         self.viewer.warning = ""
-
         return False
 
     def is_valid(self, command_name):
@@ -706,7 +684,6 @@ class ListMatchesCommand:
     def exe_command(self):
         """(Put description here)."""
         self.viewer.warning = "matches"
-
         return False
 
     def is_valid(self, command_name):
@@ -727,7 +704,6 @@ class ListPlayersAlphabeticalCommand:
     def exe_command(self):
         """(Put description here)."""
         self.viewer.warning = "players alphabetical"
-
         return False
 
     def is_valid(self, command_name):
@@ -748,7 +724,6 @@ class ListPlayersRankingCommand:
     def exe_command(self):
         """(Put description here)."""
         self.viewer.warning = "players ranking"
-
         return False
 
     def is_valid(self, command_name):
@@ -771,9 +746,7 @@ class LoadPlayerDatabase:
         from app.models.player import Player
 
         Player.load_fromtinyDB()
-
         self.viewer.warning = ""
-
         return False
 
     def is_valid(self, command_name):
@@ -796,9 +769,7 @@ class LoadTournamentDatabase:
         from app.models.tournament import Tournament
 
         Tournament.load_fromtinyDB()
-
         self.viewer.warning = ""
-
         return False
 
     def is_valid(self, command_name):
@@ -819,7 +790,6 @@ class PrintUnknownCommand:
     def exe_command(self):
         """(Put description here)."""
         self.viewer.warning = "command unknown"
-
         return False
 
     def is_valid(self, command_name):
@@ -839,9 +809,7 @@ class SavePlayerDatabase:
         from app.models.player import Player
 
         Player.save_tinyDB()
-
         self.viewer.warning = ""
-
         return False
 
     def is_valid(self, command_name):
@@ -864,9 +832,7 @@ class SaveTournamentDatabase:
         from app.models.tournament import Tournament
 
         Tournament.save_tinyDB()
-
         self.viewer.warning = ""
-
         return False
 
     def is_valid(self, command_name):
@@ -890,9 +856,7 @@ class UpdatePlayerRanking:
         ranking_new = input("Enter new player ranking : ")
 
         self.player.ranking = ranking_new
-
         self.viewer.warning = ""
-
         return False
 
     def is_valid(self, command_name):
