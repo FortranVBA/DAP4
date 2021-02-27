@@ -14,7 +14,7 @@ class SwissSystem:
         matchs_keys = []
         match_results = []
 
-        sorted_dict = dict(sorted(players_rank.items(), key=lambda item: item[1]))
+        sorted_dict = dict(sorted(players_rank.items(), key=lambda item: int(item[1])))
         sorted_players_keys = list(sorted_dict.keys())
 
         if not previous_matchs:
