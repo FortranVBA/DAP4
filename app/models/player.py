@@ -1,10 +1,10 @@
-"""Project OC DAP 4 file with tournament related class."""
+"""Project OC DAP 4 file with the player class."""
 
 from tinydb import TinyDB
 
 
 class Player:
-    """Player characteristics to be handled by application."""
+    """Project player class."""
 
     get_all: dict = {}
 
@@ -20,7 +20,7 @@ class Player:
         Player.get_all[self.player_index] = self
 
     def return_serialized_player(self):
-        """(Put description here)."""
+        """Return class attributes as dictionnary."""
         return {
             "name": self.name,
             "surname": self.surname,
@@ -31,7 +31,7 @@ class Player:
 
     @staticmethod
     def save_tinyDB():
-        """(Put description here)."""
+        """Save players to json database."""
         db = TinyDB("db.json")
         players_table = db.table("players")
         players_table.truncate()
@@ -41,7 +41,7 @@ class Player:
 
     @staticmethod
     def get_serialized_players():
-        """(Put description here)."""
+        """Return a list of all serialized players."""
         serialized_players = []
         for player in Player.get_all.values():
             serialized_players.append(player.return_serialized_player())
@@ -50,7 +50,7 @@ class Player:
 
     @staticmethod
     def load_fromtinyDB():
-        """(Put description here)."""
+        """Load players from json database."""
         db = TinyDB("db.json")
         players_table = db.table("players")
 

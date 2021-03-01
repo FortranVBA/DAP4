@@ -1,4 +1,4 @@
-"""Project OC DAP 4 file with tournament related class."""
+"""Project OC DAP 4 file with tournament viewer."""
 
 from app.models.tournament import Tournament
 
@@ -6,14 +6,14 @@ from app.config import CommandField
 
 
 class TournamentMenuViewer:
-    """Main viewer to be handled by application."""
+    """Project tournament viewer class."""
 
     def __init__(self):
-        """(Put description here)."""
+        """Init tournament viewer class."""
         self.warning = ""
 
     def display(self):
-        """(Put description here)."""
+        """Display the view and the command list."""
         self.display_warning()
 
         print("The list of tournament is the following :")
@@ -36,19 +36,15 @@ class TournamentMenuViewer:
         print(" - " + CommandField.EXIT + " to quit application")
 
     def get_warning(self):
-        """(Put description here)."""
+        """Return the current warning message."""
         if self.warning == "command unknown":
             return "Warning : this command is not valid"
         else:
             return "Warning : unknown error occured"
 
     def display_warning(self):
-        """(Put description here)."""
+        """Display additional warnings."""
         print(" ")
         print(" ")
         if not self.warning == "":
             print(self.get_warning())
-
-    def set_tournament_names(self, tournament_names):
-        """(Put description here)."""
-        self.tournaments_names = tournament_names[:]

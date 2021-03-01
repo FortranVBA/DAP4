@@ -1,16 +1,16 @@
-"""Project OC DAP 4 file with tournament related class."""
+"""Project OC DAP 4 file with swiss system match maker."""
 
 
 class SwissSystem:
-    """Round characteristics to be handled by application."""
+    """Project swiss_system class."""
 
     def __init__(self):
-        """Init Tournament class."""
+        """No initialization required for this class."""
         pass
 
     @staticmethod
     def get_next_turn(previous_matchs, players_rank):
-        """Init Tournament class."""
+        """Get the next turn by applying swiss system match making."""
         matchs_keys = []
         match_results = []
 
@@ -58,7 +58,7 @@ class SwissSystem:
 
     @staticmethod
     def is_match_played(opponent, player, previous_matchs):
-        """Init Tournament class."""
+        """Return if the match between player and opponent has been played or not."""
         match_player_opponent_played = (player, opponent) in previous_matchs
         match_opponent_player_played = (opponent, player) in previous_matchs
 

@@ -1,6 +1,6 @@
-"""Project OC DAP 4 file with tournament related class."""
+"""Project OC DAP 4 file with the main application class."""
 
-from app.controllers.mainmenu import MainMenuController
+from app.controllers.main_menu import MainMenuController
 
 
 class Application:
@@ -12,7 +12,7 @@ class Application:
         self.is_exit = False
 
     def run(self):
-        """Run  Application class."""
+        """Run the main loop of application."""
         while not self.is_exit:
             self.controller.display()
 
@@ -22,17 +22,8 @@ class Application:
             self.separate_screen()
         return
 
-    def get_command(self):
-        """(Put description here)."""
-        command = input("Enter your command: ")
-        return command
-
-    def display(self):
-        """(Put description here)."""
-        self.controller.display()
-
     def separate_screen(self):
-        """(Put description here)."""
+        """Separate the terminal with blank lines and line separators."""
         print(" ")
         print(" ")
         print("-----------------------------------")
@@ -40,12 +31,8 @@ class Application:
         print("-----------------------------------")
         print(" ")
         print(" ")
-
-    def exe_command(self, command):
-        """(Put description here)."""
-        return self.commands_controllers[self.current_view].exe_command(command)
 
     def change_controller(self, new_controller):
-        """(Put description here)."""
+        """Change the active controller and gives it the app reference."""
         self.controller = new_controller
         self.controller._app = self

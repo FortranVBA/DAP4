@@ -1,4 +1,4 @@
-"""Project OC DAP 4 file with tournament related class."""
+"""Project OC DAP 4 file with the tournament class."""
 
 from tinydb import TinyDB
 
@@ -8,7 +8,7 @@ from app.models.player import Player
 
 
 class Tournament:
-    """Tournament characteristics to be handled by application."""
+    """Project tournament class."""
 
     get_all: dict = {}
 
@@ -35,7 +35,7 @@ class Tournament:
         time_control,
         description,
     ):
-        """(Put description here)."""
+        """Change all tournament attributes."""
         self.location = location
         self.date = date
         self.turn_number = turn_number
@@ -51,8 +51,8 @@ class Tournament:
         self.time_control = time_control
         self.description = description
 
-    def return_serialized_player(self):
-        """(Put description here)."""
+    def return_serialized_turn(self):
+        """Return a list of all serialized turns."""
         turns_serialized = []
         for turn in self.turns.values():
             turns_serialized.append(turn.return_serialized_turn())
@@ -69,7 +69,7 @@ class Tournament:
         }
 
     def get_next_turn(self, name):
-        """(Put description here)."""
+        """Create next tournament turn with swiss system."""
         previous_matchs = self.get_previous_match()
         player_rank = self.get_player_rank()
 
@@ -88,7 +88,7 @@ class Tournament:
         )
 
     def get_previous_match(self):
-        """(Put description here)."""
+        """Return the list of all already played matches."""
         result = []
         for turn in self.turns.values():
             for match in turn.matches:
@@ -97,7 +97,7 @@ class Tournament:
         return result
 
     def get_player_rank(self):
-        """(Put description here)."""
+        """Return players ranking in tournament or global ranking."""
         results = {}
 
         if len(self.turns) == 0:
@@ -113,7 +113,7 @@ class Tournament:
         return results
 
     def get_player_scores(self):
-        """(Put description here)."""
+        """Get players total score from played matches."""
         scores = {}
 
         for player in self.players_index:
@@ -134,16 +134,16 @@ class Tournament:
 
     @staticmethod
     def get_serialized_tournament():
-        """(Put description here)."""
+        """Return a list of all serialized tournaments."""
         serialized_tournament = []
         for tournament in Tournament.get_all.values():
-            serialized_tournament.append(tournament.return_serialized_player())
+            serialized_tournament.append(tournament.return_serialized_turn())
 
         return serialized_tournament
 
     @staticmethod
     def save_tinyDB():
-        """(Put description here)."""
+        """Save tournaments and players to json database."""
         Player.save_tinyDB()
 
         db = TinyDB("db.json")
@@ -155,7 +155,7 @@ class Tournament:
 
     @staticmethod
     def load_fromtinyDB():
-        """(Put description here)."""
+        """Load tournaments and players from json database."""
         Player.load_fromtinyDB()
 
         db = TinyDB("db.json")

@@ -1,20 +1,20 @@
-"""Project OC DAP 4 file with tournament related class."""
+"""Project OC DAP 4 file with the menu navigation commands."""
 
 from app.config import CommandField
 
 
 class GoBackMenu:
-    """Project application class."""
+    """Project go_back command class."""
 
     def __init__(self, _app, viewer, menu_name, tournament):
-        """Init Application class."""
+        """Init go_back command class."""
         self._app = _app
         self.viewer = viewer
         self.menu_name = menu_name
         self.tournament = tournament
 
     def exe_command(self):
-        """(Put description here)."""
+        """Execute command and return False to not exit application."""
         if self.menu_name == "main":
             return self.go_to_main_menu()
         if self.menu_name == "edit_tournament":
@@ -29,15 +29,15 @@ class GoBackMenu:
             return self.go_to_players_menu()
 
     def go_to_main_menu(self):
-        """(Put description here)."""
-        from app.controllers.mainmenu import MainMenuController
+        """Change controller to go back to main menu."""
+        from app.controllers.main_menu import MainMenuController
 
         self._app.change_controller(MainMenuController())
         self.viewer.warning = ""
         return False
 
     def go_to_tournament_ranking(self):
-        """(Put description here)."""
+        """Change controller to go back to tournament ranking menu."""
         from app.controllers.tournament_ranking import TournamentRankingController
 
         self._app.change_controller(TournamentRankingController(self.tournament))
@@ -45,7 +45,7 @@ class GoBackMenu:
         return False
 
     def go_to_players_menu(self):
-        """(Put description here)."""
+        """Change controller to go back to players menu."""
         from app.controllers.players import PlayersController
 
         self._app.change_controller(PlayersController())
@@ -53,7 +53,7 @@ class GoBackMenu:
         return False
 
     def go_to_tournaments_menu(self):
-        """(Put description here)."""
+        """Change controller to go back to tournaments menu."""
         from app.controllers.tournaments import TournamentMenuController
 
         self._app.change_controller(TournamentMenuController())
@@ -61,7 +61,7 @@ class GoBackMenu:
         return False
 
     def go_to_edit_tournament(self):
-        """(Put description here)."""
+        """Change controller to go back to edit tournament menu."""
         from app.controllers.edit_tournament import EditTournamentController
 
         self._app.change_controller(EditTournamentController(self.tournament, False))
@@ -69,7 +69,7 @@ class GoBackMenu:
         return False
 
     def go_to_turns_menu(self):
-        """(Put description here)."""
+        """Change controller to go back to turns menu."""
         from app.controllers.turns import TurnsController
 
         self._app.change_controller(TurnsController(self.tournament))
@@ -77,7 +77,7 @@ class GoBackMenu:
         return False
 
     def is_valid(self, command_name):
-        """(Put description here)."""
+        """Return if user input matches the command name from config file."""
         if command_name == CommandField.BACK:
             return True
         else:
@@ -85,17 +85,17 @@ class GoBackMenu:
 
 
 class GotoEditPlayer:
-    """Project application class."""
+    """Project go_to_edit_player command class."""
 
     def __init__(self, _app, viewer, tournament):
-        """Init Application class."""
+        """Init go_to_edit_player command class."""
         self._app = _app
         self.viewer = viewer
         self.player = None
         self.tournament = tournament
 
     def exe_command(self):
-        """(Put description here)."""
+        """Execute command and return False to not exit application."""
         from app.controllers.edit_player import EditPlayerController
 
         self._app.change_controller(EditPlayerController(self.player, self.tournament))
@@ -103,7 +103,7 @@ class GotoEditPlayer:
         return False
 
     def is_valid(self, command_name):
-        """(Put description here)."""
+        """Return if user input matches the command name from config file."""
         from app.models.player import Player
 
         if self.tournament:
@@ -125,16 +125,16 @@ class GotoEditPlayer:
 
 
 class GotoEditTournament:
-    """Project application class."""
+    """Project go_to_edit_tournament command class."""
 
     def __init__(self, _app, viewer):
-        """Init Application class."""
+        """Init go_to_edit_tournament command class."""
         self._app = _app
         self.viewer = viewer
         self.tournament = None
 
     def exe_command(self):
-        """(Put description here)."""
+        """Execute command and return False to not exit application."""
         from app.controllers.edit_tournament import EditTournamentController
 
         self._app.change_controller(EditTournamentController(self.tournament, False))
@@ -142,7 +142,7 @@ class GotoEditTournament:
         return False
 
     def is_valid(self, command_name):
-        """(Put description here)."""
+        """Return if user input matches the command name from config file."""
         from app.models.tournament import Tournament
 
         number = 1
@@ -155,17 +155,17 @@ class GotoEditTournament:
 
 
 class GotoEditTurnMenu:
-    """Project application class."""
+    """Project go_to_edit_turn_menu command class."""
 
     def __init__(self, _app, viewer, tournament):
-        """Init Application class."""
+        """Init go_to_edit_turn_menu command class."""
         self._app = _app
         self.viewer = viewer
         self.tournament = tournament
         self.turn = None
 
     def exe_command(self):
-        """(Put description here)."""
+        """Execute command and return False to not exit application."""
         from app.controllers.edit_turn import EditTurnController
 
         self._app.change_controller(
@@ -175,7 +175,7 @@ class GotoEditTurnMenu:
         return False
 
     def is_valid(self, command_name):
-        """(Put description here)."""
+        """Return if user input matches the command name from config file."""
         number = 1
         for turn in self.tournament.turns.values():
             if command_name == str(number) + CommandField.EDIT_TURN:
@@ -187,15 +187,15 @@ class GotoEditTurnMenu:
 
 
 class GotoPlayersMenu:
-    """Project application class."""
+    """Project go_to_edit_players_menu command class."""
 
     def __init__(self, _app, viewer):
-        """Init Application class."""
+        """Init go_to_edit_players_menu command class."""
         self._app = _app
         self.viewer = viewer
 
     def exe_command(self):
-        """(Put description here)."""
+        """Execute command and return False to not exit application."""
         from app.controllers.players import PlayersController
 
         self._app.change_controller(PlayersController())
@@ -203,7 +203,7 @@ class GotoPlayersMenu:
         return False
 
     def is_valid(self, command_name):
-        """(Put description here)."""
+        """Return if user input matches the command name from config file."""
         if command_name == CommandField.PLAYERS:
             return True
         else:
@@ -211,16 +211,16 @@ class GotoPlayersMenu:
 
 
 class GotoRankingMenu:
-    """Project application class."""
+    """Project go_to_ranking_menu command class."""
 
     def __init__(self, _app, viewer, tournament):
-        """Init Application class."""
+        """Init go_to_ranking_menu command class."""
         self._app = _app
         self.viewer = viewer
         self.tournament = tournament
 
     def exe_command(self):
-        """(Put description here)."""
+        """Execute command and return False to not exit application."""
         from app.controllers.tournament_ranking import TournamentRankingController
 
         self._app.change_controller(TournamentRankingController(self.tournament))
@@ -228,7 +228,7 @@ class GotoRankingMenu:
         return False
 
     def is_valid(self, command_name):
-        """(Put description here)."""
+        """Return if user input matches the command name from config file."""
         if command_name == CommandField.RANKING:
             return True
         else:
@@ -236,15 +236,15 @@ class GotoRankingMenu:
 
 
 class GotoTournamentsMenu:
-    """Project application class."""
+    """Project go_to_tournaments_menu command class."""
 
     def __init__(self, _app, viewer):
-        """Init Application class."""
+        """Init go_to_tournaments_menu command class."""
         self._app = _app
         self.viewer = viewer
 
     def exe_command(self):
-        """(Put description here)."""
+        """Execute command and return False to not exit application."""
         from app.controllers.tournaments import TournamentMenuController
 
         self._app.change_controller(TournamentMenuController())
@@ -252,7 +252,7 @@ class GotoTournamentsMenu:
         return False
 
     def is_valid(self, command_name):
-        """(Put description here)."""
+        """Return if user input matches the command name from config file."""
         if command_name == CommandField.TOURNAMENTS:
             return True
         else:
@@ -260,16 +260,16 @@ class GotoTournamentsMenu:
 
 
 class GotoTurnsMenu:
-    """Project application class."""
+    """Project go_to_turns_menu command class."""
 
     def __init__(self, _app, viewer, tournament):
-        """Init Application class."""
+        """Init go_to_turns_menu command class."""
         self._app = _app
         self.viewer = viewer
         self.tournament = tournament
 
     def exe_command(self):
-        """(Put description here)."""
+        """Execute command and return False to not exit application."""
         from app.controllers.turns import TurnsController
 
         self._app.change_controller(TurnsController(self.tournament))
@@ -277,7 +277,7 @@ class GotoTurnsMenu:
         return False
 
     def is_valid(self, command_name):
-        """(Put description here)."""
+        """Return if user input matches the command name from config file."""
         if command_name == CommandField.TURNS:
             return True
         else:

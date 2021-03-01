@@ -1,19 +1,19 @@
-"""Project OC DAP 4 file with tournament related class."""
+"""Project OC DAP 4 file with the player commands."""
 
 from app.config import CommandField
 
 
 class AddPlayer:
-    """Project application class."""
+    """Project add_player command class."""
 
     def __init__(self, _app, viewer, tournament):
-        """Init Application class."""
+        """Init add_player command class."""
         self._app = _app
         self.viewer = viewer
         self.tournament = tournament
 
     def exe_command(self):
-        """(Put description here)."""
+        """Execute command and return False to not exit application."""
         from app.models.player import Player
         import re
 
@@ -46,7 +46,7 @@ class AddPlayer:
         return False
 
     def is_string_positive_integer(self, input_string):
-        """(Put description here)."""
+        """Return if a string is a positive integer."""
         try:
             int(input_string)
             if int(input_string) > 0:
@@ -57,7 +57,7 @@ class AddPlayer:
             return False
 
     def is_valid(self, command_name):
-        """(Put description here)."""
+        """Return if user input matches the command name from config file."""
         if command_name == CommandField.ADD_PLAYER:
             return True
         else:
@@ -65,16 +65,16 @@ class AddPlayer:
 
 
 class GeneratePlayers:
-    """Project application class."""
+    """Project generate_players command class."""
 
     def __init__(self, _app, viewer, tournament):
-        """Init Application class."""
+        """Init generate_players command class."""
         self._app = _app
         self.viewer = viewer
         self.tournament = tournament
 
     def exe_command(self):
-        """(Put description here)."""
+        """Execute command and return False to not exit application."""
         from app.models.player import Player
 
         for number in range(1, 9):
@@ -92,7 +92,7 @@ class GeneratePlayers:
         return False
 
     def is_valid(self, command_name):
-        """(Put description here)."""
+        """Return if user input matches the command name from config file."""
         if command_name == CommandField.GENERATE_PLAYERS:
             return True
         else:
@@ -100,19 +100,19 @@ class GeneratePlayers:
 
 
 class ListPlayersAlphabeticalCommand:
-    """Project application class."""
+    """Project list_players_alphabetical command class."""
 
     def __init__(self, viewer):
-        """Init Application class."""
+        """Init list_players_alphabetical command class."""
         self.viewer = viewer
 
     def exe_command(self):
-        """(Put description here)."""
+        """Execute command and return False to not exit application."""
         self.viewer.warning = "players alphabetical"
         return False
 
     def is_valid(self, command_name):
-        """(Put description here)."""
+        """Return if user input matches the command name from config file."""
         if command_name == CommandField.PLAYERS_ALPHABETIC:
             return True
         else:
@@ -120,19 +120,19 @@ class ListPlayersAlphabeticalCommand:
 
 
 class ListPlayersRankingCommand:
-    """Project application class."""
+    """Project list_players_ranking command class."""
 
     def __init__(self, viewer):
-        """Init Application class."""
+        """Init list_players_ranking command class."""
         self.viewer = viewer
 
     def exe_command(self):
-        """(Put description here)."""
+        """Execute command and return False to not exit application."""
         self.viewer.warning = "players ranking"
         return False
 
     def is_valid(self, command_name):
-        """(Put description here)."""
+        """Return if user input matches the command name from config file."""
         if command_name == CommandField.PLAYERS_RANKING:
             return True
         else:
@@ -140,14 +140,14 @@ class ListPlayersRankingCommand:
 
 
 class LoadPlayerDatabase:
-    """Project application class."""
+    """Project load_player_database command class."""
 
     def __init__(self, viewer):
-        """Init Application class."""
+        """Init load_player_database command class."""
         self.viewer = viewer
 
     def exe_command(self):
-        """(Put description here)."""
+        """Execute command and return False to not exit application."""
         from app.models.player import Player
 
         Player.load_fromtinyDB()
@@ -155,7 +155,7 @@ class LoadPlayerDatabase:
         return False
 
     def is_valid(self, command_name):
-        """(Put description here)."""
+        """Return if user input matches the command name from config file."""
         if command_name == CommandField.LOAD_PLAYERS:
             return True
         else:
@@ -163,14 +163,14 @@ class LoadPlayerDatabase:
 
 
 class SavePlayerDatabase:
-    """Project application class."""
+    """Project save_player_database command class."""
 
     def __init__(self, viewer):
-        """Init Application class."""
+        """Init save_player_database command class."""
         self.viewer = viewer
 
     def exe_command(self):
-        """(Put description here)."""
+        """Execute command and return False to not exit application."""
         from app.models.player import Player
 
         Player.save_tinyDB()
@@ -178,7 +178,7 @@ class SavePlayerDatabase:
         return False
 
     def is_valid(self, command_name):
-        """(Put description here)."""
+        """Return if user input matches the command name from config file."""
         if command_name == CommandField.SAVE_PLAYERS:
             return True
         else:
@@ -186,15 +186,15 @@ class SavePlayerDatabase:
 
 
 class UpdatePlayerRanking:
-    """Project application class."""
+    """Project update_player_ranking command class."""
 
     def __init__(self, viewer, player):
-        """Init Application class."""
+        """Init update_player_ranking command class."""
         self.viewer = viewer
         self.player = player
 
     def exe_command(self):
-        """(Put description here)."""
+        """Execute command and return False to not exit application."""
         ranking_new = input("Enter new player ranking : ")
 
         self.player.ranking = ranking_new
@@ -202,7 +202,7 @@ class UpdatePlayerRanking:
         return False
 
     def is_valid(self, command_name):
-        """(Put description here)."""
+        """Return if user input matches the command name from config file."""
         if command_name == CommandField.UPDATE_RANKING:
             return True
         else:

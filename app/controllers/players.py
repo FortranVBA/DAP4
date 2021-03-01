@@ -1,4 +1,4 @@
-"""Project OC DAP 4 file with tournament related class."""
+"""Project OC DAP 4 file with the players controller."""
 
 from app.commands.application import PrintUnknownCommand
 from app.commands.player import LoadPlayerDatabase
@@ -13,19 +13,25 @@ from app.views.players import PlayersViewer
 
 
 class PlayersController:
-    """Project application class."""
+    """Project players controller class."""
 
     def __init__(self):
-        """Init Application class."""
+        """Init players controller class."""
         self._app = None
         self.viewer = PlayersViewer()
 
         self.command_names = []
 
+    def display(self):
+        """Display the controller view."""
+        self.viewer.display()
+
     def get_command(self):
-        """(Put description here)."""
+        """Get the user input and convert it to a command instance."""
         command_input = input("Enter your command: ")
 
+        # The 1st command in list must always be the PrintUnknownCommand, which is used
+        # as default command.
         self.command_names = [
             PrintUnknownCommand(self.viewer),
             ExitApplication(),
@@ -40,7 +46,3 @@ class PlayersController:
         for command in self.command_names:
             if command.is_valid(command_input):
                 self.command = command
-
-    def display(self):
-        """(Put description here)."""
-        self.viewer.display()

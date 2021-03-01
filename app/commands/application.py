@@ -1,21 +1,21 @@
-"""Project OC DAP 4 file with tournament related class."""
+"""Project OC DAP 4 file with the application commands."""
 
 from app.config import CommandField
 
 
 class ExitApplication:
-    """Project application class."""
+    """Project exit_application command class."""
 
     def __init__(self):
-        """Init Application class."""
+        """Init exit_application command class."""
         pass
 
     def exe_command(self):
-        """(Put description here)."""
+        """Return True to exit application."""
         return True
 
     def is_valid(self, command_name):
-        """(Put description here)."""
+        """Return if user input matches the command name from config file."""
         if command_name == CommandField.EXIT:
             return True
         else:
@@ -23,17 +23,17 @@ class ExitApplication:
 
 
 class PrintUnknownCommand:
-    """Project application class."""
+    """Project print_unknown command class."""
 
     def __init__(self, viewer):
-        """Init Application class."""
+        """Init print_unknown command class."""
         self.viewer = viewer
 
     def exe_command(self):
-        """(Put description here)."""
+        """Execute command and return False to not exit application."""
         self.viewer.warning = "command unknown"
         return False
 
     def is_valid(self, command_name):
-        """(Put description here)."""
+        """Return True (Command always valid and may be replaced with user input)."""
         return True

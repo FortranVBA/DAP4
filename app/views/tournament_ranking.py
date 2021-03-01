@@ -1,4 +1,4 @@
-"""Project OC DAP 4 file with tournament related class."""
+"""Project OC DAP 4 file with the tournament_ranking viewer."""
 
 from app.models.player import Player
 
@@ -6,14 +6,14 @@ from app.config import CommandField
 
 
 class TournamentRankingViewer:
-    """Project application class."""
+    """Project tournament_ranking viewer class."""
 
     def __init__(self):
-        """Init Application class."""
+        """Init tournament_ranking viewer class."""
         self.warning = ""
 
     def display(self, tournament):
-        """(Put description here)."""
+        """Display the view and the command list."""
         self.display_warning(tournament)
 
         print(f"You are editing tournament {tournament.name}")
@@ -48,7 +48,7 @@ class TournamentRankingViewer:
         print(" - " + CommandField.EXIT + " to quit application")
 
     def get_warning(self, tournament):
-        """(Put description here)."""
+        """Return the current warning message or the requested list."""
         if self.warning == "command unknown":
             print("Warning : this command is not valid")
 
@@ -85,7 +85,7 @@ class TournamentRankingViewer:
             print("Warning : unknown error occured")
 
     def display_warning(self, tournament):
-        """(Put description here)."""
+        """Display additional warnings or information."""
         print(" ")
         print(" ")
         if not self.warning == "":

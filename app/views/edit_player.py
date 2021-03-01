@@ -1,17 +1,17 @@
-"""Project OC DAP 4 file with tournament related class."""
+"""Project OC DAP 4 file with the edit_player viewer."""
 
 from app.config import CommandField
 
 
 class EditPlayerViewer:
-    """Project application class."""
+    """Project edit_player viewer class."""
 
     def __init__(self):
-        """Init Application class."""
+        """Init edit_player viewer class."""
         self.warning = ""
 
     def display(self, player):
-        """(Put description here)."""
+        """Display the view and the command list."""
         self.display_warning()
 
         print(f"Editing player ID {player.player_index}")
@@ -26,14 +26,14 @@ class EditPlayerViewer:
         print(" - " + CommandField.EXIT + " to quit application")
 
     def get_warning(self):
-        """(Put description here)."""
+        """Return the current warning message."""
         if self.warning == "command unknown":
             return "Warning : this command is not valid"
         else:
             return "Warning : unknown error occured"
 
     def display_warning(self):
-        """(Put description here)."""
+        """Display additional warnings."""
         print(" ")
         print(" ")
         if not self.warning == "":

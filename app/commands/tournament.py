@@ -1,19 +1,19 @@
-"""Project OC DAP 4 file with tournament related class."""
+"""Project OC DAP 4 file with the tournament commands."""
 
 from app.config import CommandField
 
 
 class CreateNextTurn:
-    """Project application class."""
+    """Project create_next_turn command class."""
 
     def __init__(self, _app, viewer, tournament):
-        """Init Application class."""
+        """Init create_next_turn command class."""
         self._app = _app
         self.viewer = viewer
         self.tournament = tournament
 
     def exe_command(self):
-        """(Put description here)."""
+        """Execute command and return False to not exit application."""
         from app.controllers.edit_turn import EditTurnController
 
         for turn in self.tournament.turns.values():
@@ -30,7 +30,7 @@ class CreateNextTurn:
         return False
 
     def is_valid(self, command_name):
-        """(Put description here)."""
+        """Return if user input matches the command name from config file."""
         if command_name == CommandField.CREATE_NEXT_TURN:
             return True
         else:
@@ -38,15 +38,15 @@ class CreateNextTurn:
 
 
 class CreateTournament:
-    """Project application class."""
+    """Project create_tournament command class."""
 
     def __init__(self, _app, viewer):
-        """Init Application class."""
+        """Init create_tournament command class."""
         self._app = _app
         self.viewer = viewer
 
     def exe_command(self):
-        """(Put description here)."""
+        """Execute command and return False to not exit application."""
         from app.controllers.edit_tournament import EditTournamentController
 
         self._app.change_controller(EditTournamentController(None, True))
@@ -54,7 +54,7 @@ class CreateTournament:
         return False
 
     def is_valid(self, command_name):
-        """(Put description here)."""
+        """Return if user input matches the command name from config file."""
         if command_name == CommandField.NEW:
             return True
         else:
@@ -62,14 +62,14 @@ class CreateTournament:
 
 
 class EditTournamentDate:
-    """Project application class."""
+    """Project edit_tournament_date command class."""
 
     def __init__(self, tournament):
-        """Init Application class."""
+        """Init edit_tournament_date command class."""
         self.tournament = tournament
 
     def exe_command(self):
-        """(Put description here)."""
+        """Execute command and return False to not exit application."""
         new_date = input(
             "Enter tournament date (format dd/mm/yyyy separated by blank space): "
         )
@@ -84,7 +84,7 @@ class EditTournamentDate:
         return False
 
     def is_date_format_correct(self, input_string):
-        """(Put description here)."""
+        """Return if a string follow the correct date format xx/xx/xxxx."""
         import re
 
         date_format = re.compile(".{2}/.{2}/.{4}")
@@ -95,7 +95,7 @@ class EditTournamentDate:
         return True
 
     def is_valid(self, command_name):
-        """(Put description here)."""
+        """Return if user input matches the command name from config file."""
         if command_name == CommandField.TOURNAMENT_DATE:
             return True
         else:
@@ -103,21 +103,21 @@ class EditTournamentDate:
 
 
 class EditTournamentDescription:
-    """Project application class."""
+    """Project edit_tournament_description command class."""
 
     def __init__(self, tournament):
-        """Init Application class."""
+        """Init edit_tournament_description class."""
         self.tournament = tournament
 
     def exe_command(self):
-        """(Put description here)."""
+        """Execute command and return False to not exit application."""
         new_description = input("Enter tournament description : ")
         self.tournament.description = new_description
 
         return False
 
     def is_valid(self, command_name):
-        """(Put description here)."""
+        """Return if user input matches the command name from config file."""
         if command_name == CommandField.TOURNAMENT_DESCRIPTION:
             return True
         else:
@@ -125,21 +125,21 @@ class EditTournamentDescription:
 
 
 class EditTournamentLocation:
-    """Project application class."""
+    """Project edit_tournament_location command class."""
 
     def __init__(self, tournament):
-        """Init Application class."""
+        """Init edit_tournament_location command class."""
         self.tournament = tournament
 
     def exe_command(self):
-        """(Put description here)."""
+        """Execute command and return False to not exit application."""
         new_location = input("Enter tournament location : ")
         self.tournament.location = new_location
 
         return False
 
     def is_valid(self, command_name):
-        """(Put description here)."""
+        """Return if user input matches the command name from config file."""
         if command_name == CommandField.TOURNAMENT_LOCATION:
             return True
         else:
@@ -147,14 +147,14 @@ class EditTournamentLocation:
 
 
 class EditTournamentTimeControl:
-    """Project application class."""
+    """Project edit_tournament_time_control command class."""
 
     def __init__(self, tournament):
-        """Init Application class."""
+        """Init edit_tournament_time_control command class."""
         self.tournament = tournament
 
     def exe_command(self):
-        """(Put description here)."""
+        """Execute command and return False to not exit application."""
         new_time_control = input(
             "Enter tournament time control (bullet, blitz or rapide): "
         )
@@ -170,7 +170,7 @@ class EditTournamentTimeControl:
         return False
 
     def is_valid(self, command_name):
-        """(Put description here)."""
+        """Return if user input matches the command name from config file."""
         if command_name == CommandField.TOURNAMENT_TIME:
             return True
         else:
@@ -178,14 +178,14 @@ class EditTournamentTimeControl:
 
 
 class EditTournamentTurnNumber:
-    """Project application class."""
+    """Project edit_tournament_turn_number command class."""
 
     def __init__(self, tournament):
-        """Init Application class."""
+        """Init edit_tournament_turn_number command class."""
         self.tournament = tournament
 
     def exe_command(self):
-        """(Put description here)."""
+        """Execute command and return False to not exit application."""
         new_turn_number = input("Enter number of tournament turns : ")
         while not self.is_string_positive_integer(new_turn_number):
             print("Only authorized values are positive integers.")
@@ -196,7 +196,7 @@ class EditTournamentTurnNumber:
         return False
 
     def is_string_positive_integer(self, input_string):
-        """(Put description here)."""
+        """Return if a string is a positive integer."""
         try:
             int(input_string)
             if int(input_string) > 0:
@@ -207,7 +207,7 @@ class EditTournamentTurnNumber:
             return False
 
     def is_valid(self, command_name):
-        """(Put description here)."""
+        """Return if user input matches the command name from config file."""
         if command_name == CommandField.TOURNAMENT_TURN_NUMBER:
             return True
         else:
@@ -215,22 +215,22 @@ class EditTournamentTurnNumber:
 
 
 class EnterScore:
-    """Project application class."""
+    """Project enter_score command class."""
 
     def __init__(self, turn):
-        """Init Application class."""
+        """Init enter_score command class."""
         self.match = None
         self.turn = turn
 
     def exe_command(self):
-        """(Put description here)."""
+        """Execute command and return False to not exit application."""
         self.input_new_score()
         self.complete_end_turn()
 
         return False
 
     def input_new_score(self):
-        """(Put description here)."""
+        """Ask for score input and update match results."""
         score_player_1 = input(f"Enter score player {self.match.opponents[0]} : ")
         value_incorrect = True
         while value_incorrect:
@@ -256,7 +256,7 @@ class EnterScore:
         self.match.update_result(score_player_1, score_player_2)
 
     def complete_end_turn(self):
-        """(Put description here)."""
+        """Complete the end turn timedate if all matches have been played."""
         for result in self.turn.get_matches_results():
             if len(result) == 0:
                 return False
@@ -266,7 +266,7 @@ class EnterScore:
         self.turn.time_end = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
 
     def is_valid(self, command_name):
-        """(Put description here)."""
+        """Return if user input matches the command name from config file."""
         number = 1
         for match in self.turn.matches:
             if len(match.opponents) == 2:
@@ -279,19 +279,19 @@ class EnterScore:
 
 
 class ListMatchesCommand:
-    """Project application class."""
+    """Project list_matches command class."""
 
     def __init__(self, viewer):
-        """Init Application class."""
+        """Init list_matches command class."""
         self.viewer = viewer
 
     def exe_command(self):
-        """(Put description here)."""
+        """Execute command and return False to not exit application."""
         self.viewer.warning = "matches"
         return False
 
     def is_valid(self, command_name):
-        """(Put description here)."""
+        """Return if user input matches the command name from config file."""
         if command_name == CommandField.MATCHES:
             return True
         else:
@@ -299,14 +299,14 @@ class ListMatchesCommand:
 
 
 class LoadTournamentDatabase:
-    """Project application class."""
+    """Project load_tournament_database command class."""
 
     def __init__(self, viewer):
-        """Init Application class."""
+        """Init load_tournament_database command class."""
         self.viewer = viewer
 
     def exe_command(self):
-        """(Put description here)."""
+        """Execute command and return False to not exit application."""
         from app.models.tournament import Tournament
 
         Tournament.load_fromtinyDB()
@@ -314,7 +314,7 @@ class LoadTournamentDatabase:
         return False
 
     def is_valid(self, command_name):
-        """(Put description here)."""
+        """Return if user input matches the command name from config file."""
         if command_name == CommandField.LOAD_TOURNAMENTS:
             return True
         else:
@@ -322,14 +322,14 @@ class LoadTournamentDatabase:
 
 
 class SaveTournamentDatabase:
-    """Project application class."""
+    """Project save_tournament_database command class."""
 
     def __init__(self, viewer):
-        """Init Application class."""
+        """Init save_tournament_database command class."""
         self.viewer = viewer
 
     def exe_command(self):
-        """(Put description here)."""
+        """Execute command and return False to not exit application."""
         from app.models.tournament import Tournament
 
         Tournament.save_tinyDB()
@@ -337,7 +337,7 @@ class SaveTournamentDatabase:
         return False
 
     def is_valid(self, command_name):
-        """(Put description here)."""
+        """Return if user input matches the command name from config file."""
         if command_name == CommandField.SAVE_TOURNAMENTS:
             return True
         else:

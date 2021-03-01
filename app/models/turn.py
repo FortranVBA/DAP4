@@ -1,13 +1,13 @@
-"""Project OC DAP 4 file with tournament related class."""
+"""Project OC DAP 4 file with the turn class."""
 
 from app.models.match import Match
 
 
 class Turn:
-    """Player characteristics to be handled by application."""
+    """Project turn class."""
 
     def __init__(self, name, matches_input, matches_result, time_begin, time_end):
-        """Init Match class."""
+        """Init turn class."""
         self.name = name
         self.matches = []
         self.time_begin = time_begin
@@ -17,7 +17,7 @@ class Turn:
             self.matches.append(Match(match, result))
 
     def return_serialized_turn(self):
-        """(Put description here)."""
+        """Return class attributes as dictionnary."""
         matches_input = []
         matches_result = []
         for match in self.matches:
@@ -33,7 +33,7 @@ class Turn:
         }
 
     def get_matches_description(self):
-        """(Put description here)."""
+        """Return the list of match descriptions (match opponents)."""
         description = []
         for match in self.matches:
             description.append(match.opponents)
@@ -41,7 +41,7 @@ class Turn:
         return description
 
     def get_matches_results(self):
-        """(Put description here)."""
+        """Return the list of match results (opponent scores)."""
         results = []
         for match in self.matches:
             results.append(match.result)

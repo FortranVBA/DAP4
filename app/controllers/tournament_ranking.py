@@ -1,4 +1,4 @@
-"""Project OC DAP 4 file with tournament related class."""
+"""Project OC DAP 4 file with the tournament_ranking controller."""
 
 from app.commands.application import PrintUnknownCommand
 from app.commands.player import GeneratePlayers
@@ -13,10 +13,10 @@ from app.views.tournament_ranking import TournamentRankingViewer
 
 
 class TournamentRankingController:
-    """Project application class."""
+    """Project tournament_ranking controller class."""
 
     def __init__(self, tournament):
-        """Init Application class."""
+        """Init tournament_ranking controller class."""
         self._app = None
 
         self.tournament = tournament
@@ -25,8 +25,12 @@ class TournamentRankingController:
 
         self.viewer = TournamentRankingViewer()
 
+    def display(self):
+        """Display the controller view."""
+        self.viewer.display(self.tournament)
+
     def get_command(self):
-        """(Put description here)."""
+        """Get the user input and convert it to a command instance."""
         command_input = input("Enter your command: ")
 
         self.update_commands()
@@ -35,12 +39,10 @@ class TournamentRankingController:
             if command.is_valid(command_input):
                 self.command = command
 
-    def display(self):
-        """(Put description here)."""
-        self.viewer.display(self.tournament)
-
     def update_commands(self):
-        """(Put description here)."""
+        """Delete the player creation commands if the tournament already started."""
+        # The 1st command in list must always be the PrintUnknownCommand, which is used
+        # as default command.
         self.command_names = [
             PrintUnknownCommand(self.viewer),
             ExitApplication(),

@@ -1,4 +1,4 @@
-"""Project OC DAP 4 file with tournament related class."""
+"""Project OC DAP 4 file with the players viewer."""
 
 from app.models.player import Player
 
@@ -6,14 +6,14 @@ from app.config import CommandField
 
 
 class PlayersViewer:
-    """Project application class."""
+    """Project players viewer class."""
 
     def __init__(self):
-        """Init Application class."""
+        """Init players viewer class."""
         self.warning = ""
 
     def display(self):
-        """(Put description here)."""
+        """Display the view and the command list."""
         self.display_warning()
 
         print("The list of players is the following :")
@@ -45,7 +45,7 @@ class PlayersViewer:
         print(" - " + CommandField.EXIT + " to quit application")
 
     def get_warning(self):
-        """(Put description here)."""
+        """Return the current warning message or the requested list."""
         if self.warning == "command unknown":
             print("Warning : this command is not valid")
 
@@ -71,7 +71,7 @@ class PlayersViewer:
             return "Warning : unknown error occured"
 
     def display_warning(self):
-        """(Put description here)."""
+        """Display additional warnings or information."""
         print(" ")
         print(" ")
         if not self.warning == "":

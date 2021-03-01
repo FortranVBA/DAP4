@@ -1,4 +1,4 @@
-"""Project OC DAP 4 file with tournament related class."""
+"""Project OC DAP 4 file with the edit_tournament controller."""
 
 from app.commands.application import PrintUnknownCommand
 from app.commands.navigation import GotoRankingMenu
@@ -17,10 +17,10 @@ from app.models.tournament import Tournament
 
 
 class EditTournamentController:
-    """Project application class."""
+    """Project edit_tournament controller class."""
 
     def __init__(self, tournament, is_new):
-        """Init Application class."""
+        """Init edit_tournament controller class."""
         self._app = None
         self.viewer = EditTournamentViewer()
 
@@ -40,13 +40,15 @@ class EditTournamentController:
         self.command_names = []
 
     def display(self):
-        """(Put description here)."""
+        """Display the controller view."""
         self.viewer.display(self.tournament)
 
     def get_command(self):
-        """(Put description here)."""
+        """Get the user input and convert it to a command instance."""
         command_input = input("Enter your command: ")
 
+        # The 1st command in list must always be the PrintUnknownCommand, which is used
+        # as default command.
         self.command_names = [
             PrintUnknownCommand(self.viewer),
             ExitApplication(),

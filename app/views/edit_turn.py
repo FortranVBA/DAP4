@@ -1,17 +1,17 @@
-"""Project OC DAP 4 file with tournament related class."""
+"""Project OC DAP 4 file with the edit_turn viewer."""
 
 from app.config import CommandField
 
 
 class EditTurnViewer:
-    """Project application class."""
+    """Project edit_turn viewer class."""
 
     def __init__(self):
-        """Init Application class."""
+        """Init edit_turn viewer class."""
         self.warning = ""
 
     def display(self, tournament, turn):
-        """(Put description here)."""
+        """Display the view and the command list."""
         self.display_warning()
 
         print(f"Editing turn {turn.name} from tournament {tournament.name}")
@@ -34,14 +34,14 @@ class EditTurnViewer:
         print(" - " + CommandField.EXIT + " to quit application")
 
     def get_warning(self):
-        """(Put description here)."""
+        """Return the current warning message."""
         if self.warning == "command unknown":
             return "Warning : this command is not valid"
         else:
             return "Warning : unknown error occured"
 
     def display_warning(self):
-        """(Put description here)."""
+        """Display additional warnings."""
         print(" ")
         print(" ")
         if not self.warning == "":

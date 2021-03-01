@@ -1,8 +1,8 @@
-"""Project OC DAP 4 file with tournament related class."""
+"""Project OC DAP 4 file with the match class."""
 
 
 class Match:
-    """Player characteristics to be handled by application."""
+    """Project match class."""
 
     def __init__(self, opponents, result):
         """Init Match class."""
@@ -10,5 +10,5 @@ class Match:
         self.result = tuple(result)
 
     def update_result(self, score_p1, score_p2):
-        """(Put description here)."""
+        """Update match result."""
         self.result = (score_p1, score_p2)
