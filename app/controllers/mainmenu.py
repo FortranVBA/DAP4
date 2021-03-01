@@ -1,9 +1,9 @@
 """Project OC DAP 4 file with tournament related class."""
 
-from app.controllers.commands import PrintUnknownCommand
-from app.controllers.commands import GotoPlayersMenu
-from app.controllers.commands import GotoTournamentsMenu
-from app.controllers.commands import ExitApplication
+from app.commands.application import PrintUnknownCommand
+from app.commands.navigation import GotoPlayersMenu
+from app.commands.navigation import GotoTournamentsMenu
+from app.commands.application import ExitApplication
 
 from app.views.mainmenu import MainMenuViewer
 

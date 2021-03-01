@@ -1,13 +1,13 @@
 """Project OC DAP 4 file with tournament related class."""
 
-from app.controllers.commands import PrintUnknownCommand
-from app.controllers.commands import GeneratePlayers
-from app.controllers.commands import AddPlayer
-from app.controllers.commands import GotoEditPlayer
-from app.controllers.commands import ListPlayersAlphabeticalCommand
-from app.controllers.commands import ListPlayersRankingCommand
-from app.controllers.commands import ExitApplication
-from app.controllers.commands import GoBackMenu
+from app.commands.application import PrintUnknownCommand
+from app.commands.player import GeneratePlayers
+from app.commands.player import AddPlayer
+from app.commands.navigation import GotoEditPlayer
+from app.commands.player import ListPlayersAlphabeticalCommand
+from app.commands.player import ListPlayersRankingCommand
+from app.commands.application import ExitApplication
+from app.commands.navigation import GoBackMenu
 
 from app.views.tournament_ranking import TournamentRankingViewer
 

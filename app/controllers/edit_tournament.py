@@ -1,15 +1,15 @@
 """Project OC DAP 4 file with tournament related class."""
 
-from app.controllers.commands import PrintUnknownCommand
-from app.controllers.commands import GotoRankingMenu
-from app.controllers.commands import GotoTurnsMenu
-from app.controllers.commands import EditTournamentLocation
-from app.controllers.commands import EditTournamentDate
-from app.controllers.commands import EditTournamentTurnNumber
-from app.controllers.commands import EditTournamentTimeControl
-from app.controllers.commands import EditTournamentDescription
-from app.controllers.commands import ExitApplication
-from app.controllers.commands import GoBackMenu
+from app.commands.application import PrintUnknownCommand
+from app.commands.navigation import GotoRankingMenu
+from app.commands.navigation import GotoTurnsMenu
+from app.commands.tournament import EditTournamentLocation
+from app.commands.tournament import EditTournamentDate
+from app.commands.tournament import EditTournamentTurnNumber
+from app.commands.tournament import EditTournamentTimeControl
+from app.commands.tournament import EditTournamentDescription
+from app.commands.application import ExitApplication
+from app.commands.navigation import GoBackMenu
 
 from app.views.edit_tournament import EditTournamentViewer
 
