@@ -33,3 +33,7 @@ You can do so by typing in vscode (or other python interpretor for Windows) or y
 - Execute main.py from project root folder:
     - Type ```python main.py``` in terminal (vscode or other python interpretor for Windows)
     - Or type ```python3 main.py``` in terminal (Linux or Mac OS)
+
+## Generate flake8 report
+
+- To generate flake8 report, activate your environment (see above) and type ```flake8``` in your terminal (configuration is taken from .flake8 file).

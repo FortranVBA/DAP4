@@ -2,8 +2,6 @@
 
 from app.controllers.application import Application
 
-""" flake8 --format=html --htmldir=flake-report --max-line-length=119 --exclude=.venv"""
-
 
 def main():
     """Program entry point."""
