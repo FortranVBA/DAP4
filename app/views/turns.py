@@ -45,6 +45,11 @@ class TurnsViewer:
             print("New turn creation has been cancelled.")
             print(" ")
 
+        elif self.warning == "max turn":
+            print("Warning : Tournanent number of turns has been reached.")
+            print("New turn creation has been cancelled.")
+            print(" ")
+
         else:
             print("Warning : unknown error occured")
 

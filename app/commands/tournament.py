@@ -16,6 +16,11 @@ class CreateNextTurn:
         """Execute command and return False to not exit application."""
         from app.controllers.edit_turn import EditTurnController
 
+        if len(self.tournament.turns) >= int(self.tournament.turn_number):
+            self.viewer.warning = "max turn"
+
+            return False
+
         for turn in self.tournament.turns.values():
             for result in turn.get_matches_results():
                 if len(result) == 0:
