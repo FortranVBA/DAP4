@@ -37,3 +37,4 @@ You can do so by typing in vscode (or other python interpretor for Windows) or y
 ## Generate flake8 report
 
 - To generate flake8 report, activate your environment (see above) and type ```flake8``` in your terminal (configuration is taken from .flake8 file).
+The generated flake8 report is located in flake-report folder.
