@@ -3,4 +3,3 @@ __pycache__
 .mypy_cache
 db.json
 get-pip.py
-flake-report
